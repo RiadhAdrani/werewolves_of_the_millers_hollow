@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Werewolf of The Millers Hollow</string>
+
+    <string name="app_name">Werewolves of The Millers Hollow</string>
+
+    <string name="servant_name">Servant</string>
+    <string name="servant_description">Servant Description</string>
+
 </resources>
