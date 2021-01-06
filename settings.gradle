@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "Werewolf of The Millers Hollow"
