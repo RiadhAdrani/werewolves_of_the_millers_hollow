@@ -5,4 +5,13 @@
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>
 
+    <string name="guardian_name">Guardian</string>
+    <string name="guardian_description">Guardian Description</string>
+
+    <string name="wolf_name">Werewolf</string>
+    <string name="wolf_description">Werewolf Description</string>
+
+    <string name="infect_name">Infect : Father of Werewolf</string>
+    <string name="infect_description">Infect : Father of Werewolf Description</string>
+
 </resources>

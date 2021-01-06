@@ -1,5 +1,6 @@
 package com.example.werewolfofthemillershollow.roles
 
+import android.util.Log
 import com.example.werewolfofthemillershollow.settings.App
 
 /**
@@ -579,6 +580,34 @@ abstract class Role {
 
         }
 
+    }
+
+    /**
+     * Display All Info about the object class
+     * in the logcat for debug purpose.
+     * @param name custom name to be given to the role (default is Role name)
+     * @param tag custom tag (default is "DEBUG_ROLE")
+     * @see Role
+     * @see Log.d
+     */
+    fun debug(name : String? = getName(), tag : String = "DEBUG_ROLE") {
+        Log.d(tag,"$name Debug Start ----------------------------------------------")
+        Log.d(tag,"$name Name : ${getName()}")
+        Log.d(tag,"$name Description : ${getDescription()}")
+        Log.d(tag,"$name Team : ${getName()}")
+        Log.d(tag,"$name Primary : ${getCanUsePrimary()}")
+        Log.d(tag,"$name PrimaryPower : ${getPrimaryAbilityPower()}")
+        Log.d(tag,"$name Secondary : ${getCanUseSecondary()}")
+        Log.d(tag,"$name SecondaryPower : ${getCanUseSecondary()}")
+        Log.d(tag,"$name isAlive : ${getIsAlive()}")
+        Log.d(tag,"$name isKilled : ${getIsKilled()}")
+        Log.d(tag,"$name isInfected : ${getIsInfected()}")
+        Log.d(tag,"$name isServed : ${getIsServed()}")
+        Log.d(tag,"$name isGuarded : ${getIsGuarded()}")
+        Log.d(tag,"$name wasGuarded : ${getWasGuarded()}")
+        Log.d(tag,"$name isTalking : ${getIsTalking()}")
+        Log.d(tag,"$name isCaptain : ${getIsCaptain()}")
+        Log.d(tag,"Debug End ----------------------------------------------")
     }
 
 }

@@ -14,7 +14,7 @@ import com.example.werewolfofthemillershollow.settings.App
  * @See App.SERVANT_PRIMARY_POWER
  * @see App.SERVANT_CAN_SECONDARY
  * @see App.SERVANT_SECONDARY_POWER
- * @param context context in which the class is created
+ * @param context context in which the class object is created
  */
 class Servant(context: Context) : Role() {
 
