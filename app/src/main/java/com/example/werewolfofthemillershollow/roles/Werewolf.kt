@@ -18,6 +18,18 @@ import com.example.werewolfofthemillershollow.settings.App
  */
 class Werewolf(context: Context) : Role() {
 
+    companion object{
+
+        /**
+         * Power of the wolf pack : allow the pack to choose a player to kill, even one of them ...
+         * @param role player to kill
+         */
+        fun wolfPackPower(role : Role){
+            role.setIsKilled(true)
+        }
+
+    }
+
     init {
         setName(context.getString(App.WOLF_NAME))
         setDescription(context.getString(App.WOLF_DESCRIPTION))

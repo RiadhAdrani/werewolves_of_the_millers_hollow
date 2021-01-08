@@ -5,6 +5,12 @@ import com.example.werewolfofthemillershollow.roles.Servant
 import com.example.werewolfofthemillershollow.roles.Guardian
 import com.example.werewolfofthemillershollow.roles.Werewolf
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
+import com.example.werewolfofthemillershollow.roles.Sorcerer
+import com.example.werewolfofthemillershollow.roles.Seer
+import com.example.werewolfofthemillershollow.roles.Barber
+import com.example.werewolfofthemillershollow.roles.Knight
+import com.example.werewolfofthemillershollow.roles.Captain
+import com.example.werewolfofthemillershollow.roles.Villager
 
 
 /**
@@ -168,7 +174,7 @@ abstract class App {
 
         /**
          * * Werewolf secondary ability power
-         * @see Guardian
+         * @see Werewolf
          * */
         const val WOLF_SECONDARY_POWER : Int = ABILITY_NONE
 
@@ -216,6 +222,276 @@ abstract class App {
          * @see FatherOfWolves
          * */
         const val INFECT_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // SORCERER
+        // ---------------------------------------------------------------------------------------
+
+        /*** Sorcerer name resource id
+         * @see Sorcerer
+         * */
+        const val SORCERER_NAME : Int = R.string.sorcerer_name
+
+        /**
+         * Sorcerer description resource id
+         * @see Sorcerer
+         * */
+        const val SORCERER_DESCRIPTION : Int = R.string.sorcerer_description
+
+        /**
+         * Sorcerer team
+         * @see Sorcerer
+         */
+        const val SORCERER_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Sorcerer has a primary ability ?
+         * @see Sorcerer
+         */
+        const val SORCERER_CAN_PRIMARY : Boolean = true
+
+        /**
+         * Sorcerer has a secondary ability ?
+         * @see Sorcerer
+         */
+        const val SORCERER_CAN_SECONDARY : Boolean = true
+
+        /**
+         * * Sorcerer primary ability power
+         * @see Sorcerer
+         * */
+        const val SORCERER_PRIMARY_POWER : Int = ABILITY_ONCE
+
+        /**
+         * * Sorcerer secondary ability power
+         * @see Sorcerer
+         * */
+        const val SORCERER_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // SEER
+        // ---------------------------------------------------------------------------------------
+
+        /*** Seer name resource id
+         * @see Seer
+         * */
+        const val SEER_NAME : Int = R.string.seer_name
+
+        /**
+         * Seer description resource id
+         * @see Seer
+         * */
+        const val SEER_DESCRIPTION : Int = R.string.seer_description
+
+        /**
+         * Seer team
+         * @see Seer
+         */
+        const val SEER_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Seer has a primary ability ?
+         * @see Seer
+         */
+        const val SEER_CAN_PRIMARY : Boolean = true
+
+        /**
+         * Seer has a secondary ability ?
+         * @see Seer
+         */
+        const val SEER_CAN_SECONDARY : Boolean = false
+
+        /**
+         * * Seer primary ability power
+         * @see Seer
+         * */
+        const val SEER_PRIMARY_POWER : Int = ABILITY_INFINITE
+
+        /**
+         * * Seer secondary ability power
+         * @see Seer
+         * */
+        const val SEER_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // KNIGHT
+        // ---------------------------------------------------------------------------------------
+
+        /*** Knight name resource id
+         * @see Knight
+         * */
+        const val KNIGHT_NAME : Int = R.string.knight_name
+
+        /**
+         * Knight description resource id
+         * @see Knight
+         * */
+        const val KNIGHT_DESCRIPTION : Int = R.string.knight_description
+
+        /**
+         * Knight team
+         * @see Knight
+         */
+        const val KNIGHT_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Knight has a primary ability ?
+         * @see Knight
+         */
+        const val KNIGHT_CAN_PRIMARY : Boolean = true
+
+        /**
+         * Knight has a secondary ability ?
+         * @see Knight
+         */
+        const val KNIGHT_CAN_SECONDARY : Boolean = false
+
+        /**
+         * * Knight primary ability power
+         * @see Knight
+         * */
+        const val KNIGHT_PRIMARY_POWER : Int = ABILITY_ONCE
+
+        /**
+         * * Knight secondary ability power
+         * @see Knight
+         * */
+        const val KNIGHT_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // BARBER
+        // ---------------------------------------------------------------------------------------
+
+        /*** Barber name resource id
+         * @see Barber
+         * */
+        const val BARBER_NAME : Int = R.string.barber_name
+
+        /**
+         * Barber description resource id
+         * @see Barber
+         * */
+        const val BARBER_DESCRIPTION : Int = R.string.barber_description
+
+        /**
+         * Barber team
+         * @see Barber
+         */
+        const val BARBER_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Barber has a primary ability ?
+         * @see Barber
+         */
+        const val BARBER_CAN_PRIMARY : Boolean = true
+
+        /**
+         * Barber has a secondary ability ?
+         * @see Barber
+         */
+        const val BARBER_CAN_SECONDARY : Boolean = false
+
+        /**
+         * * Barber primary ability power
+         * @see Barber
+         * */
+        const val BARBER_PRIMARY_POWER : Int = ABILITY_ONCE
+
+        /**
+         * * Barber secondary ability power
+         * @see Barber
+         * */
+        const val BARBER_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // CAPTAIN
+        // ---------------------------------------------------------------------------------------
+
+        /*** Captain name resource id
+         * @see Captain
+         * */
+        const val CAPTAIN_NAME : Int = R.string.captain_name
+
+        /**
+         * Captain description resource id
+         * @see Captain
+         * */
+        const val CAPTAIN_DESCRIPTION : Int = R.string.captain_description
+
+        /**
+         * Captain team
+         * @see Captain
+         */
+        const val CAPTAIN_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Captain has a primary ability ?
+         * @see Captain
+         */
+        const val CAPTAIN_CAN_PRIMARY : Boolean = true
+
+        /**
+         * Captain has a secondary ability ?
+         * @see Captain
+         */
+        const val CAPTAIN_CAN_SECONDARY : Boolean = false
+
+        /**
+         * * Captain primary ability power
+         * @see Captain
+         * */
+        const val CAPTAIN_PRIMARY_POWER : Int = ABILITY_INFINITE
+
+        /**
+         * * Captain secondary ability power
+         * @see Captain
+         * */
+        const val CAPTAIN_SECONDARY_POWER : Int = ABILITY_NONE
+
+        // ---------------------------------------------------------------------------------------
+        // VILLAGER
+        // ---------------------------------------------------------------------------------------
+
+        /*** Villager name resource id
+         * @see Villager
+         * */
+        const val VILLAGER_NAME : Int = R.string.villager_name
+
+        /**
+         * Villager description resource id
+         * @see Villager
+         * */
+        const val VILLAGER_DESCRIPTION : Int = R.string.villager_description
+
+        /**
+         * Villager team
+         * @see Villager
+         */
+        const val VILLAGER_TEAM : Int = TEAM_VILLAGE
+
+        /**
+         * Villager has a primary ability ?
+         * @see Villager
+         */
+        const val VILLAGER_CAN_PRIMARY : Boolean = false
+
+        /**
+         * Villager has a secondary ability ?
+         * @see Villager
+         */
+        const val VILLAGER_CAN_SECONDARY : Boolean = false
+
+        /**
+         * * Villager primary ability power
+         * @see Villager
+         * */
+        const val VILLAGER_PRIMARY_POWER : Int = ABILITY_NONE
+
+        /**
+         * * Villager secondary ability power
+         * @see Villager
+         * */
+        const val VILLAGER_SECONDARY_POWER : Int = ABILITY_NONE
 
     }
 
