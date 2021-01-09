@@ -1,5 +1,14 @@
 <resources>
 
+    <string name="werewolves">Werewolves</string>
+    <string name="of_the_millers_hollow">of The Millers Hollow</string>
+
+    <string name="info">More Info</string>
+    <string name="settings">Settings</string>
+    <string name="new_game">New Game</string>
+    <string name="load_game">Load Game</string>
+    <string name="documentation">Docs</string>
+
     <string name="app_name">Werewolves of The Millers Hollow</string>
 
     <string name="servant_name">Servant</string>
