@@ -9,6 +9,9 @@
         android:roundIcon="@drawable/ic_ww"
         android:supportsRtl="true"
         android:theme="@style/Theme.WerewolfOfTheMillersHollow">
+
+        <activity android:name=".NewGameActivity"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

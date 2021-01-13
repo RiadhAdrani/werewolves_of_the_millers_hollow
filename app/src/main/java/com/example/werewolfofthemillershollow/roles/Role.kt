@@ -583,6 +583,13 @@ abstract class Role {
     }
 
     /**
+     * Return whereas the role is a wolf or not
+     */
+    open fun isWolf():Boolean {
+        return false
+    }
+
+    /**
      * Display All Info about the object class
      * in the logcat for debug purpose.
      * @param name custom name to be given to the role (default is Role name)

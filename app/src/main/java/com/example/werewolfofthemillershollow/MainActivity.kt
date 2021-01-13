@@ -1,8 +1,8 @@
 package com.example.werewolfofthemillershollow
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
@@ -42,8 +42,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Start a new game.
+     * Opens up a new activity.
+     * @see NewGameActivity
+     */
     private fun startNewGame() {
-        Toast.makeText(applicationContext,"New Game",Toast.LENGTH_SHORT).show()
+        val i = Intent(applicationContext,NewGameActivity::class.java)
+        startActivity(i)
     }
 
     private fun loadSavedGame(){

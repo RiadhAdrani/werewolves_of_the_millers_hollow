@@ -76,4 +76,5 @@ class Captain(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return true
     }
+
 }

@@ -52,4 +52,5 @@ class Barber(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return role != this
     }
+
 }

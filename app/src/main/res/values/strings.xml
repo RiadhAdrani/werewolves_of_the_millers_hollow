@@ -8,6 +8,13 @@
     <string name="new_game">New Game</string>
     <string name="load_game">Load Game</string>
     <string name="documentation">Docs</string>
+    <string name="back">Return</string>
+    <string name="current_players">Players:</string>
+    <string name="current_players_number">00</string>
+    <string name="players_number">Player count</string>
+    <string name="generate">Generate</string>
+    <string name="start">Start</string>
+    <string name="roll">Roll</string>
 
     <string name="app_name">Werewolves of The Millers Hollow</string>
 
@@ -40,4 +47,5 @@
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
+
 </resources>
