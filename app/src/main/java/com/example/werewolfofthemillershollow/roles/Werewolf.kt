@@ -67,9 +67,4 @@ class Werewolf(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return true
     }
-
-
-    override fun isWolf() : Boolean{
-        return true
-    }
 }

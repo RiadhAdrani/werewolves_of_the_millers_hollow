@@ -1,9 +1,10 @@
 package com.example.werewolfofthemillershollow
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,8 @@ import com.example.werewolfofthemillershollow.utility.RoleAdapter
  * @see Role
  */
 class NewGameActivity : AppCompatActivity() {
+
+    private lateinit var returnButton: ImageView
 
     /**
      * Recycler view for currently selected players
@@ -47,10 +50,14 @@ class NewGameActivity : AppCompatActivity() {
         numberOfPlayer = findViewById(R.id.current_players_count)
 
         val generate : Button = findViewById(R.id.generate)
+
         generate.setOnClickListener {
-            val number : Int = Integer.parseInt(numberOfPlayer.text.toString())
-            currentPlayersAdapter.getList().clear()
-            currentPlayersAdapter.setList(Role.getRoles(baseContext,number))
+            generateRoles()
+        }
+
+        returnButton = findViewById(R.id.return_button)
+        returnButton.setOnClickListener {
+            returnToMainActivity()
         }
 
         currentPlayersRV = findViewById(R.id.current_players_rv)
@@ -66,6 +73,8 @@ class NewGameActivity : AppCompatActivity() {
         availableRolesAdapter.setListener(listener = availableRoleListener())
         availableRolesRV.adapter = availableRolesAdapter
 
+        updateNumberOfPlayers()
+
     }
 
     /**
@@ -79,9 +88,14 @@ class NewGameActivity : AppCompatActivity() {
         return object : RoleAdapter.OnItemClick{
 
             override fun onClick(position: Int) {
+
                 val item = currentPlayersAdapter.getList()[position]
+
                 currentPlayersAdapter.removeItem(position)
-                availableRolesAdapter.addItem(item,0)
+
+                if (item.isUnique()) availableRolesAdapter.addItem(item,0)
+
+                updateNumberOfPlayers()
             }
 
             override fun onHold(position: Int): Boolean {
@@ -102,9 +116,14 @@ class NewGameActivity : AppCompatActivity() {
         return object : RoleAdapter.OnItemClick{
 
             override fun onClick(position: Int) {
+
                 val item = availableRolesAdapter.getList()[position]
-                availableRolesAdapter.removeItem(position)
+
+                if (item.isUnique()) availableRolesAdapter.removeItem(position)
+
                 currentPlayersAdapter.addItem(item,0)
+
+                updateNumberOfPlayers()
             }
 
             override fun onHold(position: Int): Boolean {
@@ -113,4 +132,40 @@ class NewGameActivity : AppCompatActivity() {
 
         }
     }
+
+    /**
+     * Generate role according to the user'input.
+     */
+    private fun generateRoles() {
+
+        val number : Int = Integer.parseInt(numberOfPlayer.text.toString())
+        currentPlayersAdapter.getList().clear()
+        currentPlayersAdapter.setList(Role.getRoles(baseContext,number))
+
+        for (role : Role in currentPlayersAdapter.getList()){
+
+            if (role.isUnique()) {
+                val index = Role.deleteRole(role,availableRolesAdapter.getList())
+                if ( index != -1) availableRolesAdapter.notifyItemRemoved(index)
+            }
+        }
+    }
+
+    /**
+     * Automatically update the EditText of number of player displayed.
+     */
+    private fun updateNumberOfPlayers() {
+        numberOfPlayer.setText("${currentPlayersAdapter.getList().size}")
+        numberOfPlayer.clearFocus()
+    }
+
+    /**
+     * Return to main activity, and finish this activity
+     */
+    private fun returnToMainActivity() {
+        val i = Intent(applicationContext,MainActivity::class.java)
+        startActivity(i)
+        finish()
+    }
+
 }

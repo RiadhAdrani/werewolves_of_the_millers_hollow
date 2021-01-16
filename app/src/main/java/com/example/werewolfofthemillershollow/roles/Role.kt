@@ -694,5 +694,39 @@ abstract class Role {
             return list
         }
 
+        /**
+         * Return whether the role exists in the list or not
+         * @param role role to be found
+         * @param list list in which searching will be made
+         */
+        fun isRoleInList(role : Role, list : ArrayList<Role>) : Boolean {
+
+            for (r : Role in list){
+                if (r.getName().equals(role.getName())) return true
+            }
+
+            return false
+        }
+
+        /**
+         * Delete a role from a list and return its position.
+         * @param role role to be deleted
+         * @param list list in which searching and deleting will be made
+         * @return index of deleted item.
+         */
+        fun deleteRole(role : Role, list : ArrayList<Role>) : Int {
+
+            for (r : Role in list){
+                if (r.getName().equals(role.getName())) {
+                    val index : Int = list.indexOf(r)
+                    list.removeAt(index)
+                    return index
+                }
+            }
+
+            return -1
+
+        }
+
     }
 }

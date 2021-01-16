@@ -10,9 +10,12 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:contentDescription="@string/back"
+        android:paddingHorizontal="8dp"
+        android:layout_marginStart="8dp"
         android:src="@drawable/ic_return"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"/>
 
     <TextView
         android:id="@+id/new_game_label"
