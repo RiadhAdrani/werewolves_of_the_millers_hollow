@@ -65,4 +65,8 @@ class FatherOfWolves(context: Context) :Role() {
     override fun isATarget(role: Role): Boolean {
         return role.getIsKilled() == true
     }
+
+    override fun isUnique(): Boolean {
+        return true
+    }
 }

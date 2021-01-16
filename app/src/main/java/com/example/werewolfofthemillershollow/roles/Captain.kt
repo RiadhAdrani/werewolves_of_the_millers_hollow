@@ -77,4 +77,8 @@ class Captain(context: Context) : Role() {
         return true
     }
 
+    override fun isUnique(): Boolean {
+        return true
+    }
+
 }

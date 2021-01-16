@@ -64,4 +64,8 @@ class Servant(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return role == this
     }
+
+    override fun isUnique(): Boolean {
+        return true
+    }
 }

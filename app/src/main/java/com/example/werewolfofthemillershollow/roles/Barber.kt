@@ -53,4 +53,7 @@ class Barber(context: Context) : Role() {
         return role != this
     }
 
+    override fun isUnique(): Boolean {
+        return true
+    }
 }

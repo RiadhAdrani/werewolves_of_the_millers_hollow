@@ -62,4 +62,8 @@ class Sorcerer(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return role.getIsKilled() == false
     }
+
+    override fun isUnique(): Boolean {
+        return true
+    }
 }

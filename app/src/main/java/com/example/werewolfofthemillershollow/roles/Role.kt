@@ -1,7 +1,9 @@
 package com.example.werewolfofthemillershollow.roles
 
+import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Blueprint class for all the existing roles in the game
@@ -465,6 +467,25 @@ abstract class Role {
     }
 
     /**
+     * Role icon
+     */
+    private var icon : Int? = Icons.info
+
+    /**
+     * getter for Role.icon
+     * @return icon
+     */
+    fun getIcon() : Int? = icon
+
+    /**
+     * setter for Role.icon
+     * @param icon new icon
+     */
+    fun setIcon(icon : Int?) {
+        this.icon = icon
+    }
+
+    /**
      * primary ability of this role
      * @return return true if the operation was successful else false
      * @param role target role
@@ -590,6 +611,13 @@ abstract class Role {
     }
 
     /**
+     * Return whether the role can be represented by only one or many players.
+     */
+    open fun isUnique() : Boolean{
+        return false
+    }
+
+    /**
      * Display All Info about the object class
      * in the logcat for debug purpose.
      * @param name custom name to be given to the role (default is Role name)
@@ -617,4 +645,54 @@ abstract class Role {
         Log.d(tag,"Debug End ----------------------------------------------")
     }
 
+    companion object {
+
+        /**
+         * Return a list of all the roles available
+         * @param context calling context
+         * @return array list of Role
+         */
+        fun getRoles(context: Context) : ArrayList<Role> {
+
+            val list = ArrayList<Role>()
+
+            list.add(Servant(context))
+            list.add(Guardian(context))
+            list.add(Werewolf(context))
+            list.add(FatherOfWolves(context))
+            list.add(Sorcerer(context))
+            list.add(Seer(context))
+            list.add(Knight(context))
+            list.add(Barber(context))
+            list.add(Captain(context))
+            list.add(Villager(context))
+
+            return list
+        }
+
+        /**
+         * Return a list of specified roles depending on the number provided
+         * @param context calling context
+         * @param numberOfRoles number of roles needed
+         * @return array list of Role
+         */
+        fun getRoles(context: Context, numberOfRoles : Int) : ArrayList<Role>{
+
+            val list = ArrayList<Role>()
+
+            if (numberOfRoles > 8) list.add(Servant(context))
+            list.add(Guardian(context))
+            if (numberOfRoles > 7) list.add(Werewolf(context))
+            list.add(FatherOfWolves(context))
+            list.add(Sorcerer(context))
+            list.add(Seer(context))
+            if (numberOfRoles > 9) list.add(Knight(context))
+            list.add(Barber(context))
+            list.add(Captain(context))
+            list.add(Villager(context))
+
+            return list
+        }
+
+    }
 }

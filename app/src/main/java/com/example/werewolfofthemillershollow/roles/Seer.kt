@@ -68,4 +68,8 @@ class Seer(context: Context) : Role() {
     override fun isATarget(role: Role): Boolean {
         return true
     }
+
+    override fun isUnique(): Boolean {
+        return true
+    }
 }
