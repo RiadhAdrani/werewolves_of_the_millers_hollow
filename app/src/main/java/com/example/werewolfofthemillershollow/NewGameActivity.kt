@@ -2,14 +2,19 @@ package com.example.werewolfofthemillershollow
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.RoleAdapter
+import com.example.werewolfofthemillershollow.utility.RolesRollerDialog
 
 /**
  * Activity allowing the user to customize his game,
@@ -18,7 +23,16 @@ import com.example.werewolfofthemillershollow.utility.RoleAdapter
  */
 class NewGameActivity : AppCompatActivity() {
 
+    /**
+     * Return button : allow user to back-track to the previous activity
+     * @see MainActivity
+     */
     private lateinit var returnButton: ImageView
+
+    /**
+     * Allow the user to start distributing roles.
+     */
+    private lateinit var rollButton: Button
 
     /**
      * Recycler view for currently selected players
@@ -58,6 +72,18 @@ class NewGameActivity : AppCompatActivity() {
         returnButton = findViewById(R.id.return_button)
         returnButton.setOnClickListener {
             returnToMainActivity()
+        }
+
+        rollButton = findViewById(R.id.roll_button)
+        rollButton.setOnClickListener {
+
+            if (currentPlayersAdapter.getList().isEmpty()) {
+                Toast.makeText(baseContext,R.string.not_enough_player,Toast.LENGTH_SHORT).show()
+            }
+            else {
+                rolesRoller()
+            }
+
         }
 
         currentPlayersRV = findViewById(R.id.current_players_rv)
@@ -149,6 +175,8 @@ class NewGameActivity : AppCompatActivity() {
                 if ( index != -1) availableRolesAdapter.notifyItemRemoved(index)
             }
         }
+
+        updateNumberOfPlayers()
     }
 
     /**
@@ -166,6 +194,104 @@ class NewGameActivity : AppCompatActivity() {
         val i = Intent(applicationContext,MainActivity::class.java)
         startActivity(i)
         finish()
+    }
+
+    private fun rolesRoller(){
+
+        val onClick = object : RolesRollerDialog.OnClick{
+
+            override fun info(role: Role, dialog : RolesRollerDialog) {
+            }
+
+            override fun roll(list: ArrayList<Role>, dialog : RolesRollerDialog) {
+
+                if (!dialog.getState()){
+                    list[dialog.getCurrentIndex()].setPlayer(dialog.getInput())
+                    Log.d("INPUT", "Input => ${dialog.getInput()}")
+                    Log.d("INPUT","Real Player Name => ${list[dialog.getCurrentIndex()].getPlayer()}")
+                    Toast.makeText(
+                        baseContext,
+                        "${list[dialog.getCurrentIndex()].getName()} " +
+                                "${getString(R.string.is_now_named)} " +
+                                "${list[dialog.getCurrentIndex()].getPlayer()} ",
+                        Toast.LENGTH_SHORT).show()
+                    dialog.setState(true)
+                    dialog.setRollButtonIcon(Icons.roll)
+                    return
+                }
+
+                if (areAllRolesPicked(list)) {
+                    Toast.makeText(baseContext,R.string.roles_distributed,Toast.LENGTH_SHORT).show()
+                }
+                else {
+
+                    dialog.setCurrentIndex(pickRandomAliveRole(list))
+                    val role = list[dialog.getCurrentIndex()]
+                    role.setIsAlive(true)
+                    dialog.setIcon(role.getIcon()!!)
+                    dialog.setRoleText(role.getName()!!)
+                    dialog.setState(false)
+                    dialog.setRollButtonIcon(Icons.done)
+                    dialog.clearInput()
+                }
+            }
+
+            override fun cancel(list: ArrayList<Role>, dialog : RolesRollerDialog) {
+                for (role : Role in list){
+                    role.setIsAlive(true)
+                }
+                dialog.dismiss()
+            }
+
+            override fun reset(list: ArrayList<Role>, dialog : RolesRollerDialog) {
+                for (role : Role in list){
+                    role.setIsAlive(false)
+                    role.setName(getString(R.string.no_string))
+                    dialog.setState(true)
+                    dialog.setRollButtonIcon(Icons.roll)
+                }
+            }
+
+        }
+
+        val dialog = RolesRollerDialog(currentPlayersAdapter.getList(),onClick)
+        dialog.isCancelable = false
+        dialog.show(supportFragmentManager,"ROLES_ROLLER")
+    }
+
+    /**
+     * Return the index of a non-Alive role in the list.
+     * This function uses recursion.
+     * @param list list to return from
+     * @return a valid index from list
+     */
+    private fun pickRandomAliveRole(list : ArrayList<Role>) : Int {
+
+        val index = App.random(max = list.size)
+
+        if (index < 0 && index >= list.size)
+            return pickRandomAliveRole(list)
+
+        if (!list[index].getIsAlive()!!){
+            return index
+        }
+
+        return pickRandomAliveRole(list)
+    }
+
+    /**
+     * Return whether the roles are all picked or not.
+     * @param list list to check
+     */
+    private fun areAllRolesPicked(list : ArrayList<Role>) : Boolean{
+
+        for (role : Role in list){
+            if (!role.getIsAlive()!!)
+                return false
+        }
+
+        return true
+
     }
 
 }

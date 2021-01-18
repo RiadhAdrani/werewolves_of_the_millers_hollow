@@ -28,6 +28,8 @@ abstract class Icons {
         const val back : Int = R.drawable.ic_return
         const val settings : Int = R.drawable.ic_settings
         const val start : Int = R.drawable.ic_start
+        const val done : Int = R.drawable.ic_done
+        const val roll : Int = R.drawable.ic_flip
     }
 
 }

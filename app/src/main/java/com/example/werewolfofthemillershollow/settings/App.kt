@@ -1,16 +1,7 @@
 package com.example.werewolfofthemillershollow.settings
 
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.roles.Servant
-import com.example.werewolfofthemillershollow.roles.Guardian
-import com.example.werewolfofthemillershollow.roles.Werewolf
-import com.example.werewolfofthemillershollow.roles.FatherOfWolves
-import com.example.werewolfofthemillershollow.roles.Sorcerer
-import com.example.werewolfofthemillershollow.roles.Seer
-import com.example.werewolfofthemillershollow.roles.Barber
-import com.example.werewolfofthemillershollow.roles.Knight
-import com.example.werewolfofthemillershollow.roles.Captain
-import com.example.werewolfofthemillershollow.roles.Villager
+import com.example.werewolfofthemillershollow.roles.*
 
 
 /**
@@ -492,6 +483,18 @@ abstract class App {
          * @see Villager
          * */
         const val VILLAGER_SECONDARY_POWER : Int = ABILITY_NONE
+
+        /**
+         * Return a random number in a given interval
+         * @param min min number of the interval
+         * @param max max number of the interval
+         * @return an integer in [min,max[
+         */
+        fun random(min : Int = 0,max : Int): Int {
+
+            return (Math.random()*max).toInt() + min
+
+        }
 
     }
 

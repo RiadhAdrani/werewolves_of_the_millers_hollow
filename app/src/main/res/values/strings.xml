@@ -15,8 +15,19 @@
     <string name="generate">Generate</string>
     <string name="start">Start</string>
     <string name="roll">Roll</string>
+    <string name="roles_distribution">Distribution of Roles</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+    <string name="roles_distributed">All roles distributed successfully</string>
+    <string name="not_enough_player">Not enough players!</string>
+    <string name="no_string"> </string>
+    <string name="is_now_named">is now named</string>
+
+    <string name="as">as</string>
 
     <string name="app_name">Werewolves of The Millers Hollow</string>
+
+    <string name="player_name">Player Name</string>
 
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>

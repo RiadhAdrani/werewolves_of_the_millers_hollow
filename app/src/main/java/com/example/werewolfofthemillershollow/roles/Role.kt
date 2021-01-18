@@ -51,7 +51,7 @@ abstract class Role {
      * @see player
      * @see setPlayer
      */
-    fun getPlayer() : String? = name
+    fun getPlayer() : String? = player
 
     /**
      * setter for Role.player
