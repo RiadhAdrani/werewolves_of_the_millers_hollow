@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/small"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/dialog_icon"
+        android:src="@drawable/ic_info"
+        android:contentDescription="@string/info"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/large"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/tiny_extra"
+        />
+
+    <TextView
+        android:id="@+id/dialog_text"
+        android:text="@string/lorem"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/medium"
+        />
+
+    <CheckBox
+        android:id="@+id/dialog_check"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dialog_check_info"
+        android:layout_marginTop="@dimen/medium"
+        />
+
+    <TextView
+        android:id="@+id/dialog_check_info"
+        android:text="@string/lorem"
+        android:textSize="@dimen/text_tiny_x"
+        android:textStyle="italic"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/dialog_check"
+        app:layout_constraintLeft_toRightOf="@id/dialog_check"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/dialog_button_left"
+        android:text="@string/ok"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_check_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dialog_button_mid"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginTop="@dimen/tiny_extra"
+        />
+
+    <TextView
+        android:id="@+id/dialog_button_mid"
+        android:text="@string/ok"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/dialog_button_left"
+        app:layout_constraintLeft_toRightOf="@id/dialog_button_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/dialog_button_right"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:id="@+id/dialog_button_right"
+        android:text="@string/ok"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/dialog_button_left"
+        app:layout_constraintLeft_toRightOf="@id/dialog_button_mid"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

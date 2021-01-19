@@ -12,6 +12,13 @@ abstract class App {
 
     companion object {
 
+        // TAGs
+
+        /**
+         * Alert dialog tag
+         */
+        const val TAG_ALERT : String = "ALERT_DIALOG"
+
         // ABILITY
         /*** can use ability once*/
         const val ABILITY_ONCE : Int = 1

@@ -22,6 +22,13 @@
     <string name="not_enough_player">Not enough players!</string>
     <string name="no_string"> </string>
     <string name="is_now_named">is now named</string>
+    <string name="done">Done</string>
+    <string name="ok">OK</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
+
+    <string name="empty_name_alert">Player name is empty !!!</string>
+    <string name="existing_name_alert">Player name already exits !!!</string>
 
     <string name="as">as</string>
 

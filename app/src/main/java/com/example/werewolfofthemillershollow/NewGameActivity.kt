@@ -2,7 +2,6 @@ package com.example.werewolfofthemillershollow
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -13,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.RoleAdapter
 import com.example.werewolfofthemillershollow.utility.RolesRollerDialog
 
@@ -90,12 +90,12 @@ class NewGameActivity : AppCompatActivity() {
         availableRolesRV = findViewById(R.id.roles_rv)
 
         currentPlayersAdapter = RoleAdapter(context = applicationContext, list = ArrayList())
-        currentPlayersRV.layoutManager = GridLayoutManager(baseContext,3)
+        currentPlayersRV.layoutManager = GridLayoutManager(baseContext,resources.getInteger(R.integer.role_span_count))
         currentPlayersAdapter.setListener(listener = currentPlayersListener())
         currentPlayersRV.adapter = currentPlayersAdapter
 
         availableRolesAdapter = RoleAdapter(context = applicationContext, list = Role.getRoles(applicationContext))
-        availableRolesRV.layoutManager = GridLayoutManager(baseContext, 3)
+        availableRolesRV.layoutManager = GridLayoutManager(baseContext, resources.getInteger(R.integer.role_span_count))
         availableRolesAdapter.setListener(listener = availableRoleListener())
         availableRolesRV.adapter = availableRolesAdapter
 
@@ -160,7 +160,7 @@ class NewGameActivity : AppCompatActivity() {
     }
 
     /**
-     * Generate role according to the user'input.
+     * Generate role according to the user's input.
      */
     private fun generateRoles() {
 
@@ -196,6 +196,9 @@ class NewGameActivity : AppCompatActivity() {
         finish()
     }
 
+    /**
+     * OnClick listener for roll button, initialize roles roller dialog.
+     */
     private fun rolesRoller(){
 
         val onClick = object : RolesRollerDialog.OnClick{
@@ -206,17 +209,29 @@ class NewGameActivity : AppCompatActivity() {
             override fun roll(list: ArrayList<Role>, dialog : RolesRollerDialog) {
 
                 if (!dialog.getState()){
-                    list[dialog.getCurrentIndex()].setPlayer(dialog.getInput())
-                    Log.d("INPUT", "Input => ${dialog.getInput()}")
-                    Log.d("INPUT","Real Player Name => ${list[dialog.getCurrentIndex()].getPlayer()}")
+
+                    val inputText = dialog.getInput().trim()
+
+                    if (invalidPlayerNameAlert(input = inputText, list = list))
+                        return
+
+                    list[dialog.getCurrentIndex()].setPlayer(inputText)
+
                     Toast.makeText(
                         baseContext,
                         "${list[dialog.getCurrentIndex()].getName()} " +
                                 "${getString(R.string.is_now_named)} " +
                                 "${list[dialog.getCurrentIndex()].getPlayer()} ",
                         Toast.LENGTH_SHORT).show()
+
+                    dialog.clearInput()
                     dialog.setState(true)
                     dialog.setRollButtonIcon(Icons.roll)
+
+                    if (areAllRolesPicked(list)){
+                        dialog.setCancelButton(R.string.done)
+                    }
+
                     return
                 }
 
@@ -246,9 +261,11 @@ class NewGameActivity : AppCompatActivity() {
             override fun reset(list: ArrayList<Role>, dialog : RolesRollerDialog) {
                 for (role : Role in list){
                     role.setIsAlive(false)
-                    role.setName(getString(R.string.no_string))
+                    role.setPlayer(getString(R.string.no_string))
                     dialog.setState(true)
                     dialog.setRollButtonIcon(Icons.roll)
+                    dialog.setCancelButton()
+                    dialog.clearInput()
                 }
             }
 
@@ -291,6 +308,40 @@ class NewGameActivity : AppCompatActivity() {
         }
 
         return true
+
+    }
+
+    /**
+     * Display an alert based of the input made by the user.
+     * @param input user input
+     * @param list list of current players
+     */
+    private fun invalidPlayerNameAlert(input : String, list : ArrayList<Role>) : Boolean{
+
+        if (input.trim().isEmpty()){
+
+            val dialog = AlertDialog(
+                icon = R.drawable.ic_info,
+                text = R.string.empty_name_alert)
+            dialog.show(supportFragmentManager,App.TAG_ALERT)
+
+            return true
+        }
+
+
+        for (role : Role in list){
+            if (role.getPlayer().equals(input) && !role.getPlayer()?.trim().equals(resources.getString(R.string.no_string))){
+
+                val dialog = AlertDialog(
+                    icon = R.drawable.ic_info,
+                    text = R.string.existing_name_alert)
+                dialog.show(supportFragmentManager,App.TAG_ALERT)
+
+                return true
+            }
+        }
+
+        return false
 
     }
 

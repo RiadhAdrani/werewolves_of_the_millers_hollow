@@ -12,4 +12,15 @@
     <dimen name="text_giant_x">36sp</dimen>
     <dimen name="text_giant_xx">40sp</dimen>
 
+    <dimen name="tiny_extra">4dp</dimen>
+    <dimen name="tiny">8dp</dimen>
+    <dimen name="small">12dp</dimen>
+    <dimen name="medium_small">16dp</dimen>
+    <dimen name="medium">20dp</dimen>
+    <dimen name="medium_large">24dp</dimen>
+    <dimen name="large">32dp</dimen>
+    <dimen name="large_extra">40dp</dimen>
+    <dimen name="giant">60dp</dimen>
+    <dimen name="giant_extra">80dp</dimen>
+
 </resources>

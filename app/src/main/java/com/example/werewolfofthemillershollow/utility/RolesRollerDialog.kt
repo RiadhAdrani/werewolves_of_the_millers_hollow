@@ -195,4 +195,15 @@ class RolesRollerDialog(private var list: ArrayList<Role>, onClick : OnClick) : 
         this.currentIndex = index
     }
 
+    /**
+     * Update and change the text of the cancel button.
+     * @param textRes text resource id
+     */
+    fun setCancelButton(textRes : Int = R.string.cancel){
+
+        val textView = dialog?.findViewById<TextView>(R.id.cancel_button)
+        textView?.setText(textRes)
+
+    }
+
 }
