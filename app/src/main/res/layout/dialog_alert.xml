@@ -9,8 +9,8 @@
         android:id="@+id/dialog_icon"
         android:src="@drawable/ic_info"
         android:contentDescription="@string/info"
-        android:layout_width="@dimen/large"
-        android:layout_height="@dimen/large"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -63,7 +63,8 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_check_info"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/dialog_button_mid"
-        android:padding="@dimen/small"
+        android:paddingHorizontal="@dimen/medium"
+        android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
         android:layout_marginTop="@dimen/tiny_extra"
         />
@@ -79,7 +80,8 @@
         app:layout_constraintLeft_toRightOf="@id/dialog_button_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toLeftOf="@id/dialog_button_right"
-        android:padding="@dimen/small"
+        android:paddingHorizontal="@dimen/medium"
+        android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
         />
 
@@ -94,7 +96,8 @@
         app:layout_constraintLeft_toRightOf="@id/dialog_button_mid"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:padding="@dimen/small"
+        android:paddingHorizontal="@dimen/medium"
+        android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
         />
 

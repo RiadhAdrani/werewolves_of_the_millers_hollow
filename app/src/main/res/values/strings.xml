@@ -24,6 +24,18 @@
     <string name="is_now_named">is now named</string>
     <string name="done">Done</string>
     <string name="ok">OK</string>
+    <string name="roles_not_distributed">Not all roles have been given a name !</string>
+
+    <string name="no_captain">No Captain was found in the list!</string>
+    <string name="no_villager">Not a single villager was found in the list!</string>
+    <string name="no_wolves">Not a single wolf was found in the list!</string>
+    <string name="unbalanced_teams">The composition of players does not allow for a balanced game!</string>
+
+    <string name="bloc">Bloc</string>
+    <string name="kick">Kick</string>
+    <string name="more_options">More options</string>
+    <string name="role_icon">Role Icon</string>
+    <string name="use_ability">Use Ability</string>
 
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
 

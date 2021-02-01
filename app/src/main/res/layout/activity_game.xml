@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/kick_player"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/ic_bloc"
+        android:contentDescription="@string/kick"
+        android:padding="@dimen/tiny_extra"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:id="@+id/player_name"
+        android:text="@string/player_name"
+        android:textSize="@dimen/text_larger"
+        android:layout_marginHorizontal="8dp"
+        android:singleLine="true"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/kick_player"
+        app:layout_constraintRight_toLeftOf="@id/more_options"
+        />
+
+    <ImageView
+        android:id="@+id/more_options"
+        android:contentDescription="@string/more_options"
+        android:src="@drawable/ic_more_options"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:padding="@dimen/tiny_extra"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <ImageView
+        android:id="@+id/role_icon"
+        app:layout_constraintTop_toBottomOf="@id/player_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/role_name"
+        android:src="@drawable/ic_info"
+        android:layout_width="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra"
+        android:contentDescription="@string/role_icon"
+        />
+
+    <TextView
+        android:id="@+id/role_name"
+        android:text="@string/role"
+        android:textSize="@dimen/text_large"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintTop_toBottomOf="@id/role_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/status_effects"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/status_effects"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/giant_extra"
+        app:layout_constraintTop_toBottomOf="@id/role_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/narrator_info"
+        android:paddingVertical="@dimen/tiny_extra"
+        android:paddingHorizontal="@dimen/small"
+        />
+
+    <TextView
+        android:id="@+id/narrator_info"
+        android:text="@string/lorem"
+        android:textAlignment="center"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:minLines="6"
+        android:maxLines="6"
+        app:layout_constraintTop_toBottomOf="@id/status_effects"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ability_one"
+        />
+
+    <ImageView
+        android:id="@+id/ability_one"
+        android:contentDescription="@string/use_ability"
+        android:src="@drawable/ic_info"
+        android:layout_width="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra"
+        app:layout_constraintTop_toBottomOf="@id/narrator_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/ability_two"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/giant"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <ImageView
+        android:id="@+id/ability_two"
+        android:contentDescription="@string/use_ability"
+        android:src="@drawable/ic_info"
+        android:layout_width="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra"
+        app:layout_constraintTop_toTopOf="@id/ability_one"
+        app:layout_constraintBottom_toBottomOf="@id/ability_one"
+        app:layout_constraintLeft_toRightOf="@id/ability_one"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="@dimen/giant"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

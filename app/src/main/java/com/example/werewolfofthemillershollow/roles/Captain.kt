@@ -45,6 +45,7 @@ class Captain(context: Context) : Role() {
         setName(context.getString(App.CAPTAIN_NAME))
         setDescription(context.getString(App.CAPTAIN_DESCRIPTION))
         setTeam(App.CAPTAIN_TEAM)
+        setIsCaptain(true)
         setCanUsePrimary(App.CAPTAIN_CAN_PRIMARY)
         setCanUseSecondary(App.CAPTAIN_CAN_SECONDARY)
         setPrimaryAbilityPower(App.CAPTAIN_PRIMARY_POWER)

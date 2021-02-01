@@ -35,6 +35,11 @@ class NewGameActivity : AppCompatActivity() {
     private lateinit var rollButton: Button
 
     /**
+     * Allow the user to start the game after distributing the roles.
+     */
+    private lateinit var startButton : Button
+
+    /**
      * Recycler view for currently selected players
      */
     private lateinit var currentPlayersRV : RecyclerView
@@ -54,6 +59,9 @@ class NewGameActivity : AppCompatActivity() {
      */
     private lateinit var availableRolesAdapter : RoleAdapter
 
+    /**
+     * Indicates the current number of players
+     */
     private lateinit var numberOfPlayer : EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,13 +85,32 @@ class NewGameActivity : AppCompatActivity() {
         rollButton = findViewById(R.id.roll_button)
         rollButton.setOnClickListener {
 
+            val error: Int
+
             if (currentPlayersAdapter.getList().isEmpty()) {
                 Toast.makeText(baseContext,R.string.not_enough_player,Toast.LENGTH_SHORT).show()
             }
             else {
-                rolesRoller()
+                error = Role.isListValid(currentPlayersAdapter.getList())
+
+                if (error == Role.NO_ERROR)
+                    rolesRoller()
+                else {
+
+                    val alert = AlertDialog(
+                        text = Role.errorMessage(error = error)
+                    )
+                    alert.isCancelable = true
+                    alert.show(supportFragmentManager,App.TAG_ALERT)
+
+                }
             }
 
+        }
+
+        startButton = findViewById(R.id.start_button)
+        startButton.setOnClickListener {
+            startGame()
         }
 
         currentPlayersRV = findViewById(R.id.current_players_rv)
@@ -226,6 +253,7 @@ class NewGameActivity : AppCompatActivity() {
 
                     dialog.clearInput()
                     dialog.setState(true)
+                    dialog.setRoleText(getString(R.string.role))
                     dialog.setRollButtonIcon(Icons.roll)
 
                     if (areAllRolesPicked(list)){
@@ -252,16 +280,23 @@ class NewGameActivity : AppCompatActivity() {
             }
 
             override fun cancel(list: ArrayList<Role>, dialog : RolesRollerDialog) {
-                for (role : Role in list){
-                    role.setIsAlive(true)
+
+                if (!areAllRolesNamed(list)){
+                    for (role : Role in list){
+                        role.setIsAlive(true)
+                        role.setPlayer(null)
+                    }
                 }
+
                 dialog.dismiss()
+
             }
 
             override fun reset(list: ArrayList<Role>, dialog : RolesRollerDialog) {
                 for (role : Role in list){
                     role.setIsAlive(false)
-                    role.setPlayer(getString(R.string.no_string))
+                    role.setPlayer(null)
+                    dialog.setRoleText(getString(R.string.role))
                     dialog.setState(true)
                     dialog.setRollButtonIcon(Icons.roll)
                     dialog.setCancelButton()
@@ -312,6 +347,21 @@ class NewGameActivity : AppCompatActivity() {
     }
 
     /**
+     * Return whether all the players are named or not.
+     * @param list list to check
+     */
+    private fun areAllRolesNamed(list : ArrayList<Role>) : Boolean{
+
+        for (role : Role in list){
+            if (role.getPlayer() == null)
+                return false
+        }
+
+        return true
+
+    }
+
+    /**
      * Display an alert based of the input made by the user.
      * @param input user input
      * @param list list of current players
@@ -342,6 +392,39 @@ class NewGameActivity : AppCompatActivity() {
         }
 
         return false
+
+    }
+
+    /**
+     * Start the game: open GameActivity if there is no issues regarding the composition of the players.
+     * The method check if all roles are picked (have been given a name) in addition to making another check
+     * concerning the composition of the players and how teams play in the game.
+     * @see GameActivity
+     * @see Role.isListValid
+     * @see areAllRolesPicked
+     */
+    private fun startGame(){
+
+        if (currentPlayersAdapter.getList().size < 7){
+            Toast.makeText(baseContext,R.string.not_enough_player,Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (!areAllRolesNamed(list = currentPlayersAdapter.getList())){
+            Toast.makeText(baseContext,R.string.roles_not_distributed,Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val error = Role.isListValid(currentPlayersAdapter.getList())
+
+        if (error != Role.NO_ERROR){
+            Toast.makeText(baseContext,Role.errorMessage(error),Toast.LENGTH_LONG).show()
+            return
+        }
+
+        val i = Intent(baseContext,GameActivity::class.java)
+        // TODO: send the list of current player to game activity
+        startActivity(i)
 
     }
 

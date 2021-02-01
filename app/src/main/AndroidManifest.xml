@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WerewolfOfTheMillersHollow">
 
+        <activity android:name=".GameActivity"/>
+
         <activity android:name=".NewGameActivity"/>
 
         <activity android:name=".MainActivity">

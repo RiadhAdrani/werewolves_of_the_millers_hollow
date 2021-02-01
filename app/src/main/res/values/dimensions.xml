@@ -11,7 +11,14 @@
     <dimen name="text_giant">32sp</dimen>
     <dimen name="text_giant_x">36sp</dimen>
     <dimen name="text_giant_xx">40sp</dimen>
+    <dimen name="text_giant_xxx">60sp</dimen>
+    <dimen name="text_enormous">80sp</dimen>
+    <dimen name="text_enormous_x">100sp</dimen>
+    <dimen name="text_enormous_xx">120sp</dimen>
+    <dimen name="text_enormous_xxx">140sp</dimen>
 
+    <dimen name="epsilon_extra">1dp</dimen>
+    <dimen name="epsilon">2dp</dimen>
     <dimen name="tiny_extra">4dp</dimen>
     <dimen name="tiny">8dp</dimen>
     <dimen name="small">12dp</dimen>
@@ -22,5 +29,9 @@
     <dimen name="large_extra">40dp</dimen>
     <dimen name="giant">60dp</dimen>
     <dimen name="giant_extra">80dp</dimen>
+    <dimen name="giant_extra_extra">100dp</dimen>
+    <dimen name="enormous">120dp</dimen>
+    <dimen name="enormous_extra">140dp</dimen>
+    <dimen name="enormous_extra_extra">160dp</dimen>
 
 </resources>

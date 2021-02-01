@@ -2,6 +2,7 @@ package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
 import android.util.Log
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 
@@ -648,6 +649,59 @@ abstract class Role {
     companion object {
 
         /**
+         * value = (-1)
+         * @sample isListValid
+         */
+        const val NO_ERROR : Int = -1
+
+        /**
+         * value = (0)
+         * @sample isListValid
+         */
+        const val NO_CAPTAIN : Int = 0
+
+        /**
+         * value = (1)
+         * @sample isListValid
+         */
+        const val NO_VILLAGER : Int = 1
+
+        /**
+         * value = (2)
+         * @sample isListValid
+         */
+        const val NO_WOLVES : Int = 2
+
+        /**
+         * value = (3)
+         * @sample isListValid
+         */
+        const val UNBALANCED_TEAMS : Int = 3
+
+        /**
+         * Returns the error message depending on its id.
+         * @see NO_WOLVES
+         * @see NO_VILLAGER
+         * @see NO_CAPTAIN
+         * @see UNBALANCED_TEAMS
+         * @param error error id
+         * @param context calling context
+         * @return returns a string id from the resource
+         */
+        fun errorMessage(error : Int): Int{
+
+            when (error){
+                NO_CAPTAIN -> return R.string.no_captain
+                NO_VILLAGER -> return R.string.no_villager
+                NO_WOLVES -> return R.string.no_wolves
+                UNBALANCED_TEAMS -> return R.string.unbalanced_teams
+            }
+
+            return R.string.no_string
+
+        }
+
+        /**
          * Return a list of all the roles available
          * @param context calling context
          * @return array list of Role
@@ -726,6 +780,86 @@ abstract class Role {
 
             return -1
 
+        }
+
+        /**
+         * Indicates if a captain exits in the given list of role or not.
+         * @param list list to be checked
+         */
+        fun captainExists(list : ArrayList<Role>) : Boolean{
+
+            for (role : Role in list){
+                if (role.isCaptain!!){
+                    return true
+                }
+            }
+
+            return false
+        }
+
+        /**
+         * Indicates the number of player in the village team.
+         * @param list list to be checked
+         */
+        fun villagerNumber(list : ArrayList<Role>) : Int {
+
+            var number = 0
+
+            for (role : Role in list){
+
+                if (role.team == App.TEAM_VILLAGE)
+                    number ++
+            }
+
+            return number
+
+        }
+
+        /**
+         * Indicates the number of player in the village team.
+         * @param list list to be checked
+         */
+        fun wolvesNumber(list : ArrayList<Role>) : Int {
+
+            var number = 0
+
+            for (role : Role in list){
+
+                if (role.team == App.TEAM_WOLVES)
+                    number ++
+            }
+
+            return number
+
+        }
+
+        /**
+         * Indicates if a list of roles is valid for a game or not.
+         * @param list list to be checked
+         * @see NO_CAPTAIN
+         * @see NO_VILLAGER
+         * @see NO_WOLVES
+         * @see UNBALANCED_TEAMS
+         * @return returns multiple values depending the type of issue. Returns -1 in case of no problem.
+         */
+        fun isListValid(list : ArrayList<Role>) : Int{
+
+            if (!captainExists(list))
+                return NO_CAPTAIN
+
+            if (villagerNumber(list) == 0){
+                return NO_VILLAGER
+            }
+
+            if (wolvesNumber(list) == 0){
+                return NO_WOLVES
+            }
+
+            if (wolvesNumber(list) == villagerNumber(list)){
+                return UNBALANCED_TEAMS
+            }
+
+            return NO_ERROR
         }
 
     }
