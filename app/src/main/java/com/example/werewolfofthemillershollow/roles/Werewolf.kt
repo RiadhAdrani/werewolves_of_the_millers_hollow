@@ -24,8 +24,29 @@ class Werewolf(context: Context) : Role() {
          * Power of the wolf pack : allow the pack to choose a player to kill, even one of them ...
          * @param role player to kill
          */
-        fun wolfPackPower(role : Role){
-            role.setIsKilled(true)
+        fun wolfPackPower(role : Role) : Boolean{
+            if (!role.getIsGuarded()!!) {
+                role.setIsKilled(true)
+                return true
+            }
+
+            return false
+        }
+
+        /**
+         * Returns the list of the current players making the wolfpack
+         * @param list list of alive players
+         */
+        fun getWolfPack(list : ArrayList<Role>): ArrayList<Role>{
+
+            val output = ArrayList<Role>()
+            for (role : Role in list){
+                if (role.isWolf() || role.getIsInfected()!!)
+                    output.add((role))
+            }
+
+            return output
+
         }
 
     }

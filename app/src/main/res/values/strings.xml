@@ -30,6 +30,9 @@
     <string name="no_villager">Not a single villager was found in the list!</string>
     <string name="no_wolves">Not a single wolf was found in the list!</string>
     <string name="unbalanced_teams">The composition of players does not allow for a balanced game!</string>
+    
+    <string name="was_killed">was killed.</string>
+    <string name="nobody_was_killed">Nobody was killed. </string>
 
     <string name="bloc">Bloc</string>
     <string name="kick">Kick</string>
@@ -50,33 +53,50 @@
 
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>
+    <string name="servant_instructions">Choose a player, and upon his death you will take his power.</string>
 
     <string name="guardian_name">Guardian</string>
     <string name="guardian_description">Guardian Description</string>
+    <string name="guardian_instruction">Choose a player to defend this night against the attacks of the wolves. You may guard yourself, but you cannot guard the same player twice in a row.</string>
 
     <string name="wolf_name">Werewolf</string>
     <string name="wolf_description">Werewolf Description</string>
+    <string name="wolf_instruction">Assemble wolf pack, who will be the victim tonight?</string>
 
     <string name="infect_name">Infect The Father</string>
     <string name="infect_description">Infect The Father Description</string>
+    <string name="infect_instruction">Father of wolves, would you like to infect the player killed by the wolves so he can join you?</string>
+    <string name="infect_instruction_nobody">Nobody was harmed this night …</string>
 
     <string name="sorcerer_name">Sorcerer</string>
     <string name="sorcerer_description">Sorcerer Description</string>
+    <string name="sorcerer_instruction_heal">Would you like to use your healing potion to revive this player?</string>
+    <string name="sorcerer_instruction_kill">Would you like to use your poisonous potion to kill a player?</string>
 
     <string name="seer_name">Seer</string>
     <string name="seer_description">Seer Description</string>
+    <string name="seer_instruction">Choose a player to see his true role. The seen role will be announced in the morning.</string>
 
     <string name="knight_name">Knight</string>
     <string name="knight_description">Knight Description</string>
+    <string name="knight_instruction_peace">No one tried to attack you this night.</string>
+    <string name="knight_instruction_targeted">You have been targeted! Choose a player as a shield to die instead of you!</string>
 
     <string name="barber_name">Barber</string>
     <string name="barber_description">Barber Description</string>
+    <string name="barber_instruction">Barber, give me a sign. With it, I can interrupt the discussion in the morning so you can choose a player to kill. If the targeted player is a wolf, you live, otherwise you die with him!</string>
+    <string name="barber_instruction_killed">You have been killed by someone, choose another player to die with you.</string>
 
     <string name="captain_name">Captain</string>
     <string name="captain_description">Villager Description</string>
+    <string name="captain_instruction">Choose a player that will open the discussion in the morning!</string>
+    <string name="captain_instruction_inherit">You have been killed, choose another player to become the new captain!</string>
+    <string name="captain_instruction_equal">Choose one of the convicted players to start talking first.</string>
+    <string name="captain_instruction_execute">Choose which one of the convicted players to die, choose wisely!</string>
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
+
     <string name="role">Role</string>
 
 </resources>

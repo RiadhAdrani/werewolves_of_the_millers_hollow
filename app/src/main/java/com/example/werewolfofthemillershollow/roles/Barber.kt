@@ -46,7 +46,7 @@ class Barber(context: Context) : Role() {
     }
 
     override fun canPlay(round: Int): Boolean {
-        return getIsKilled() == true
+        return ( getIsKilled() == true || round == 1)
     }
 
     override fun isATarget(role: Role): Boolean {

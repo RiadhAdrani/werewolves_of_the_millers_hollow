@@ -685,7 +685,6 @@ abstract class Role {
          * @see NO_CAPTAIN
          * @see UNBALANCED_TEAMS
          * @param error error id
-         * @param context calling context
          * @return returns a string id from the resource
          */
         fun errorMessage(error : Int): Int{
