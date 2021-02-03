@@ -32,7 +32,7 @@ abstract class Icons {
         const val roll : Int = R.drawable.ic_flip
         const val bloc : Int = R.drawable.ic_bloc
         const val more : Int = R.drawable.ic_more_options
-
+        const val moon : Int = R.drawable.ic_moon
     }
 
 }

@@ -1,7 +1,9 @@
 package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
+import android.util.Log
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Servant
 
@@ -26,6 +28,17 @@ class ServantTurn(role: Servant) : Turn<Servant>() {
 
     override fun useSecondary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
         return false
+    }
+
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+
+        val index = Role.roleInList(role = getRole(), list = list)
+
+        if (index != -1)
+            output.add(ServantTurn(list[index] as Servant))
+
+        else
+            Log.d("AddTurn","role not found")
     }
 
 }

@@ -5,6 +5,10 @@ import android.util.Log
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.StatusEffect
+import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Blueprint class for all the existing roles in the game
@@ -12,7 +16,7 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * @sample Sorcerer
  * @sample Werewolf
  */
-abstract class Role {
+abstract class Role : Serializable {
 
     /**
      * name of the role
@@ -619,6 +623,34 @@ abstract class Role {
     }
 
     /**
+     * Returns a list of status effects affecting this role.
+     * @return array list of StatusEffect
+     * @see StatusEffect
+     */
+    fun getStatusEffects(): ArrayList<StatusEffect>{
+
+        val output = ArrayList<StatusEffect>()
+
+        if (isServed!!){
+            output.add(StatusEffect.servant())
+        }
+
+        if (isGuarded!!){
+            output.add(StatusEffect.shield())
+        }
+
+        if (isInfected!!){
+            output.add(StatusEffect.infection())
+        }
+
+        if (isCaptain!!){
+            output.add(StatusEffect.captain())
+        }
+
+        return output
+    }
+
+    /**
      * Display All Info about the object class
      * in the logcat for debug purpose.
      * @param name custom name to be given to the role (default is Role name)
@@ -751,14 +783,15 @@ abstract class Role {
          * Return whether the role exists in the list or not
          * @param role role to be found
          * @param list list in which searching will be made
+         * @return index of the role. returns (-1) if not found.
          */
-        fun isRoleInList(role : Role, list : ArrayList<Role>) : Boolean {
+        fun roleInList(role : Role, list : ArrayList<Role>) : Int {
 
             for (r : Role in list){
-                if (r.getName().equals(role.getName())) return true
+                if (r.getName().equals(role.getName())) return list.indexOf(r)
             }
 
-            return false
+            return -1
         }
 
         /**
@@ -806,7 +839,7 @@ abstract class Role {
 
             for (role : Role in list){
 
-                if (role.team == App.TEAM_VILLAGE)
+                if (role.team == App.TEAM_VILLAGE && role.getIsAlive()!!)
                     number ++
             }
 
@@ -824,7 +857,7 @@ abstract class Role {
 
             for (role : Role in list){
 
-                if (role.team == App.TEAM_WOLVES)
+                if (role.team == App.TEAM_WOLVES && role.getIsAlive()!!)
                     number ++
             }
 
@@ -859,6 +892,20 @@ abstract class Role {
             }
 
             return NO_ERROR
+        }
+
+        /**
+         * Fill the player names of a given list of roles with random uuid
+         * @param list list to be filled with uuid
+         */
+        fun fillWithDummyNames(list : ArrayList<Role>) : ArrayList<Role>{
+
+            for (role : Role in list){
+                role.setPlayer(UUID.randomUUID().toString())
+            }
+
+            return list
+
         }
 
     }

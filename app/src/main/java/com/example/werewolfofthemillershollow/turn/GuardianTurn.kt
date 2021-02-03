@@ -1,7 +1,9 @@
 package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
+import android.util.Log
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Guardian
 import com.example.werewolfofthemillershollow.roles.Role
 
@@ -20,11 +22,22 @@ class GuardianTurn(role : Guardian) : Turn<Guardian>() {
     }
 
     override fun usePrimary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
-        TODO("Not yet implemented")
+        return getRole().usePrimaryAbility(role = singleTarget!!)
     }
 
     override fun useSecondary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
-        TODO("Not yet implemented")
+        return false
+    }
+
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+
+        val index = Role.roleInList(role = getRole(), list = list)
+
+        if (index != -1)
+            output.add(GuardianTurn(list[index] as Guardian))
+
+        else
+            Log.d("AddTurn","Guardian role not found")
     }
 
 }

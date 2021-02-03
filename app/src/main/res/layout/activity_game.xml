@@ -45,15 +45,55 @@
         />
 
     <ImageView
+        android:id="@+id/turn_icon"
+        android:contentDescription="@string/turn"
+        android:src="@drawable/ic_moon"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/large"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/role_icon"
+        app:layout_constraintTop_toTopOf="@id/role_icon"
+        app:layout_constraintBottom_toBottomOf="@id/role_icon"
+        android:layout_marginEnd="@dimen/large"
+        />
+
+    <TextView
+        android:id="@+id/turn_count"
+        android:text="@string/current_players_number"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/turn_icon"
+        app:layout_constraintTop_toTopOf="@id/role_icon"
+        app:layout_constraintBottom_toBottomOf="@id/role_icon"
+        android:layout_marginStart="@dimen/small"
+        />
+
+    <ImageView
         android:id="@+id/role_icon"
         app:layout_constraintTop_toBottomOf="@id/player_name"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toTopOf="@id/role_name"
         android:src="@drawable/ic_info"
-        android:layout_width="@dimen/giant_extra"
-        android:layout_height="@dimen/giant_extra"
+        android:layout_width="@dimen/enormous"
+        android:layout_height="@dimen/enormous"
         android:contentDescription="@string/role_icon"
+        />
+
+    <ImageView
+        android:id="@+id/skip"
+        android:contentDescription="@string/done"
+        android:src="@drawable/ic_done"
+        android:layout_width="@dimen/giant"
+        android:layout_height="@dimen/giant"
+        android:padding="@dimen/small"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/role_icon"
+        app:layout_constraintTop_toTopOf="@id/role_icon"
+        app:layout_constraintBottom_toBottomOf="@id/role_icon"
+        android:foreground="?android:attr/selectableItemBackground"
         />
 
     <TextView
@@ -71,9 +111,10 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/grey_lightest"
         android:id="@+id/status_effects"
         android:layout_width="0dp"
-        android:layout_height="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra_extra"
         app:layout_constraintTop_toBottomOf="@id/role_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -85,7 +126,9 @@
     <TextView
         android:id="@+id/narrator_info"
         android:text="@string/lorem"
-        android:textAlignment="center"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:background="@color/grey_lighter"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"

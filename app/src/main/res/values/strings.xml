@@ -47,6 +47,8 @@
 
     <string name="as">as</string>
 
+    <string name="turn">Turn</string>
+
     <string name="app_name">Werewolves of The Millers Hollow</string>
 
     <string name="player_name">Player Name</string>
@@ -60,6 +62,7 @@
     <string name="guardian_instruction">Choose a player to defend this night against the attacks of the wolves. You may guard yourself, but you cannot guard the same player twice in a row.</string>
 
     <string name="wolf_name">Werewolf</string>
+    <string name="wolfpack">Wolfpack</string>
     <string name="wolf_description">Werewolf Description</string>
     <string name="wolf_instruction">Assemble wolf pack, who will be the victim tonight?</string>
 
@@ -75,7 +78,7 @@
 
     <string name="seer_name">Seer</string>
     <string name="seer_description">Seer Description</string>
-    <string name="seer_instruction">Choose a player to see his true role. The seen role will be announced in the morning.</string>
+    <string name="seer_instruction">Choose a player to see his true nature. The seen role will be announced in the morning.</string>
 
     <string name="knight_name">Knight</string>
     <string name="knight_description">Knight Description</string>
@@ -89,7 +92,7 @@
 
     <string name="captain_name">Captain</string>
     <string name="captain_description">Villager Description</string>
-    <string name="captain_instruction">Choose a player that will open the discussion in the morning!</string>
+    <string name="captain_instruction">Choose a player that will open up the discussion in the morning!</string>
     <string name="captain_instruction_inherit">You have been killed, choose another player to become the new captain!</string>
     <string name="captain_instruction_equal">Choose one of the convicted players to start talking first.</string>
     <string name="captain_instruction_execute">Choose which one of the convicted players to die, choose wisely!</string>
@@ -98,5 +101,19 @@
     <string name="villager_description">Simple Villager Description</string>
 
     <string name="role">Role</string>
+
+    <string name="status_effect">Status Effect</string>
+
+    <string name="servant_effect">Servant Effect</string>
+    <string name="servant_effect_description">This player is affected by the power of the servant, if he dies, his power will be transferred to the servant.</string>
+
+    <string name="guardian_effect">Guardian Shield</string>
+    <string name="guardian_effect_description">This player is being Shielded by the Guardian of the village. This shield is only effective against the attack of the wolves. In fact, it is useless against other players attack.</string>
+
+    <string name="infection_effect">Infection of the father of wolves</string>
+    <string name="infection_effect_description">This player is infected by the power of the father of wolves, he can participate in the wolf pack.</string>
+
+    <string name="captain_effect">Captain Armband</string>
+    <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
 
 </resources>

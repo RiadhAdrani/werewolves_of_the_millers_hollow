@@ -1,23 +1,34 @@
 package com.example.werewolfofthemillershollow
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.werewolfofthemillershollow.roles.Knight
-import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.roles.Sorcerer
+import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.turn.KnightTurn
-import com.example.werewolfofthemillershollow.turn.SorcererTurn
-import com.example.werewolfofthemillershollow.turn.Turn
+import com.example.werewolfofthemillershollow.turn.*
+import com.example.werewolfofthemillershollow.utility.StatusEffect
+import com.example.werewolfofthemillershollow.utility.StatusEffectAdapter
+import java.lang.Exception
 
 /**
  * Manage how game is played and progressed.
  * @see NewGameActivity
  */
 class GameActivity : AppCompatActivity() {
+
+    /**
+     * Current player turn index
+     */
+    private var index : Int = 0
+
+    /**
+     * Turn count
+     */
+    private var round : Int = 1
 
     /**
      * List of alive players
@@ -32,7 +43,7 @@ class GameActivity : AppCompatActivity() {
     /**
      * List of current roles turns
      */
-    private lateinit var turnList : ArrayList<Turn<Role>>
+    private lateinit var turnList : ArrayList<Turn<*>>
 
     /**
      * Allow the game master to kick the current player.
@@ -65,6 +76,11 @@ class GameActivity : AppCompatActivity() {
     private lateinit var statusEffects : RecyclerView
 
     /**
+     * Adapter for status effect recycler view.
+     */
+    private lateinit var statusEffectAdapter : StatusEffectAdapter
+
+    /**
      * Display needed info for the game master/narrator.
      */
     private lateinit var narratorText : TextView
@@ -78,6 +94,13 @@ class GameActivity : AppCompatActivity() {
      * Allow the current player to use his secondary ability if he has one.
      */
     private lateinit var abilityTwo : ImageView
+
+    /**
+     * Allow the user to skip this player
+     */
+    private lateinit var skip : ImageView
+
+    private lateinit var turn : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,11 +119,22 @@ class GameActivity : AppCompatActivity() {
             //TODO : onClickListener
         }
 
+        turn = findViewById(R.id.turn_count)
+        setTurn()
+
+        skip = findViewById(R.id.skip)
+        skip.setOnClickListener {
+            next()
+        }
+
         roleIcon = findViewById(R.id.role_icon)
 
         roleName = findViewById(R.id.role_name)
 
         statusEffects = findViewById(R.id.status_effects)
+        statusEffectAdapter = StatusEffectAdapter(list = ArrayList(),context = baseContext, listener = null)
+        statusEffects.layoutManager = LinearLayoutManager(baseContext, LinearLayoutManager.HORIZONTAL, false)
+        statusEffects.adapter = statusEffectAdapter
 
         narratorText = findViewById(R.id.narrator_info)
 
@@ -114,28 +148,152 @@ class GameActivity : AppCompatActivity() {
             //TODO : onClickListener
         }
 
-        playerList = ArrayList()
         deadList = ArrayList()
-        turnList = ArrayList()
 
-        nextPlayer()
+        playerList = intent.getSerializableExtra("list") as ArrayList<Role>
 
+        for (role : Role in playerList){
+            role.debug()
+        }
+
+        turnList = createTurns(playerList)
+
+        displayNext()
     }
 
+    /**
+     * Update role icon drawable with a new one.
+     * @param icon new icon id
+     */
+    private fun setIcon(icon : Int){
+        if (icon == -1) return
+        roleIcon.setImageResource(icon)
+    }
+
+    /**
+     * Update the role textView.
+     * @param name new role name
+     */
+    private fun setRole(name : String){
+        roleName.text = name
+    }
+
+    /**
+     * Update the player name TextView.
+     * @param name new name
+     */
+    private fun setName(name : String){
+        playerName.text = name
+    }
+
+    /**
+     * Update narrator instructions TextView.
+     * @param text new text
+     */
+    private fun setInstructions(text : String){
+        narratorText.text = text
+    }
+
+    /**
+     * Update the text of turn TextView with round.
+     */
+    private fun setTurn(){
+        turn.text = round.toString()
+    }
+
+    /**
+     * Update primary ability icon.
+     * @param icon new icon
+     */
+    private fun setPrimaryIcon(icon : Int){
+        abilityOne.setImageDrawable(Icons.getDrawableIcon(icon,applicationContext))
+    }
+
+    /**
+     * Update secondary ability icon.
+     * @param icon new icon
+     */
+    private fun setSecondaryIcon(icon : Int){
+        abilityTwo.setImageDrawable(Icons.getDrawableIcon(icon,applicationContext))
+    }
+
+    /**
+     * Create a list of ordered turns from the list of players.
+     * @param list list of player
+     * @return list of turns in order
+     */
     private fun createTurns(list : ArrayList<Role>) : ArrayList<Turn<*>> {
 
         val output = ArrayList<Turn<*>>()
-        output.add(KnightTurn(Knight(baseContext)))
-        output.add(SorcererTurn(Sorcerer(baseContext)))
+
+        val servant = ServantTurn(Servant(baseContext))
+        servant.addTurn(output = output, list = list, baseContext)
+
+        val guardian = GuardianTurn(Guardian(baseContext))
+        guardian.addTurn(output = output, list = list, baseContext)
+
+        val wolfpack = WolfpackTurn(Werewolf(baseContext))
+        wolfpack.addTurn(output = output, list = list, baseContext)
+
+        val infect = InfectTurn(FatherOfWolves(baseContext))
+        infect.addTurn(output = output, list = list, baseContext)
+
+        val sorcerer = SorcererTurn(Sorcerer(baseContext))
+        sorcerer.addTurn(output = output, list = list, baseContext)
+
+        val seer = SeerTurn(Seer(baseContext))
+        seer.addTurn(output = output, list = list, baseContext)
+
+        val knight = KnightTurn(Knight(baseContext))
+        knight.addTurn(output = output, list = list, baseContext)
+
+        val barber = BarberTurn(Barber(baseContext))
+        barber.addTurn(output = output, list = list, baseContext)
+
+        val captain = CaptainTurn(Captain(baseContext))
+        captain.addTurn(output = output, list = list, baseContext)
 
         return output
     }
 
-    private fun nextPlayer(){
-        val currentPlayer = createTurns(list = playerList)[0]
-        playerName.text = currentPlayer.getRole().getPlayer()
-        roleIcon.setImageDrawable(Icons.getDrawableIcon(currentPlayer.getRole().getIcon()!!,baseContext))
-        roleName.text = currentPlayer.getRole().getName()
-        narratorText.text = currentPlayer.getInstructions(context = baseContext)
+    /**
+     * Update the information displayed in the activity.
+     */
+    private fun displayNext(){
+        val currentPlayer = turnList[index]
+
+        try {
+            setName(currentPlayer.getPlayer(list = playerList))
+        }catch (e : Exception){
+            Log.d("DEBUG_ROLE","$e")
+        }finally {
+            currentPlayer.getRole().debug()
+        }
+
+        setIcon(currentPlayer.getRole().getIcon()!!)
+        setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
+        setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
+        statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
+    }
+
+    /**
+     * Move to the next role.
+     * Uses Recursive call.
+     */
+    private fun next(){
+
+        if (index == turnList.size-1){
+            index = 0
+            round ++
+            setTurn()
+        }
+        else
+            index ++
+
+        if (!turnList[index].canPlay(round = round, list = playerList))
+            next()
+        else
+            displayNext()
+
     }
 }

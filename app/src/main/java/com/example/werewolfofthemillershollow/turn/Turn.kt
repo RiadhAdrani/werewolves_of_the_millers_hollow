@@ -14,6 +14,8 @@ abstract class Turn<R : Role> {
      */
     abstract fun getInstructions(context: Context, list : ArrayList<Role>? = null):String
 
+    abstract fun addTurn(output : ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context)
+
     private var role : R? = null
 
     /**
@@ -23,8 +25,26 @@ abstract class Turn<R : Role> {
         return role!!
     }
 
+    /**
+     * setter for Turn.Role
+     * @param role new role
+     */
     fun setRole(role : R){
         this.role = role
+    }
+
+    /**
+     * Returns the name to be displayed.
+     */
+    open fun getPlayer(list : ArrayList<Role>? = null): String{
+        return role?.getPlayer()!!
+    }
+
+    /**
+     * Return the name of the role to be displayed.
+     */
+    open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
+        return role?.getName()!!
     }
 
     /**

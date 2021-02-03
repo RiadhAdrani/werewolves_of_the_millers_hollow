@@ -16,7 +16,7 @@ import com.example.werewolfofthemillershollow.settings.App
  * @see App.INFECT_SECONDARY_POWER
  * @param context context in which the class object is created
  */
-class FatherOfWolves(context: Context) :Role() {
+class FatherOfWolves(context: Context) :Werewolf(context) {
 
     init {
         setName(context.getString(App.INFECT_NAME))

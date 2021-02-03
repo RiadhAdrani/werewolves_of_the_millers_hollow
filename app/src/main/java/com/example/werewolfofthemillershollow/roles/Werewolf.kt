@@ -16,7 +16,7 @@ import com.example.werewolfofthemillershollow.settings.App
  * @see App.WOLF_SECONDARY_POWER
  * @param context context in which the class object is created
  */
-class Werewolf(context: Context) : Role() {
+open class Werewolf(context: Context) : Role() {
 
     companion object{
 
@@ -41,8 +41,9 @@ class Werewolf(context: Context) : Role() {
 
             val output = ArrayList<Role>()
             for (role : Role in list){
-                if (role.isWolf() || role.getIsInfected()!!)
-                    output.add((role))
+                if (role.isWolf() || role.getIsInfected()!! || role.getTeam() == App.WOLF_TEAM)
+                    if (role.getIsAlive()!!)
+                        output.add((role))
             }
 
             return output
@@ -86,6 +87,10 @@ class Werewolf(context: Context) : Role() {
     }
 
     override fun isATarget(role: Role): Boolean {
+        return true
+    }
+
+    override fun isWolf(): Boolean {
         return true
     }
 }

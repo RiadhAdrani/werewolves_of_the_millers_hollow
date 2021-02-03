@@ -18,8 +18,8 @@ import com.example.werewolfofthemillershollow.settings.Icons
  */
 class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adapter<RoleAdapter.MyViewHolder>() {
 
-    private var list : ArrayList<Role>? = null
-    private var context : Context? = null
+    private var list : ArrayList<Role>
+    private var context : Context
     private var listener : OnItemClick? = null
 
     /**
@@ -32,11 +32,10 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
         fun onHold(position: Int) : Boolean
     }
 
-
     /**
      * Return the current list of items displayed.
      */
-    fun getList() : ArrayList<Role> = list!!
+    fun getList() : ArrayList<Role> = list
 
     /**
      * Setter for list of items displayed.
@@ -60,9 +59,9 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item : Role = list!![position]
+        val item : Role = list[position]
 
-        holder.icon.setImageDrawable(Icons.getDrawableIcon(icon = item.getIcon()!!, context = context!!))
+        holder.icon.setImageDrawable(Icons.getDrawableIcon(icon = item.getIcon()!!, context = context))
         holder.text.text = item.getName()
 
         holder.itemView.setOnClickListener {
@@ -77,7 +76,7 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int {
-        return list!!.size
+        return list.size
     }
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -100,7 +99,7 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
      * @param position insertion position
      */
     fun addItem(item : Role, position: Int){
-        list?.add(position,item)
+        list.add(position,item)
         notifyItemInserted(position)
     }
 
@@ -109,7 +108,7 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
      * @param position position of the item to be removed
      */
     fun removeItem(position : Int){
-        list?.removeAt(position)
+        list.removeAt(position)
         notifyItemRemoved(position)
     }
 }

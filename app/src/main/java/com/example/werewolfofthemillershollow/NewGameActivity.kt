@@ -113,6 +113,10 @@ class NewGameActivity : AppCompatActivity() {
             startGame()
         }
 
+        startButton.setOnLongClickListener {
+            return@setOnLongClickListener startDummyGame()
+        }
+
         currentPlayersRV = findViewById(R.id.current_players_rv)
         availableRolesRV = findViewById(R.id.roles_rv)
 
@@ -191,7 +195,11 @@ class NewGameActivity : AppCompatActivity() {
      */
     private fun generateRoles() {
 
-        val number : Int = Integer.parseInt(numberOfPlayer.text.toString())
+        val number : Int = if (numberOfPlayer.text.isEmpty())
+            7
+        else
+            Integer.parseInt(numberOfPlayer.text.toString())
+
         currentPlayersAdapter.getList().clear()
         currentPlayersAdapter.setList(Role.getRoles(baseContext,number))
 
@@ -423,9 +431,29 @@ class NewGameActivity : AppCompatActivity() {
         }
 
         val i = Intent(baseContext,GameActivity::class.java)
-        // TODO: send the list of current player to game activity
+        i.putExtra("list", currentPlayersAdapter.getList())
+        finish()
         startActivity(i)
 
+    }
+
+    /**
+     * Starts a dummy game for testing purpose.
+     * @return true
+     */
+    private fun startDummyGame() : Boolean{
+
+        if (currentPlayersAdapter.getList().size < 7){
+            Toast.makeText(baseContext,R.string.not_enough_player,Toast.LENGTH_LONG).show()
+        }
+        else {
+            val i = Intent(baseContext,GameActivity::class.java)
+            i.putExtra("list", Role.fillWithDummyNames(currentPlayersAdapter.getList()))
+            finish()
+            startActivity(i)
+        }
+
+        return true
     }
 
 }
