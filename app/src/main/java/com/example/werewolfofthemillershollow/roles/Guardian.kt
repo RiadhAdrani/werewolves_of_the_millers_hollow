@@ -59,7 +59,7 @@ class Guardian(context: Context) : Role() {
     }
 
     override fun isATarget(role: Role): Boolean {
-        return role.getWasGuarded() == true
+        return !role.getWasGuarded()!!
     }
 
     override fun isUnique(): Boolean {

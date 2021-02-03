@@ -52,7 +52,7 @@ class Knight(context: Context) : Role() {
     }
 
     override fun isATarget(role: Role): Boolean {
-        return role == this
+        return role != this
     }
 
     override fun isUnique(): Boolean {

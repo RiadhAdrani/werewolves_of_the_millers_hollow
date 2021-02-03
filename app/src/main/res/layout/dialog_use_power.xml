@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/small"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/dialog_icon"
+        android:src="@drawable/ic_moon"
+        android:padding="@dimen/small"
+        android:layout_width="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:contentDescription="@string/use_ability"
+        />
+
+    <TextView
+        android:id="@+id/dialog_instruction"
+        android:text="@string/lorem"
+        android:textSize="@dimen/text_tiny_x"
+        android:textAlignment="gravity"
+        android:gravity="center"
+        android:padding="@dimen/tiny_extra"
+        android:maxLines="5"
+        android:minLines="5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dialog_targets_rv"
+        android:background="@color/grey_lightest"
+        android:padding="@dimen/tiny_extra"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/yo_mama_extra"
+        android:layout_marginVertical="@dimen/small"
+        app:layout_constraintTop_toBottomOf="@id/dialog_instruction"
+        />
+
+    <TextView
+        android:id="@+id/dialog_cancel"
+        android:text="@string/cancel"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tiny"
+        android:layout_marginStart="@dimen/medium"
+        android:paddingVertical="@dimen/tiny_extra"
+        android:paddingHorizontal="@dimen/tiny"
+        app:layout_constraintTop_toBottomOf="@id/dialog_targets_rv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:id="@+id/dialog_done"
+        android:text="@string/done"
+        android:textStyle="bold"
+        android:textSize="@dimen/text_small"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/tiny"
+        android:layout_marginEnd="@dimen/medium"
+        app:layout_constraintTop_toBottomOf="@id/dialog_targets_rv"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingVertical="@dimen/tiny_extra"
+        android:paddingHorizontal="@dimen/tiny"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

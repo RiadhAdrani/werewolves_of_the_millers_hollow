@@ -8,10 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.*
+import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.turn.*
-import com.example.werewolfofthemillershollow.utility.StatusEffect
-import com.example.werewolfofthemillershollow.utility.StatusEffectAdapter
+import com.example.werewolfofthemillershollow.utility.*
+
 import java.lang.Exception
 
 /**
@@ -139,9 +140,6 @@ class GameActivity : AppCompatActivity() {
         narratorText = findViewById(R.id.narrator_info)
 
         abilityOne = findViewById(R.id.ability_one)
-        abilityOne.setOnClickListener {
-            //TODO : onClickListener
-        }
 
         abilityTwo = findViewById(R.id.ability_two)
         abilityTwo.setOnClickListener {
@@ -260,6 +258,7 @@ class GameActivity : AppCompatActivity() {
      * Update the information displayed in the activity.
      */
     private fun displayNext(){
+
         val currentPlayer = turnList[index]
 
         try {
@@ -274,6 +273,12 @@ class GameActivity : AppCompatActivity() {
         setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
+
+        abilityOne.setOnClickListener {
+            val dialog = UsePowerDialog(currentPlayer,playerList,null,null)
+            dialog.show(supportFragmentManager, App.TAG_ALERT)
+        }
+
     }
 
     /**
