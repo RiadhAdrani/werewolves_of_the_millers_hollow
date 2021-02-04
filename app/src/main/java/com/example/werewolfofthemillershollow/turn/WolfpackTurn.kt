@@ -6,6 +6,7 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Werewolf
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 
 class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
 
@@ -19,6 +20,18 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return Werewolf.getWolfPack(list!!).size > 0
+    }
+
+    override fun getIcon(): Int {
+        return Werewolf.getPackIcon()
+    }
+
+    override fun getPrimaryIcon(): Int {
+        return Werewolf.getPackPowerIcon()
+    }
+
+    override fun getSecondaryIcon(): Int {
+        return Icons.noAbility
     }
 
     override fun getPlayer(list: ArrayList<Role>?): String {
@@ -41,12 +54,16 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
 
     }
 
-    override fun usePrimary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
-        return Werewolf.wolfPackPower(role = singleTarget!!)
+    override fun usePrimary(target: Role): Boolean {
+        return Werewolf.wolfPackPower(role = target)
     }
 
-    override fun useSecondary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
+    override fun useSecondary(target: Role): Boolean {
         return false
+    }
+
+    override fun getCanUsePrimary(): Boolean {
+        return true
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
@@ -63,5 +80,9 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
 
     override fun getRoleToDisplay(context: Context?, list: ArrayList<Role>?): String {
         return context?.getString(R.string.wolfpack) + " (${Werewolf.getWolfPack(list!!).size})"
+    }
+
+    override fun getPrimaryTargets(): Int {
+        return Werewolf.getPackTargets()
     }
 }

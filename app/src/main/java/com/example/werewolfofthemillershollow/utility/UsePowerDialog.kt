@@ -23,9 +23,12 @@ import com.example.werewolfofthemillershollow.turn.Turn
  */
 class UsePowerDialog(
     private var turn : Turn<*>,
+    private var headerIcon : Int,
     private var alivePlayers : ArrayList<Role>,
+    private var deadPlayers : ArrayList<Role>,
     private var onClick : OnClickListener? = null,
-    private var onTargetClick : TargetAdapter.OnClickListener? = null) : AppCompatDialogFragment() {
+    private var onTargetClick : TargetAdapter.OnClickListener? = null,
+    private var onDismissed : OnDismissed? = null) : AppCompatDialogFragment() {
 
     private lateinit var dialog : View
 
@@ -45,11 +48,15 @@ class UsePowerDialog(
 
     interface OnClickListener{
 
-        fun done(list : ArrayList<Role>)
+        fun done(list : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
-        fun reset(list : ArrayList<Role>)
+        fun reset(list : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
-        fun cancel(list : ArrayList<Role>)
+    }
+
+    interface OnDismissed{
+
+        fun onDismissed()
 
     }
 
@@ -63,25 +70,33 @@ class UsePowerDialog(
         builder.setView(dialog)
 
         icon = dialog.findViewById(R.id.dialog_icon)
+        icon.setImageResource(headerIcon)
 
         targetRV = dialog.findViewById(R.id.dialog_targets_rv)
         targetRV.layoutManager = LinearLayoutManager(context)
-        targetAdapter = TargetAdapter(list = turn.getTargets(alivePlayers), context = context!!, handler = onTargetClick)
+        targetAdapter = TargetAdapter(
+            list = turn.getTargets(alivePlayers),
+            dialog =  this,
+            handler = onTargetClick
+        )
         targetRV.adapter = targetAdapter
 
         doneButton = dialog.findViewById(R.id.dialog_done)
         doneButton.setOnClickListener {
-            onClick?.done(list = turn.getTargets(alivePlayers))
+            onClick?.done(list = turn.getTargets(alivePlayers), deadList = deadPlayers, adapter = targetAdapter)
+            onDismissed?.onDismissed()
+            dismiss()
         }
 
         cancelButton = dialog.findViewById(R.id.dialog_cancel)
         cancelButton.setOnClickListener {
             if (state){
-                onClick?.cancel(list = turn.getTargets(alivePlayers))
                 dismiss()
             }
-            else
-                onClick?.reset(list = turn.getTargets(alivePlayers))
+            else{
+                onClick?.reset(list = turn.getTargets(alivePlayers), deadList = deadPlayers, adapter = targetAdapter)
+                setCancelState()
+            }
         }
 
         instruction = dialog.findViewById(R.id.dialog_instruction)
@@ -97,6 +112,7 @@ class UsePowerDialog(
      */
     fun setResetState(){
         state = false
+        cancelButton.setText(R.string.reset)
     }
 
     /**
@@ -104,6 +120,7 @@ class UsePowerDialog(
      */
     fun setCancelState(){
         state = true
+        cancelButton.setText(R.string.cancel)
     }
 
 }

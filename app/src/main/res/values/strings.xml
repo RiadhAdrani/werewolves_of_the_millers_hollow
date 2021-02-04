@@ -53,6 +53,8 @@
 
     <string name="player_name">Player Name</string>
 
+    <string name="no_power">No remaining power for this player !</string>
+
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>
     <string name="servant_instructions">Choose a player, and upon his death you will take his power.</string>

@@ -26,6 +26,9 @@ class Barber(context: Context) : Role() {
         setCanUseSecondary(App.BARBER_CAN_SECONDARY)
         setPrimaryAbilityPower(App.BARBER_PRIMARY_POWER)
         setSecondaryAbilityPower(App.BARBER_SECONDARY_POWER)
+        setIcon(App.BARBER_ICON)
+        setPrimaryIcon(App.BARBER_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     override fun primaryAbility(role: Role): Boolean {

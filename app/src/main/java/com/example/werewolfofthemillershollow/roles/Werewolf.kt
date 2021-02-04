@@ -1,7 +1,9 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import android.graphics.drawable.Icon
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Werewolf : Sided with the wolf pack.
@@ -50,6 +52,25 @@ open class Werewolf(context: Context) : Role() {
 
         }
 
+        /**
+         * Returns the icon of the pack.
+         */
+        fun getPackIcon(): Int{
+            return Icons.pack
+        }
+
+        /**
+         * Return the icon representing the ability of the pack.
+         */
+        fun getPackPowerIcon(): Int{
+            return Icons.packAttack
+        }
+
+        /**
+         * returns how many players could be targeted by the wolfpack
+         */
+        fun getPackTargets(): Int = App.TARGET_SINGLE
+
     }
 
     init {
@@ -60,6 +81,7 @@ open class Werewolf(context: Context) : Role() {
         setCanUseSecondary(App.WOLF_CAN_SECONDARY)
         setPrimaryAbilityPower(App.WOLF_PRIMARY_POWER)
         setSecondaryAbilityPower(App.WOLF_SECONDARY_POWER)
+        setIcon(App.WOLF_ICON)
     }
 
     /**

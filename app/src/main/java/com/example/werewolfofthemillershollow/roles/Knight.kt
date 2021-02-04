@@ -26,6 +26,9 @@ class Knight(context: Context) : Role() {
         setCanUseSecondary(App.KNIGHT_CAN_SECONDARY)
         setPrimaryAbilityPower(App.KNIGHT_PRIMARY_POWER)
         setSecondaryAbilityPower(App.KNIGHT_SECONDARY_POWER)
+        setIcon(App.KNIGHT_ICON)
+        setPrimaryIcon(App.KNIGHT_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     /**

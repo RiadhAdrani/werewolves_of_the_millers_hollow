@@ -26,6 +26,11 @@ class Sorcerer(context: Context) : Role() {
         setCanUseSecondary(App.SORCERER_CAN_SECONDARY)
         setPrimaryAbilityPower(App.SORCERER_PRIMARY_POWER)
         setSecondaryAbilityPower(App.SORCERER_SECONDARY_POWER)
+        setIcon(App.SORCERER_ICON)
+        setPrimaryIcon(App.SORCERER_PRIMARY_ICON)
+        setSecondaryIcon(App.SORCERER_SECONDARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
+        setSecondaryTargets(App.TARGET_SINGLE)
     }
 
     /**

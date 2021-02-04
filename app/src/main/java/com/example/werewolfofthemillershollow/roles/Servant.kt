@@ -26,6 +26,9 @@ class Servant(context: Context) : Role() {
         setCanUseSecondary(App.SERVANT_CAN_SECONDARY)
         setPrimaryAbilityPower(App.SERVANT_PRIMARY_POWER)
         setSecondaryAbilityPower(App.SERVANT_SECONDARY_POWER)
+        setIcon(App.SERVANT_ICON)
+        setPrimaryIcon(App.SERVANT_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     /**

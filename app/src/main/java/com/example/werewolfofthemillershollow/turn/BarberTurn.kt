@@ -23,11 +23,11 @@ class BarberTurn(role : Barber) : Turn<Barber>() {
         return getRole().canPlay(round)
     }
 
-    override fun usePrimary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
-        return getRole().usePrimaryAbility(role = singleTarget!!)
+    override fun usePrimary(target: Role): Boolean {
+        return getRole().usePrimaryAbility(role = target)
     }
 
-    override fun useSecondary(singleTarget: Role?, multipleTargets: ArrayList<Role>?): Boolean {
+    override fun useSecondary(target: Role): Boolean {
         return false
     }
 

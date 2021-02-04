@@ -12,6 +12,7 @@
         android:src="@drawable/ic_info"
         android:id="@+id/item_icon"
         android:layout_width="match_parent"
+        app:tint="@color/grey_darker"
         android:padding="8dp"
         android:contentDescription="@string/role"
         android:layout_height="0dp"

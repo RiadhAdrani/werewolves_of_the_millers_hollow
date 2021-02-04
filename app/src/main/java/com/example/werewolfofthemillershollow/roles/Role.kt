@@ -209,7 +209,6 @@ abstract class Role : Serializable {
     /**
      * setter for Role.canUsePrimary
      * @param can new value
-     * @see getCanUsePrimary
      * @see App
      */
     fun setCanUsePrimary(can : Boolean?) {
@@ -219,8 +218,6 @@ abstract class Role : Serializable {
     /**
      * allow this role to use its secondary ability
      * only few roles has a second ability
-     * @see getCanUseSecondary
-     * @see setCanUseSecondary
      * @see App
      */
     private var canUseSecondary : Boolean? = false
@@ -228,8 +225,6 @@ abstract class Role : Serializable {
     /**
      * getter for Role.canUseSecondary
      * @return the ability to use secondary or not
-     * @see canUseSecondary
-     * @see setCanUseSecondary
      * @see App
      */
     fun getCanUseSecondary() : Boolean? = canUseSecondary
@@ -237,12 +232,49 @@ abstract class Role : Serializable {
     /**
      * setter for Role.canUseSecondary
      * @param can new value
-     * @see canUseSecondary
-     * @see getCanUseSecondary
      * @see App
      */
     fun setCanUseSecondary(can : Boolean?) {
         canUseSecondary = can
+    }
+
+    /**
+     * determine whether this role can use its tertiary ability or no.
+     */
+    private var canUseTertiary : Boolean = false
+
+    /**
+     * getter for Role.canUseTertiary
+     * @return (true) if this role has the ability, (false) otherwise.
+     */
+    fun getCanUseTertiary(): Boolean = canUseSecondary!!
+
+    /**
+     * setter for Role.canUseTertiary.
+     * @param can new value.
+     */
+    fun setCanUseTertiary(can : Boolean){
+        canUseTertiary = can
+    }
+
+    /**
+     * determine how many times can this role use its tertiary ability
+     * @see canUseTertiary
+     */
+    private var tertiaryAbilityPower : Int = App.ABILITY_NONE
+
+    /**
+     * getter for Role.tertiaryAbilityPower
+     * @return (Boolean) true, false
+     */
+    fun getTertiaryAbilityPower() : Int = tertiaryAbilityPower
+
+    /**
+     * setter for Role.tertiaryAbilityPower
+     * @param power new value.
+     */
+    fun setTertiaryAbilityPower(power : Int){
+        tertiaryAbilityPower = power
     }
 
     /**
@@ -271,7 +303,6 @@ abstract class Role : Serializable {
     fun setIsAlive(alive : Boolean?) {
         isAlive = alive
     }
-
 
     /**
      * indicates if the role is chosen by the servant or not
@@ -415,7 +446,6 @@ abstract class Role : Serializable {
         this.isInfected = infect
     }
 
-
     /**
      * indicates if the role is the captain or not
      * a non-captain can receive the captain status
@@ -474,7 +504,7 @@ abstract class Role : Serializable {
     /**
      * Role icon
      */
-    private var icon : Int? = Icons.info
+    private var icon : Int? = Icons.person
 
     /**
      * getter for Role.icon
@@ -488,6 +518,117 @@ abstract class Role : Serializable {
      */
     fun setIcon(icon : Int?) {
         this.icon = icon
+    }
+
+    /**
+     * Primary ability icon
+     */
+    private var primaryIcon : Int? = Icons.noAbility
+
+    /**
+     * getter for Role.primaryIcon
+     * @return icon as id in res
+     */
+    fun getPrimaryIcon() : Int? = primaryIcon
+
+    /**
+     * setter for Role.primaryIcon
+     * @param icon new icon id
+     */
+    fun setPrimaryIcon(icon : Int?) {
+        this.primaryIcon = icon
+    }
+
+    /**
+     * Secondary ability icon
+     */
+    private var secondaryIcon : Int? = Icons.noAbility
+
+    /**
+     * getter for Role.secondaryIcon
+     * @return icon as id in res
+     */
+    fun getSecondaryIcon() : Int? = secondaryIcon
+
+    /**
+     * setter for Role.secondaryIcon.
+     * @param icon new icon id
+     */
+    fun setSecondaryIcon(icon : Int?){
+        this.secondaryIcon = icon
+    }
+
+    /**
+     * Tertiary ability icon
+     */
+    private var tertiaryIcon : Int = Icons.noAbility
+
+    /**
+     * getter for Role.tertiaryIcon
+     * @return icon as id in res
+     */
+    fun getTertiaryIcon() : Int = tertiaryIcon
+
+    /**
+     * setter for Role.tertiaryIcon.
+     * @param icon new icon id
+     */
+    fun setTertiaryIcon(icon : Int){
+        this.tertiaryIcon = icon
+    }
+
+    /**
+     * determine how many player could be targeted with the primary ability.
+     */
+    private var primaryTargets : Int = App.TARGET_NONE
+
+    /**
+     * getter for Role.primaryTargets
+     */
+    fun getPrimaryTargets() : Int = primaryTargets
+
+    /**
+     * setter for Role.primaryTargets
+     * @param targets new target rule
+     */
+    fun setPrimaryTargets(targets : Int){
+        primaryTargets = targets
+    }
+
+    /**
+     * determine how many player could be targeted with the secondary ability.
+     */
+    private var secondaryTargets : Int = App.TARGET_NONE
+
+    /**
+     * getter for Role.secondaryTargets
+     */
+    fun getSecondaryTargets() : Int = secondaryTargets
+
+    /**
+     * setter for Role.secondaryTargets
+     * @param targets new target rule
+     */
+    fun setSecondaryTargets(targets : Int){
+        secondaryTargets = targets
+    }
+
+    /**
+     * determine how many player could be targeted with the tertiary ability.
+     */
+    private var tertiaryTargets: Int = App.TARGET_NONE
+
+    /**
+     * getter for Role.tertiaryTargets
+     */
+    fun getTertiaryTargets() : Int = tertiaryTargets
+
+    /**
+     * setter for Role.tertiaryTargets
+     * @param targets new target rule
+     */
+    fun setTertiaryTargets(targets : Int){
+        tertiaryTargets = targets
     }
 
     /**

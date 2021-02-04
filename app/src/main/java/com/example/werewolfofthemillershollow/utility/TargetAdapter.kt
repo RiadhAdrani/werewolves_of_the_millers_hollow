@@ -1,6 +1,6 @@
 package com.example.werewolfofthemillershollow.utility
 
-import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,16 +9,43 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.Icons
 
 class TargetAdapter(
     private var list : ArrayList<Role>,
-    private var context : Context,
+    private var dialog: UsePowerDialog,
     private var handler : OnClickListener? = null)
     : RecyclerView.Adapter<TargetAdapter.MyViewHolder>() {
 
+    fun getList(): ArrayList<Role> = list
+
+    private var targets : ArrayList<Int> = ArrayList()
+
+    fun getTargets() : ArrayList<Int> = targets
+
+    fun emptyTargets(){
+        targets.clear()
+        notifyDataSetChanged()
+    }
+
+    fun addTarget(element : Int){
+        Log.d("TargetAdapter","Inner Class : added element $element")
+        targets.add(element)
+        notifyItemChanged(element)
+    }
+
+    fun removeTarget(element : Int){
+        if (targets.remove(element)){
+            Log.d("TargetAdapter","Inner Class : removed element $element")
+            notifyItemChanged(element)
+            return
+        }
+        Log.d("TargetAdapter","Inner Class : element $element does not exist")
+    }
+
     interface OnClickListener{
 
-        fun onClick(position: Int)
+        fun onClick(position: Int, dialog: UsePowerDialog, adapter : TargetAdapter)
     }
 
     class MyViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -39,10 +66,24 @@ class TargetAdapter(
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentTarget = list[position]
+
         holder.player.text = currentTarget.getPlayer()
         holder.role.text = currentTarget.getName()
+        holder.icon.setImageResource(currentTarget.getIcon()!!)
+
+        if (position !in targets){
+            holder.use.setImageResource(Icons.done)
+        }
+        else {
+            holder.use.setImageResource(Icons.goal)
+        }
+
         holder.use.setOnClickListener {
-            handler?.onClick(holder.adapterPosition)
+            handler?.onClick(
+                holder.adapterPosition,
+                dialog,
+                this
+            )
         }
 
     }

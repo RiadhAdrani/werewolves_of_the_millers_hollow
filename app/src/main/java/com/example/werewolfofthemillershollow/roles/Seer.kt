@@ -46,6 +46,9 @@ class Seer(context: Context) : Role() {
         setCanUseSecondary(App.SEER_CAN_SECONDARY)
         setPrimaryAbilityPower(App.SEER_PRIMARY_POWER)
         setSecondaryAbilityPower(App.SEER_SECONDARY_POWER)
+        setIcon(App.SEER_ICON)
+        setPrimaryIcon(App.SEER_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     override fun primaryAbility(role: Role): Boolean {

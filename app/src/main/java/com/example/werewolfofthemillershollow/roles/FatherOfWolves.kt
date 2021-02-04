@@ -26,6 +26,9 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         setCanUseSecondary(App.INFECT_CAN_SECONDARY)
         setPrimaryAbilityPower(App.INFECT_PRIMARY_POWER)
         setSecondaryAbilityPower(App.INFECT_SECONDARY_POWER)
+        setIcon(App.INFECT_ICON)
+        setPrimaryIcon(App.INFECT_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     /**

@@ -39,7 +39,7 @@
         android:background="@color/grey_lightest"
         android:padding="@dimen/tiny_extra"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/yo_mama_extra"
+        android:layout_height="@dimen/yo_mama_extra_extra"
         android:layout_marginVertical="@dimen/small"
         app:layout_constraintTop_toBottomOf="@id/dialog_instruction"
         />

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -142,9 +143,6 @@ class GameActivity : AppCompatActivity() {
         abilityOne = findViewById(R.id.ability_one)
 
         abilityTwo = findViewById(R.id.ability_two)
-        abilityTwo.setOnClickListener {
-            //TODO : onClickListener
-        }
 
         deadList = ArrayList()
 
@@ -204,7 +202,7 @@ class GameActivity : AppCompatActivity() {
      * @param icon new icon
      */
     private fun setPrimaryIcon(icon : Int){
-        abilityOne.setImageDrawable(Icons.getDrawableIcon(icon,applicationContext))
+        abilityOne.setImageResource(icon)
     }
 
     /**
@@ -212,7 +210,7 @@ class GameActivity : AppCompatActivity() {
      * @param icon new icon
      */
     private fun setSecondaryIcon(icon : Int){
-        abilityTwo.setImageDrawable(Icons.getDrawableIcon(icon,applicationContext))
+        abilityTwo.setImageResource(icon)
     }
 
     /**
@@ -269,14 +267,30 @@ class GameActivity : AppCompatActivity() {
             currentPlayer.getRole().debug()
         }
 
-        setIcon(currentPlayer.getRole().getIcon()!!)
+        setIcon(currentPlayer.getIcon())
+        setPrimaryIcon(currentPlayer.getPrimaryIcon())
+        setSecondaryIcon(currentPlayer.getSecondaryIcon())
         setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
 
         abilityOne.setOnClickListener {
-            val dialog = UsePowerDialog(currentPlayer,playerList,null,null)
-            dialog.show(supportFragmentManager, App.TAG_ALERT)
+
+            if (currentPlayer.getCanUsePrimary()){
+                val dialog = UsePowerDialog(
+                    currentPlayer,
+                    currentPlayer.getPrimaryIcon(),
+                    playerList,
+                    deadList,
+                    currentPlayer.getPrimaryOnClickHandler(),
+                    currentPlayer.getPrimaryOnTargetHandler())
+
+                dialog.show(supportFragmentManager, App.TAG_ALERT)
+            }
+            else {
+                Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
+            }
+
         }
 
     }

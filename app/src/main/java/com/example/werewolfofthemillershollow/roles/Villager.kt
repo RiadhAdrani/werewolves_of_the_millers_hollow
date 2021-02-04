@@ -26,6 +26,7 @@ class Villager(context: Context) : Role() {
         setCanUseSecondary(App.VILLAGER_CAN_SECONDARY)
         setPrimaryAbilityPower(App.VILLAGER_PRIMARY_POWER)
         setSecondaryAbilityPower(App.VILLAGER_SECONDARY_POWER)
+        setIcon(App.VILLAGER_ICON)
     }
 
     override fun primaryAbility(role: Role): Boolean {

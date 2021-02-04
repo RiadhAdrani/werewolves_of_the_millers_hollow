@@ -1,7 +1,12 @@
 package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
+import android.util.Log
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.TargetAdapter
+import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import kotlin.collections.ArrayList
 
 abstract class Turn<R : Role> {
@@ -41,6 +46,33 @@ abstract class Turn<R : Role> {
     }
 
     /**
+     * Returns the displayed icon of the current role turn.
+     */
+    open fun getIcon(): Int{
+        return role?.getIcon()!!
+    }
+
+    /**
+     * Returns the icon representing the primary ability.
+     */
+    open fun getPrimaryIcon(): Int{
+        if (role?.getCanUsePrimary()!!)
+            return role?.getPrimaryIcon()!!
+
+        return Icons.noAbility
+    }
+
+    /**
+     * Returns the icon representing the secondary ability.
+     */
+    open fun getSecondaryIcon(): Int{
+        if (role?.getCanUseSecondary()!!)
+            return role?.getSecondaryIcon()!!
+
+        return Icons.noAbility
+    }
+
+    /**
      * Return the name of the role to be displayed.
      */
     open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
@@ -48,9 +80,144 @@ abstract class Turn<R : Role> {
     }
 
     /**
+     * Return whether this role can use its primary ability or no.
+     */
+    open fun getCanUsePrimary(): Boolean{
+        return role?.getCanUsePrimary()!!
+    }
+
+    /**
+     * Return whether this role can use its secondary ability or no.
+     */
+    open fun getCanUseSecondary(): Boolean{
+        return role?.getCanUseSecondary()!!
+    }
+
+    /**
+     * Return whether this role can use its tertiary ability or no.
+     */
+    open fun getCanUseTertiary(): Boolean{
+        return role?.getCanUseTertiary()!!
+    }
+
+    /**
+     * returns the number of players that can be targeted with the primary ability
+     */
+    open fun getPrimaryTargets() : Int{
+        return role!!.getPrimaryTargets()
+    }
+
+    /**
+     * returns the number of players that can be targeted with the secondary ability
+     */
+    open fun getSecondaryTargets(): Int{
+        return role!!.getSecondaryTargets()
+    }
+
+    /**
+     * returns the number of players that can be targeted with the tertiary ability
+     */
+    open fun getTertiaryTargets(): Int{
+        return role!!.getTertiaryTargets()
+    }
+
+    /**
+     * Interface used to override the functionality of the fragment UsePowerDialog.
+     * @see UsePowerDialog
+     */
+    open fun getPrimaryOnClickHandler() : UsePowerDialog.OnClickListener{
+
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                list: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val inListIndex = list.indexOf(target)
+
+                    if (inListIndex != -1){
+                        usePrimary(list[inListIndex])
+                    }
+                }
+            }
+
+            override fun reset(
+                list: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+
+        }
+
+    }
+
+    /**
+     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
+     * @see UsePowerDialog
+     * @see TargetAdapter
+     */
+    open fun getPrimaryOnTargetHandler() : TargetAdapter.OnClickListener{
+
+        return object : TargetAdapter.OnClickListener{
+
+            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
+
+                Log.d("TargetAdapter","Clicked on pos $position")
+
+                if (getPrimaryTargets() == App.TARGET_NONE)
+                    return
+
+                if (position in adapter.getTargets()){
+                    Log.d("TargetAdapter","item $position removed from target list.")
+                    adapter.removeTarget(position)
+                    if (adapter.getTargets().size == 0){
+                        dialog.setCancelState()
+                    }
+                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
+                    return
+                }
+
+                if (getPrimaryTargets() == App.TARGET_SINGLE){
+
+                    if (adapter.getTargets().size > 0){
+                        adapter.emptyTargets()
+                    }
+
+                    adapter.addTarget(position)
+                    dialog.setResetState()
+                    Log.d("TargetAdapter","item $position added to target list")
+                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
+                    return
+                }
+
+                if (getPrimaryTargets() == App.TARGET_TWO){
+
+                    if (adapter.getTargets().size > 1){
+                        adapter.getTargets().removeAt(0)
+                    }
+
+                    adapter.addTarget(position)
+                    dialog.setResetState()
+                    Log.d("TargetAdapter","item $position added to target list")
+                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
+                }
+
+            }
+
+        }
+
+    }
+
+    /**
      * Returns whether the current role turn is playable or not.
-     * Returning (true) means that the turn will be played normally.
-     * Returning (false) means that the turn will be skipped.
+     * * Returning (true) means that the turn will be played normally.
+     * * Returning (false) means that the turn will be skipped.
      * @param round current round
      * @param list list of alive players
      */
@@ -58,19 +225,17 @@ abstract class Turn<R : Role> {
 
     /**
      * Allow the use of the primary ability of the role.
-     * @param singleTarget only used when the ability supports only one target.
-     * @param multipleTargets only used when the ability supports multiple targets to affect.
+     * @param target only used when the ability supports only one target.
      * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
      */
-    abstract fun usePrimary(singleTarget : Role? = null, multipleTargets : ArrayList<Role>? = null): Boolean
+    abstract fun usePrimary(target : Role): Boolean
 
     /**
      * Allow the use of the secondary ability of the role.
-     * @param singleTarget only used when the ability supports only one target.
-     * @param multipleTargets only used when the ability supports multiple targets to affect.
+     * @param target only used when the ability supports only one target.
      * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
      */
-    abstract fun useSecondary(singleTarget : Role? = null, multipleTargets : ArrayList<Role>? = null): Boolean
+    abstract fun useSecondary(target : Role): Boolean
 
     /**
      * Returns a list of targets

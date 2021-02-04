@@ -27,6 +27,9 @@ class Guardian(context: Context) : Role() {
         setCanUseSecondary(App.GUARDIAN_CAN_SECONDARY)
         setPrimaryAbilityPower(App.GUARDIAN_PRIMARY_POWER)
         setSecondaryAbilityPower(App.GUARDIAN_SECONDARY_POWER)
+        setIcon(App.GUARDIAN_ICON)
+        setPrimaryIcon(App.GUARDIAN_PRIMARY_ICON)
+        setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     /**

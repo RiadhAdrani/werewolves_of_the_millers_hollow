@@ -38,6 +38,10 @@ class Captain(context: Context) : Role() {
             role.setIsCaptain(true)
         }
 
+        /**
+         * Return the number of targets that could be affected by the captain.
+         */
+        fun getCaptainTargets(): Int = App.TARGET_SINGLE
 
     }
 
@@ -50,6 +54,8 @@ class Captain(context: Context) : Role() {
         setCanUseSecondary(App.CAPTAIN_CAN_SECONDARY)
         setPrimaryAbilityPower(App.CAPTAIN_PRIMARY_POWER)
         setSecondaryAbilityPower(App.CAPTAIN_SECONDARY_POWER)
+        setIcon(App.CAPTAIN_ICON)
+        setPrimaryIcon(App.CAPTAIN_PRIMARY_ICON)
     }
 
     /**
