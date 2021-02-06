@@ -42,10 +42,10 @@ class Seer(context: Context) : Role() {
         setName(context.getString(App.SEER_NAME))
         setDescription(context.getString(App.SEER_DESCRIPTION))
         setTeam(App.SEER_TEAM)
-        setCanUsePrimary(App.SEER_CAN_PRIMARY)
-        setCanUseSecondary(App.SEER_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.SEER_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.SEER_SECONDARY_POWER)
+        setHasPrimary(App.SEER_CAN_PRIMARY)
+        setHasSecondary(App.SEER_CAN_SECONDARY)
+        setPrimaryType(App.SEER_PRIMARY_POWER)
+        setSecondaryType(App.SEER_SECONDARY_POWER)
         setIcon(App.SEER_ICON)
         setPrimaryIcon(App.SEER_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -68,7 +68,7 @@ class Seer(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return true
     }
 

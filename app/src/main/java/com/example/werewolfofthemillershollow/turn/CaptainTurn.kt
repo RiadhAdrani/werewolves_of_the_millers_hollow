@@ -2,9 +2,12 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.utility.TargetAdapter
+import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class CaptainTurn(role : Captain) : Turn<Captain>() {
 
@@ -46,7 +49,81 @@ class CaptainTurn(role : Captain) : Turn<Captain>() {
         return Captain.getCaptainTargets()
     }
 
-    override fun getCanUsePrimary(): Boolean {
+    override fun getHasPrimary(): Boolean {
         return true
+    }
+
+    override fun onStart(activity: AppCompatActivity): Boolean {
+
+        if (getRole().getIsKilled()!!){
+            return true
+        }
+
+        return false
+    }
+
+    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
+        return Captain.newCaptainTargets(list)
+    }
+
+    override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
+
+            return object : UsePowerDialog.OnClickListener{
+                override fun done(
+                    aliveList: ArrayList<Role>,
+                    deadList: ArrayList<Role>,
+                    adapter: TargetAdapter
+                ) {
+
+                    if (adapter.getTargets().isEmpty())
+                        return
+
+                    val target : Role = adapter.getList()[0]
+
+                    val inListIndex = aliveList.indexOf(target)
+
+                    if (inListIndex != -1)
+                        Captain.newCaptain(aliveList[inListIndex])
+
+                }
+
+                override fun reset(
+                    aliveList: ArrayList<Role>,
+                    deadList: ArrayList<Role>,
+                    adapter: TargetAdapter
+                ) {
+                    adapter.emptyTargets()
+                }
+            }
+    }
+
+    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener {
+
+        return object : TargetAdapter.OnClickListener{
+
+            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
+
+                if (position in adapter.getTargets()){
+                    Log.d("TargetAdapter","item $position removed from target list.")
+                    adapter.removeTarget(position)
+                    if (adapter.getTargets().size == 0){
+                        dialog.setCancelState()
+                    }
+                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
+                    return
+                }
+
+                if (adapter.getTargets().size > 0){
+                    adapter.emptyTargets()
+                }
+
+                adapter.addTarget(position)
+                dialog.setResetState()
+                Log.d("TargetAdapter","item $position added to target list")
+                Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
+
+            }
+
+        }
     }
 }

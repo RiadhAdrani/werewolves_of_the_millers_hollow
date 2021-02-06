@@ -62,7 +62,7 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
         return false
     }
 
-    override fun getCanUsePrimary(): Boolean {
+    override fun getHasPrimary(): Boolean {
         return true
     }
 

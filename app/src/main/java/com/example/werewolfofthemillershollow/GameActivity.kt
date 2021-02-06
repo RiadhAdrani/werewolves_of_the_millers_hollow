@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.turn.*
 import com.example.werewolfofthemillershollow.utility.*
 
@@ -274,16 +273,78 @@ class GameActivity : AppCompatActivity() {
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
 
+        val onDismissed = object : UsePowerDialog.OnDismissed{
+
+            override fun onDismissed() {
+                next()
+            }
+
+        }
+
+        if (currentPlayer.onStart(this)!!){
+
+            val dialog = UsePowerDialog(
+                currentPlayer,
+                currentPlayer.getRole().getIcon()!!,
+                playerList,
+                deadList,
+                currentPlayer.getOnStartTargets(playerList),
+                currentPlayer.getOnStartOnClickHandler(),
+                currentPlayer.getOnStartOnTargetHandler(),
+                onDismissed,
+                false
+            )
+
+            dialog.show(supportFragmentManager, App.TAG_ALERT)
+
+            return
+        }
+
         abilityOne.setOnClickListener {
 
-            if (currentPlayer.getCanUsePrimary()){
+            if (!currentPlayer.canPrimary()){
+                Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (currentPlayer.getHasPrimary()){
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getPrimaryIcon(),
                     playerList,
                     deadList,
+                    currentPlayer.getTargetsPrimary(playerList),
                     currentPlayer.getPrimaryOnClickHandler(),
-                    currentPlayer.getPrimaryOnTargetHandler())
+                    currentPlayer.getPrimaryOnTargetHandler(),
+                    onDismissed,
+                )
+
+                dialog.show(supportFragmentManager, App.TAG_ALERT)
+            }
+            else {
+                Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+        abilityTwo.setOnClickListener {
+
+            if (!currentPlayer.canSecondary()){
+                Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (currentPlayer.getHasSecondary()){
+                val dialog = UsePowerDialog(
+                    currentPlayer,
+                    currentPlayer.getSecondaryIcon(),
+                    playerList,
+                    deadList,
+                    currentPlayer.getTargetsSecondary(playerList),
+                    currentPlayer.getSecondaryOnClickHandler(),
+                    currentPlayer.getSecondaryOnTargetHandler(),
+                    onDismissed,
+                )
 
                 dialog.show(supportFragmentManager, App.TAG_ALERT)
             }

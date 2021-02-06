@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +21,10 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * @param leftButton custom left button.
  * @param midButton custom mid button.
  * @param rightButton custom right button. By default it is set to dismiss the dialog, could be overridden.
+ * @param leftButtonText custom text for the left button. default is (OK)
+ * @param midButtonText custom text for the middle button. default is (OK)
+ * @param rightButtonText custom text for the right button. default is (OK)
+ * @param cancelable set if the dialog is cancelable or not.
  * @see OnClick
  */
 class AlertDialog(private var icon : Int = R.drawable.ic_info,
@@ -33,6 +36,7 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
                   private val midButtonText : Int = R.string.ok,
                   private val rightButton : OnClick = okButton,
                   private val rightButtonText : Int = R.string.ok,
+                  private val cancelable : Boolean = true,
                  ) : AppCompatDialogFragment() {
 
     interface OnClick{
@@ -117,6 +121,9 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
         buttonRight.setOnClickListener {
             rightButton.onClick(this)
         }
+
+        if (!cancelable)
+            isCancelable = false
 
         return builder.create()
     }

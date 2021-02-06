@@ -66,7 +66,7 @@
         android:paddingHorizontal="@dimen/medium"
         android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginTop="@dimen/tiny_extra"
+        android:layout_marginTop="@dimen/medium"
         />
 
     <TextView

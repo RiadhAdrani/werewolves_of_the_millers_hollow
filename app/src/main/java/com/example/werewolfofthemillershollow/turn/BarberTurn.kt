@@ -2,9 +2,16 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.TargetAdapter
+import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class BarberTurn(role : Barber) : Turn<Barber>() {
 
@@ -42,4 +49,44 @@ class BarberTurn(role : Barber) : Turn<Barber>() {
             Log.d("AddTurn","Barber role not found")
 
     }
+
+    override fun canPrimary(): Boolean {
+        return getRole().getIsKilled()!!
+    }
+
+    override fun onStart(activity: AppCompatActivity): Boolean {
+
+        if (getRole().getIsKilled()!!){
+
+            if (!getHasPrimary()){
+                val dialog = AlertDialog(
+                    text = R.string.no_power,
+                    icon = Icons.noAbility,
+                    cancelable = false
+                )
+                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+                return false
+            }
+
+            return true
+        }
+
+        return false
+    }
+
+    override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
+        return getPrimaryOnClickHandler()
+    }
+
+    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
+        return getTargetsPrimary(list)
+    }
+
+    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
+
+        return if (getHasPrimary())
+            getPrimaryOnTargetHandler()
+        else null
+    }
+
 }

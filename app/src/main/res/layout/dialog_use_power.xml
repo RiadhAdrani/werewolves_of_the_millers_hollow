@@ -19,6 +19,19 @@
         />
 
     <TextView
+        android:id="@+id/dialog_header"
+        android:text="@string/role"
+        android:textSize="@dimen/text_giant"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
+        app:layout_constraintBottom_toTopOf="@id/dialog_instruction"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
         android:id="@+id/dialog_instruction"
         android:text="@string/lorem"
         android:textSize="@dimen/text_tiny_x"
@@ -29,7 +42,7 @@
         android:minLines="5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
+        app:layout_constraintTop_toBottomOf="@id/dialog_header"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />

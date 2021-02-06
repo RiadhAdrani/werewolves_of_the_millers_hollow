@@ -26,9 +26,11 @@ class UsePowerDialog(
     private var headerIcon : Int,
     private var alivePlayers : ArrayList<Role>,
     private var deadPlayers : ArrayList<Role>,
+    private var targetPlayers : ArrayList<Role>,
     private var onClick : OnClickListener? = null,
     private var onTargetClick : TargetAdapter.OnClickListener? = null,
-    private var onDismissed : OnDismissed? = null) : AppCompatDialogFragment() {
+    private var onDismissed : OnDismissed? = null,
+    private var cancelable : Boolean? = true) : AppCompatDialogFragment() {
 
     private lateinit var dialog : View
 
@@ -44,13 +46,15 @@ class UsePowerDialog(
 
     private lateinit var instruction : TextView
 
+    private lateinit var role : TextView
+
     private var state : Boolean = true
 
     interface OnClickListener{
 
-        fun done(list : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
+        fun done(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
-        fun reset(list : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
+        fun reset(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
     }
 
@@ -72,10 +76,13 @@ class UsePowerDialog(
         icon = dialog.findViewById(R.id.dialog_icon)
         icon.setImageResource(headerIcon)
 
+        role = dialog.findViewById(R.id.dialog_header)
+        role.text = turn.getRoleToDisplay(context, alivePlayers)
+
         targetRV = dialog.findViewById(R.id.dialog_targets_rv)
         targetRV.layoutManager = LinearLayoutManager(context)
         targetAdapter = TargetAdapter(
-            list = turn.getTargets(alivePlayers),
+            list = targetPlayers,
             dialog =  this,
             handler = onTargetClick
         )
@@ -83,7 +90,7 @@ class UsePowerDialog(
 
         doneButton = dialog.findViewById(R.id.dialog_done)
         doneButton.setOnClickListener {
-            onClick?.done(list = turn.getTargets(alivePlayers), deadList = deadPlayers, adapter = targetAdapter)
+            onClick?.done(aliveList = alivePlayers, deadList = deadPlayers, adapter = targetAdapter)
             onDismissed?.onDismissed()
             dismiss()
         }
@@ -94,7 +101,7 @@ class UsePowerDialog(
                 dismiss()
             }
             else{
-                onClick?.reset(list = turn.getTargets(alivePlayers), deadList = deadPlayers, adapter = targetAdapter)
+                onClick?.reset(aliveList = alivePlayers, deadList = deadPlayers, adapter = targetAdapter)
                 setCancelState()
             }
         }
@@ -103,6 +110,11 @@ class UsePowerDialog(
         instruction.text = turn.getInstructions(context!!,alivePlayers)
 
         isCancelable = false
+
+        if (this.cancelable != null){
+            if (!cancelable!!)
+                setCancelState()
+        }
 
         return builder.create()
     }
@@ -113,14 +125,22 @@ class UsePowerDialog(
     fun setResetState(){
         state = false
         cancelButton.setText(R.string.reset)
+
+        if (!cancelable!!)
+            cancelButton.visibility = View.VISIBLE
     }
 
     /**
      * Change the state to cancel.
      */
     fun setCancelState(){
-        state = true
-        cancelButton.setText(R.string.cancel)
+        if (cancelable!!){
+            state = true
+            cancelButton.setText(R.string.cancel)
+        }
+        else
+            cancelButton.visibility = View.INVISIBLE
+
     }
 
 }

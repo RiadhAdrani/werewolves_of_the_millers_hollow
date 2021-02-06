@@ -22,10 +22,10 @@ class Knight(context: Context) : Role() {
         setName(context.getString(App.KNIGHT_NAME))
         setDescription(context.getString(App.KNIGHT_DESCRIPTION))
         setTeam(App.KNIGHT_TEAM)
-        setCanUsePrimary(App.KNIGHT_CAN_PRIMARY)
-        setCanUseSecondary(App.KNIGHT_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.KNIGHT_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.KNIGHT_SECONDARY_POWER)
+        setHasPrimary(App.KNIGHT_CAN_PRIMARY)
+        setHasSecondary(App.KNIGHT_CAN_SECONDARY)
+        setPrimaryType(App.KNIGHT_PRIMARY_POWER)
+        setSecondaryType(App.KNIGHT_SECONDARY_POWER)
         setIcon(App.KNIGHT_ICON)
         setPrimaryIcon(App.KNIGHT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -54,7 +54,7 @@ class Knight(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return role != this
     }
 

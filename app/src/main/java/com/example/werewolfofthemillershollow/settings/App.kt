@@ -90,7 +90,6 @@ abstract class App {
         const val WOLF_CAN_SECONDARY : Boolean = false
         const val WOLF_PRIMARY_POWER : Int = ABILITY_NONE
         const val WOLF_SECONDARY_POWER : Int = ABILITY_NONE
-        const val WOLF_PRIMARY_TARGET : Int = TARGET_SINGLE
         const val WOLF_ICON : Int = Icons.animal
 
         // ---------------------------------------------------------------------------------------
@@ -118,7 +117,7 @@ abstract class App {
         const val SORCERER_CAN_PRIMARY : Boolean = true
         const val SORCERER_CAN_SECONDARY : Boolean = true
         const val SORCERER_PRIMARY_POWER : Int = ABILITY_ONCE
-        const val SORCERER_SECONDARY_POWER : Int = ABILITY_NONE
+        const val SORCERER_SECONDARY_POWER : Int = ABILITY_ONCE
         const val SORCERER_PRIMARY_TARGET : Int = TARGET_SINGLE
         const val SORCERER_SECONDARY_TARGET : Int = TARGET_SINGLE
         const val SORCERER_ICON : Int = Icons.elixir

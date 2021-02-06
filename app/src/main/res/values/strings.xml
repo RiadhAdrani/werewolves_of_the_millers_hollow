@@ -54,6 +54,7 @@
     <string name="player_name">Player Name</string>
 
     <string name="no_power">No remaining power for this player !</string>
+    <string name="cant_use_power">Cannot use this ability for now !</string>
 
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>

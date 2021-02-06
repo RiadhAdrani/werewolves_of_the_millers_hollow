@@ -22,10 +22,10 @@ class Servant(context: Context) : Role() {
         setName(context.getString(App.SERVANT_NAME))
         setDescription(context.getString(App.SERVANT_DESCRIPTION))
         setTeam(App.SERVANT_TEAM)
-        setCanUsePrimary(App.SERVANT_CAN_PRIMARY)
-        setCanUseSecondary(App.SERVANT_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.SERVANT_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.SERVANT_SECONDARY_POWER)
+        setHasPrimary(App.SERVANT_CAN_PRIMARY)
+        setHasSecondary(App.SERVANT_CAN_SECONDARY)
+        setPrimaryType(App.SERVANT_PRIMARY_POWER)
+        setSecondaryType(App.SERVANT_SECONDARY_POWER)
         setIcon(App.SERVANT_ICON)
         setPrimaryIcon(App.SERVANT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -64,7 +64,7 @@ class Servant(context: Context) : Role() {
         return round == 1
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return role != this
     }
 

@@ -1,7 +1,6 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
-import android.graphics.drawable.Icon
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 
@@ -77,10 +76,10 @@ open class Werewolf(context: Context) : Role() {
         setName(context.getString(App.WOLF_NAME))
         setDescription(context.getString(App.WOLF_DESCRIPTION))
         setTeam(App.WOLF_TEAM)
-        setCanUsePrimary(App.WOLF_CAN_PRIMARY)
-        setCanUseSecondary(App.WOLF_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.WOLF_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.WOLF_SECONDARY_POWER)
+        setHasPrimary(App.WOLF_CAN_PRIMARY)
+        setHasSecondary(App.WOLF_CAN_SECONDARY)
+        setPrimaryType(App.WOLF_PRIMARY_POWER)
+        setSecondaryType(App.WOLF_SECONDARY_POWER)
         setIcon(App.WOLF_ICON)
     }
 
@@ -108,7 +107,7 @@ open class Werewolf(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return true
     }
 

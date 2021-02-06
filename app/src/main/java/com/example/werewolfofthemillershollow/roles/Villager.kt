@@ -22,10 +22,10 @@ class Villager(context: Context) : Role() {
         setName(context.getString(App.VILLAGER_NAME))
         setDescription(context.getString(App.VILLAGER_DESCRIPTION))
         setTeam(App.VILLAGER_TEAM)
-        setCanUsePrimary(App.VILLAGER_CAN_PRIMARY)
-        setCanUseSecondary(App.VILLAGER_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.VILLAGER_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.VILLAGER_SECONDARY_POWER)
+        setHasPrimary(App.VILLAGER_CAN_PRIMARY)
+        setHasSecondary(App.VILLAGER_CAN_SECONDARY)
+        setPrimaryType(App.VILLAGER_PRIMARY_POWER)
+        setSecondaryType(App.VILLAGER_SECONDARY_POWER)
         setIcon(App.VILLAGER_ICON)
     }
 
@@ -45,7 +45,7 @@ class Villager(context: Context) : Role() {
         return false
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return false
     }
 }

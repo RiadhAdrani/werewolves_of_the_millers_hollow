@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import android.util.Log
 import com.example.werewolfofthemillershollow.settings.App
 
 /**
@@ -22,10 +23,12 @@ class Sorcerer(context: Context) : Role() {
         setName(context.getString(App.SORCERER_NAME))
         setDescription(context.getString(App.SORCERER_DESCRIPTION))
         setTeam(App.SORCERER_TEAM)
-        setCanUsePrimary(App.SORCERER_CAN_PRIMARY)
-        setCanUseSecondary(App.SORCERER_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.SORCERER_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.SORCERER_SECONDARY_POWER)
+        setHasPrimary(App.SORCERER_CAN_PRIMARY)
+        setHasSecondary(App.SORCERER_CAN_SECONDARY)
+        setPrimaryType(App.SORCERER_PRIMARY_POWER)
+        setPrimaryTargets(App.SORCERER_PRIMARY_TARGET)
+        setSecondaryType(App.SORCERER_SECONDARY_POWER)
+        setSecondaryTargets(App.SORCERER_SECONDARY_TARGET)
         setIcon(App.SORCERER_ICON)
         setPrimaryIcon(App.SORCERER_PRIMARY_ICON)
         setSecondaryIcon(App.SORCERER_SECONDARY_ICON)
@@ -49,10 +52,8 @@ class Sorcerer(context: Context) : Role() {
      * @return true
      */
     override fun secondaryAbility(role: Role): Boolean {
-
         role.setIsKilled(false)
-        role.setIsAlive(true)
-
+        Log.d("SorcererClass","${role.getName()} is healed")
         return true
     }
 
@@ -64,11 +65,15 @@ class Sorcerer(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return role.getIsKilled() == false
     }
 
     override fun isUnique(): Boolean {
         return true
+    }
+
+    override fun isATargetSecondary(role: Role): Boolean {
+        return role.getIsKilled()!!
     }
 }

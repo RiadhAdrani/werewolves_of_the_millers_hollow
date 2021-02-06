@@ -18,7 +18,7 @@ class SorcererTurn(role : Sorcerer) : Turn<Sorcerer>() {
 
         for (role : Role in list!!){
             if (role.getIsKilled()!!){
-                return role.getName()+ " " + context.getString(R.string.was_killed) + " " + output
+                return role.getName()+ " " + context.getString(R.string.was_killed) + ".. " + output
             }
         }
 
@@ -30,11 +30,16 @@ class SorcererTurn(role : Sorcerer) : Turn<Sorcerer>() {
     }
 
     override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target!!)
+        return getRole().usePrimaryAbility(role = target)
+    }
+
+    override fun canSecondary(): Boolean {
+        return getRole().getHasSecondary()!!
     }
 
     override fun useSecondary(target: Role): Boolean {
-        return getRole().useSecondaryAbility(role = target!!)
+        Log.d("Role","using secondary")
+        return getRole().useSecondaryAbility(role = target)
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {

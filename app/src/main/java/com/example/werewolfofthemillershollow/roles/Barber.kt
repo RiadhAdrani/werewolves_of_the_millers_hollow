@@ -22,10 +22,10 @@ class Barber(context: Context) : Role() {
         setName(context.getString(App.BARBER_NAME))
         setDescription(context.getString(App.BARBER_DESCRIPTION))
         setTeam(App.BARBER_TEAM)
-        setCanUsePrimary(App.BARBER_CAN_PRIMARY)
-        setCanUseSecondary(App.BARBER_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.BARBER_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.BARBER_SECONDARY_POWER)
+        setHasPrimary(App.BARBER_CAN_PRIMARY)
+        setHasSecondary(App.BARBER_CAN_SECONDARY)
+        setPrimaryType(App.BARBER_PRIMARY_POWER)
+        setSecondaryType(App.BARBER_SECONDARY_POWER)
         setIcon(App.BARBER_ICON)
         setPrimaryIcon(App.BARBER_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -52,7 +52,7 @@ class Barber(context: Context) : Role() {
         return ( getIsKilled() == true || round == 1)
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return role != this
     }
 

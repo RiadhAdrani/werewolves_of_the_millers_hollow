@@ -23,10 +23,10 @@ class Guardian(context: Context) : Role() {
         setName(context.getString(App.GUARDIAN_NAME))
         setDescription(context.getString(App.GUARDIAN_DESCRIPTION))
         setTeam(App.GUARDIAN_TEAM)
-        setCanUsePrimary(App.GUARDIAN_CAN_PRIMARY)
-        setCanUseSecondary(App.GUARDIAN_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.GUARDIAN_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.GUARDIAN_SECONDARY_POWER)
+        setHasPrimary(App.GUARDIAN_CAN_PRIMARY)
+        setHasSecondary(App.GUARDIAN_CAN_SECONDARY)
+        setPrimaryType(App.GUARDIAN_PRIMARY_POWER)
+        setSecondaryType(App.GUARDIAN_SECONDARY_POWER)
         setIcon(App.GUARDIAN_ICON)
         setPrimaryIcon(App.GUARDIAN_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -61,7 +61,7 @@ class Guardian(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return !role.getWasGuarded()!!
     }
 

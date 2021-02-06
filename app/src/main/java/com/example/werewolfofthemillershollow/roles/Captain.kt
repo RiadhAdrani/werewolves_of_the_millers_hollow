@@ -43,6 +43,23 @@ class Captain(context: Context) : Role() {
          */
         fun getCaptainTargets(): Int = App.TARGET_SINGLE
 
+        /**
+         * Return the targets that could be chosen by the current captain to be a the new captain.
+         * @param list list of alive players.
+         */
+        fun newCaptainTargets(list : ArrayList<Role>): ArrayList<Role>{
+
+            val output = ArrayList<Role>()
+
+            for (role : Role in list){
+                if (!role.getIsCaptain()!!)
+                    output.add(role)
+            }
+
+            return output
+
+        }
+
     }
 
     init {
@@ -50,10 +67,10 @@ class Captain(context: Context) : Role() {
         setDescription(context.getString(App.CAPTAIN_DESCRIPTION))
         setTeam(App.CAPTAIN_TEAM)
         setIsCaptain(true)
-        setCanUsePrimary(App.CAPTAIN_CAN_PRIMARY)
-        setCanUseSecondary(App.CAPTAIN_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.CAPTAIN_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.CAPTAIN_SECONDARY_POWER)
+        setHasPrimary(App.CAPTAIN_CAN_PRIMARY)
+        setHasSecondary(App.CAPTAIN_CAN_SECONDARY)
+        setPrimaryType(App.CAPTAIN_PRIMARY_POWER)
+        setSecondaryType(App.CAPTAIN_SECONDARY_POWER)
         setIcon(App.CAPTAIN_ICON)
         setPrimaryIcon(App.CAPTAIN_PRIMARY_ICON)
     }
@@ -80,7 +97,7 @@ class Captain(context: Context) : Role() {
         return true
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return true
     }
 

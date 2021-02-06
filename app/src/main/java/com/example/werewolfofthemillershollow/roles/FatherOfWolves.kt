@@ -22,10 +22,10 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         setName(context.getString(App.INFECT_NAME))
         setDescription(context.getString(App.INFECT_DESCRIPTION))
         setTeam(App.INFECT_TEAM)
-        setCanUsePrimary(App.INFECT_CAN_PRIMARY)
-        setCanUseSecondary(App.INFECT_CAN_SECONDARY)
-        setPrimaryAbilityPower(App.INFECT_PRIMARY_POWER)
-        setSecondaryAbilityPower(App.INFECT_SECONDARY_POWER)
+        setHasPrimary(App.INFECT_CAN_PRIMARY)
+        setHasSecondary(App.INFECT_CAN_SECONDARY)
+        setPrimaryType(App.INFECT_PRIMARY_POWER)
+        setSecondaryType(App.INFECT_SECONDARY_POWER)
         setIcon(App.INFECT_ICON)
         setPrimaryIcon(App.INFECT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -42,7 +42,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
 
         return if (role.getIsGuarded() == false){
             role.setIsInfected(true)
-            setCanUsePrimary(false)
+            setHasPrimary(false)
             true
         } else {
             false
@@ -65,7 +65,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         return round > 1
     }
 
-    override fun isATarget(role: Role): Boolean {
+    override fun isATargetPrimary(role: Role): Boolean {
         return role.getIsKilled() == true
     }
 
