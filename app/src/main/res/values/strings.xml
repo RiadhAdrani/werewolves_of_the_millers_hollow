@@ -99,6 +99,7 @@
     <string name="captain_instruction_inherit">You have been killed, choose another player to become the new captain!</string>
     <string name="captain_instruction_equal">Choose one of the convicted players to start talking first.</string>
     <string name="captain_instruction_execute">Choose which one of the convicted players to die, choose wisely!</string>
+    <string name="captain_instruction_inherit_servant">The current captain is dead and the servant took his role!</string>
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>

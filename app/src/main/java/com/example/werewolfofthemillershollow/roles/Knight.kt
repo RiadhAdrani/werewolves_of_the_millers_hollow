@@ -58,6 +58,17 @@ class Knight(context: Context) : Role() {
         return role != this
     }
 
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Knight(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isUnique(): Boolean {
         return true
     }

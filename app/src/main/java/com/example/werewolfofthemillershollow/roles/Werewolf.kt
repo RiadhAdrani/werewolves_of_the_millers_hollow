@@ -111,6 +111,17 @@ open class Werewolf(context: Context) : Role() {
         return true
     }
 
+    override fun new(context: Context, name: String, role: Role?): Role? {
+        val output = Werewolf(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isWolf(): Boolean {
         return true
     }

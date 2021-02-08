@@ -72,6 +72,17 @@ class Seer(context: Context) : Role() {
         return true
     }
 
+    override fun new(context: Context, name: String, role: Role?): Role? {
+        val output = Seer(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isUnique(): Boolean {
         return true
     }

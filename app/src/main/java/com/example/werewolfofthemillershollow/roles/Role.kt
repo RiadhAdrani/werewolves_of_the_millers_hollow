@@ -303,7 +303,7 @@ abstract class Role : Serializable {
     }
 
     /**
-     * indicates if the role is chosen by the servant or not
+     * indicates if the role is chosen by the servantRef or not
      * @see Servant
      * @see getIsServed
      * @see setIsServed
@@ -445,9 +445,9 @@ abstract class Role : Serializable {
     }
 
     /**
-     * indicates if the role is the captain or not
-     * a non-captain can receive the captain status
-     * if he is chosen by the previous one (captain)
+     * indicates if the role is the captainRef or not
+     * a non-captainRef can receive the captainRef status
+     * if he is chosen by the previous one (captainRef)
      * @see Captain
      * @see getIsCaptain
      * @see setIsCaptain
@@ -800,6 +800,27 @@ abstract class Role : Serializable {
     }
 
     /**
+     * copy the status effect from another player to this role.
+     * * This method don't apply the "alive status".
+     * @param role player to copy data from.
+     */
+    fun copyStatusEffects(role: Role){
+
+        setIsServed(role.getIsServed())
+        setIsCaptain(role.getIsCaptain())
+        setIsKilled(role.getIsKilled())
+        setIsInfected(role.getIsInfected())
+        setWasGuarded(role.getWasGuarded())
+        setIsGuarded(role.getIsGuarded())
+        setIsTalking(role.getIsTalking())
+
+    }
+
+    open fun new(context: Context, name: String, role: Role? = null): Role?{
+        return null
+    }
+
+    /**
      * Return whereas the role is a wolf or not
      */
     open fun isWolf():Boolean {
@@ -852,6 +873,7 @@ abstract class Role : Serializable {
     fun debug(name : String? = getName(), tag : String = "DEBUG_ROLE") {
         Log.d(tag,"$name Debug Start ----------------------------------------------")
         Log.d(tag,"$name Name : ${getName()}")
+        Log.d(tag,"$name Player : ${getPlayer()}")
         Log.d(tag,"$name Description : ${getDescription()}")
         Log.d(tag,"$name Team : ${getName()}")
         Log.d(tag,"$name Primary : ${getHasPrimary()}")
@@ -1013,7 +1035,7 @@ abstract class Role : Serializable {
         }
 
         /**
-         * Indicates if a captain exits in the given list of role or not.
+         * Indicates if a captainRef exits in the given list of role or not.
          * @param list list to be checked
          */
         fun captainExists(list : ArrayList<Role>) : Boolean{

@@ -56,6 +56,18 @@ class Barber(context: Context) : Role() {
         return role != this
     }
 
+
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Barber(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isUnique(): Boolean {
         return true
     }

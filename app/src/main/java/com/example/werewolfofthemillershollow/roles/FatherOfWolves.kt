@@ -69,6 +69,17 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         return role.getIsKilled() == true
     }
 
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = FatherOfWolves(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isUnique(): Boolean {
         return true
     }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.turn.Turn
@@ -30,7 +31,8 @@ class UsePowerDialog(
     private var onClick : OnClickListener? = null,
     private var onTargetClick : TargetAdapter.OnClickListener? = null,
     private var onDismissed : OnDismissed? = null,
-    private var cancelable : Boolean? = true) : AppCompatDialogFragment() {
+    private var cancelable : Boolean? = true,
+    private var gameActivity : GameActivity) : AppCompatDialogFragment() {
 
     private lateinit var dialog : View
 
@@ -52,7 +54,7 @@ class UsePowerDialog(
 
     interface OnClickListener{
 
-        fun done(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
+        fun done(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter, activity: GameActivity, dialog : UsePowerDialog? = null)
 
         fun reset(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
@@ -90,7 +92,13 @@ class UsePowerDialog(
 
         doneButton = dialog.findViewById(R.id.dialog_done)
         doneButton.setOnClickListener {
-            onClick?.done(aliveList = alivePlayers, deadList = deadPlayers, adapter = targetAdapter)
+            onClick?.done(
+                aliveList = alivePlayers,
+                deadList = deadPlayers,
+                adapter = targetAdapter,
+                activity = gameActivity,
+                dialog = this
+            )
             onDismissed?.onDismissed()
             dismiss()
         }

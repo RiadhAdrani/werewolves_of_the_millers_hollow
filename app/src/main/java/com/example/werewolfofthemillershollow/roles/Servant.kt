@@ -31,16 +31,30 @@ class Servant(context: Context) : Role() {
         setPrimaryTargets(App.TARGET_SINGLE)
     }
 
+    private var target : Role? = null
+
+    fun getTarget() : Role? = target
+
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Servant(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     /**
      * Choose a player to receive his power
      * upon his death
      * @param role chosen player
-     * @return true (always)ù
-     * @see canUsePrimary
-     * @see primaryAbilityPower
+     * @return true (always)
      */
     override fun primaryAbility(role: Role): Boolean {
         role.setIsServed(true)
+        target = role
         return true
     }
 

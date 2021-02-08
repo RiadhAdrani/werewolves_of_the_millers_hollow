@@ -76,4 +76,15 @@ class Sorcerer(context: Context) : Role() {
     override fun isATargetSecondary(role: Role): Boolean {
         return role.getIsKilled()!!
     }
+
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Sorcerer(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
 }

@@ -2,14 +2,17 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
-class CaptainTurn(role : Captain) : Turn<Captain>() {
+class CaptainTurn(role : Role) : Turn<Role>() {
 
     init {
         setRole(role)
@@ -34,15 +37,18 @@ class CaptainTurn(role : Captain) : Turn<Captain>() {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1) {
             output.add(CaptainTurn(list[index] as Captain))
+            return true
+        }
 
         else
             Log.d("AddTurn","Captain role not found")
+        return false
     }
 
     override fun getPrimaryTargets(): Int {
@@ -53,13 +59,47 @@ class CaptainTurn(role : Captain) : Turn<Captain>() {
         return true
     }
 
-    override fun onStart(activity: AppCompatActivity): Boolean {
+    override fun onStart(activity: GameActivity): Boolean {
 
         if (getRole().getIsKilled()!!){
+
+            if (getRole().getIsServed()!!){
+
+                val index = servant(activity)
+                if (index == -1)
+                    return true
+
+                setRole(activity.playerList[index])
+
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(dialog: AlertDialog) {
+                        activity.displayNext()
+                        dialog.dismiss()
+                    }
+                }
+
+                val dialog = AlertDialog(
+                    icon = Icons.servantTake,
+                    text = R.string.captain_instruction_inherit_servant,
+                    rightButton = onClick,
+                    cancelable = false)
+
+                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+
+                return false
+            }
             return true
         }
 
         return false
+    }
+
+    override fun getPrimaryIcon(): Int {
+        return Icons.captainChoose
+    }
+
+    override fun getRoleToDisplay(context: Context?, list: ArrayList<Role>?): String {
+        return context!!.getString(R.string.captain_name)
     }
 
     override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
@@ -72,7 +112,9 @@ class CaptainTurn(role : Captain) : Turn<Captain>() {
                 override fun done(
                     aliveList: ArrayList<Role>,
                     deadList: ArrayList<Role>,
-                    adapter: TargetAdapter
+                    adapter: TargetAdapter,
+                    activity: GameActivity,
+                    dialog: UsePowerDialog?
                 ) {
 
                     if (adapter.getTargets().isEmpty())
@@ -82,8 +124,12 @@ class CaptainTurn(role : Captain) : Turn<Captain>() {
 
                     val inListIndex = aliveList.indexOf(target)
 
-                    if (inListIndex != -1)
+                    if (inListIndex != -1) {
                         Captain.newCaptain(aliveList[inListIndex])
+                        setRole(aliveList[inListIndex])
+                        activity.displayNext()
+                        dialog!!.dismiss()
+                    }
 
                 }
 

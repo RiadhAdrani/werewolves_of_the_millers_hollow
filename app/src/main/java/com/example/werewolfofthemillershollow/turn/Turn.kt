@@ -2,7 +2,7 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
@@ -20,7 +20,7 @@ abstract class Turn<R : Role> {
      */
     abstract fun getInstructions(context: Context, list : ArrayList<Role>? = null):String
 
-    abstract fun addTurn(output : ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context)
+    abstract fun addTurn(output : ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean
 
     private var role : R? = null
 
@@ -151,6 +151,28 @@ abstract class Turn<R : Role> {
     }
 
     /**
+     * Make the needed changes to the servantRef.
+     */
+    open fun servant(activity: GameActivity): Int{
+
+        if (activity.servantRef == null)
+            return -1
+
+        val index : Int = activity.playerList.indexOf(activity.servantRef)
+        if (index == -1)
+            return -1
+
+        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val sub = getRole().new(activity, player, activity.servantRef)!!
+        sub.setIsCaptain(true)
+
+        activity.playerList.removeAt(index)
+        activity.playerList.add(index, sub)
+        return index
+
+    }
+
+    /**
      * Interface used to override the functionality of the fragment UsePowerDialog.
      * @see UsePowerDialog
      */
@@ -160,7 +182,9 @@ abstract class Turn<R : Role> {
             override fun done(
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
-                adapter: TargetAdapter
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
             ) {
                 for(index : Int in adapter.getTargets()){
 
@@ -196,7 +220,9 @@ abstract class Turn<R : Role> {
             override fun done(
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
-                adapter: TargetAdapter
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
             ) {
 
                 if (adapter.getTargets().isEmpty())
@@ -357,7 +383,7 @@ abstract class Turn<R : Role> {
     /**
      * Executes after the role has been initialized in the game activity.
      */
-    open fun onStart(activity : AppCompatActivity): Boolean?{
+    open fun onStart(activity : GameActivity): Boolean?{
         return false
     }
 

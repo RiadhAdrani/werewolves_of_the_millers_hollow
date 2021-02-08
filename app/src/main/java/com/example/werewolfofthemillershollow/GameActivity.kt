@@ -34,17 +34,17 @@ class GameActivity : AppCompatActivity() {
     /**
      * List of alive players
      */
-    private lateinit var playerList : ArrayList<Role>
+    lateinit var playerList : ArrayList<Role>
 
     /**
      * List of dead players
      */
-    private lateinit var deadList : ArrayList<Role>
+    lateinit var deadList : ArrayList<Role>
 
     /**
      * List of current roles turns
      */
-    private lateinit var turnList : ArrayList<Turn<*>>
+    lateinit var turnList : ArrayList<Turn<*>>
 
     /**
      * Allow the game master to kick the current player.
@@ -101,7 +101,14 @@ class GameActivity : AppCompatActivity() {
      */
     private lateinit var skip : ImageView
 
+    /**
+     * Display the current turn count.
+     */
     private lateinit var turn : TextView
+
+    var servantRef : Servant? = null
+
+    lateinit var captainRef: Role
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -148,7 +155,7 @@ class GameActivity : AppCompatActivity() {
         playerList = intent.getSerializableExtra("list") as ArrayList<Role>
 
         for (role : Role in playerList){
-            role.debug()
+            role.debug(tag = "Role")
         }
 
         turnList = createTurns(playerList)
@@ -222,7 +229,15 @@ class GameActivity : AppCompatActivity() {
         val output = ArrayList<Turn<*>>()
 
         val servant = ServantTurn(Servant(baseContext))
-        servant.addTurn(output = output, list = list, baseContext)
+        if (servant.addTurn(output = output, list = list, baseContext)) {
+            for (role : Role in playerList){
+                if (role.getName() == getString(R.string.servant_name)){
+                    servantRef = role as Servant
+                    break
+                }
+            }
+            Log.d("Role","servantRef = ${this.servantRef!!.getName()} : ${this.servantRef!!.getPlayer()}")
+        }
 
         val guardian = GuardianTurn(Guardian(baseContext))
         guardian.addTurn(output = output, list = list, baseContext)
@@ -246,7 +261,16 @@ class GameActivity : AppCompatActivity() {
         barber.addTurn(output = output, list = list, baseContext)
 
         val captain = CaptainTurn(Captain(baseContext))
-        captain.addTurn(output = output, list = list, baseContext)
+        if (captain.addTurn(output = output, list = list, baseContext)) {
+            for (role : Role in playerList){
+                if (role.getIsCaptain()!!){
+                    captainRef = role
+                    break
+                }
+            }
+            Log.d("Role","captainRef = ${this.captainRef.getName()} : ${this.captainRef.getPlayer()}")
+        }
+
 
         return output
     }
@@ -254,7 +278,7 @@ class GameActivity : AppCompatActivity() {
     /**
      * Update the information displayed in the activity.
      */
-    private fun displayNext(){
+    fun displayNext(){
 
         val currentPlayer = turnList[index]
 
@@ -291,12 +315,12 @@ class GameActivity : AppCompatActivity() {
                 currentPlayer.getOnStartTargets(playerList),
                 currentPlayer.getOnStartOnClickHandler(),
                 currentPlayer.getOnStartOnTargetHandler(),
-                onDismissed,
-                false
+                null,
+                false,
+                this
             )
 
             dialog.show(supportFragmentManager, App.TAG_ALERT)
-
             return
         }
 
@@ -317,6 +341,8 @@ class GameActivity : AppCompatActivity() {
                     currentPlayer.getPrimaryOnClickHandler(),
                     currentPlayer.getPrimaryOnTargetHandler(),
                     onDismissed,
+                    true,
+                    this
                 )
 
                 dialog.show(supportFragmentManager, App.TAG_ALERT)
@@ -344,6 +370,8 @@ class GameActivity : AppCompatActivity() {
                     currentPlayer.getSecondaryOnClickHandler(),
                     currentPlayer.getSecondaryOnTargetHandler(),
                     onDismissed,
+                    true,
+                    this
                 )
 
                 dialog.show(supportFragmentManager, App.TAG_ALERT)
@@ -376,4 +404,35 @@ class GameActivity : AppCompatActivity() {
             displayNext()
 
     }
+
+    fun findServant() : Servant?{
+
+        for (role : Role in playerList){
+            if (role.javaClass == Servant::javaClass){
+                return role as Servant
+            }
+        }
+
+        return null
+    }
+
+    fun replaceServant(role : Role) : Role?{
+
+        for (player : Role in playerList){
+            if (player.javaClass == Servant::javaClass){
+                val i = playerList.indexOf(player)
+                Log.d("Servant","Size = ${playerList.size}")
+                Log.d("Servant","Player $i is ${playerList[i].getName()}")
+                playerList[i] = role.new(baseContext, player.getPlayer()!!)!!
+                servantRef = null
+                Log.d("Servant","Player $i become ${playerList[i].getName()}")
+                Log.d("Servant","Size ${playerList.size}")
+
+                return playerList[i]
+            }
+        }
+
+        return null
+    }
+
 }

@@ -430,6 +430,10 @@ class NewGameActivity : AppCompatActivity() {
             return
         }
 
+        for (role : Role in currentPlayersAdapter.getList()){
+            role.debug(tag = "Role")
+        }
+
         val i = Intent(baseContext,GameActivity::class.java)
         i.putExtra("list", currentPlayersAdapter.getList())
         finish()
@@ -451,6 +455,10 @@ class NewGameActivity : AppCompatActivity() {
             i.putExtra("list", Role.fillWithDummyNames(currentPlayersAdapter.getList()))
             finish()
             startActivity(i)
+
+            for (role : Role in currentPlayersAdapter.getList()){
+                role.debug(tag = "Role")
+            }
         }
 
         return true

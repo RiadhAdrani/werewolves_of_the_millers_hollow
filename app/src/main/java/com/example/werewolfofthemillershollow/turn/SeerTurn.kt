@@ -28,14 +28,17 @@ class SeerTurn(role : Seer) : Turn<Seer>() {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1) {
             output.add(SeerTurn(list[index] as Seer))
+            return true
+        }
 
         else
             Log.d("AddTurn","Seer role not found")
+        return false
     }
 }

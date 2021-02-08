@@ -65,6 +65,17 @@ class Guardian(context: Context) : Role() {
         return !role.getWasGuarded()!!
     }
 
+    override fun new(context: Context, name: String, role: Role?): Role? {
+        val output = Guardian(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
+
     override fun isUnique(): Boolean {
         return true
     }

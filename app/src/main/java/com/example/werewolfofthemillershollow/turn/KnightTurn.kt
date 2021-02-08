@@ -2,7 +2,7 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Knight
 import com.example.werewolfofthemillershollow.roles.Role
@@ -38,22 +38,25 @@ class KnightTurn(role : Knight) : Turn<Knight>() {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1) {
             output.add(KnightTurn(list[index] as Knight))
+            return true
+        }
 
         else
             Log.d("AddTurn","Knight role not found")
+        return false
     }
 
     override fun canPrimary(): Boolean {
         return getRole().getIsKilled()!!
     }
 
-    override fun onStart(activity: AppCompatActivity): Boolean {
+    override fun onStart(activity: GameActivity): Boolean {
 
         if (getRole().getIsKilled()!!){
 

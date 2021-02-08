@@ -13,6 +13,12 @@ class ServantTurn(role: Servant) : Turn<Servant>() {
         setRole(role)
     }
 
+    fun switchRole(turn : Turn<*>){
+
+
+
+    }
+
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
         return context.getString(R.string.servant_instructions)
     }
@@ -22,22 +28,25 @@ class ServantTurn(role: Servant) : Turn<Servant>() {
     }
 
     override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target!!)
+        return getRole().usePrimaryAbility(role = target)
     }
 
     override fun useSecondary(target: Role): Boolean {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1) {
             output.add(ServantTurn(list[index] as Servant))
+            return true
+        }
 
         else
             Log.d("AddTurn","role not found")
+        return false
     }
 
 }

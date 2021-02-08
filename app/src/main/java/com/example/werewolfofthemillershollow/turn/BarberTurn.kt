@@ -2,8 +2,7 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
@@ -38,15 +37,17 @@ class BarberTurn(role : Barber) : Turn<Barber>() {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1){
             output.add(BarberTurn(list[index] as Barber))
+            return true
+        }
 
-        else
-            Log.d("AddTurn","Barber role not found")
+        Log.d("AddTurn","Barber role not found")
+        return false
 
     }
 
@@ -54,7 +55,7 @@ class BarberTurn(role : Barber) : Turn<Barber>() {
         return getRole().getIsKilled()!!
     }
 
-    override fun onStart(activity: AppCompatActivity): Boolean {
+    override fun onStart(activity: GameActivity): Boolean {
 
         if (getRole().getIsKilled()!!){
 

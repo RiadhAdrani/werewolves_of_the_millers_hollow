@@ -66,16 +66,17 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
         return true
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         for (role : Role in list){
             if (role.isWolf()){
                 output.add(WolfpackTurn(Werewolf(context)))
-                return
+                return true
             }
         }
 
         Log.d("AddTurn","no wolf was found")
+        return false
     }
 
     override fun getRoleToDisplay(context: Context?, list: ArrayList<Role>?): String {

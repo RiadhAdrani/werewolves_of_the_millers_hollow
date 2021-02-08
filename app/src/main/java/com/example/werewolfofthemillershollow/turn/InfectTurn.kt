@@ -34,14 +34,17 @@ class InfectTurn(role : FatherOfWolves) : Turn<FatherOfWolves>() {
         return false
     }
 
-    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context) {
+    override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
 
-        if (index != -1)
+        if (index != -1) {
             output.add(InfectTurn(list[index] as FatherOfWolves))
+            return true
+        }
 
         else
             Log.d("AddTurn","role not found")
+        return false
     }
 }

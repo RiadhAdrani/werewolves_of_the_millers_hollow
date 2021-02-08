@@ -93,7 +93,7 @@ class StatusEffect(
     companion object{
 
         /**
-         * Return the status effect made by the servant.
+         * Return the status effect made by the servantRef.
          * @see Servant
          * @see StatusEffect
          */
@@ -132,7 +132,7 @@ class StatusEffect(
         }
 
         /**
-         * Return the status effect of the captain
+         * Return the status effect of the captainRef
          * @see Captain
          * @see StatusEffect
          */

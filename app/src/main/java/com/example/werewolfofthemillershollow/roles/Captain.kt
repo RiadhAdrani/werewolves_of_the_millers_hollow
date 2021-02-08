@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.werewolfofthemillershollow.settings.App
 
 /**
- * The captain of the village :
+ * The captainRef of the village :
  * has the ability to assign who will start talking first in the discussion
  * @see Role
  * @see App.CAPTAIN_NAME
@@ -29,22 +29,22 @@ class Captain(context: Context) : Role() {
         }
 
         /**
-         * When the current captain dies,
+         * When the current captainRef dies,
          * he should choose another role to
-         * be the new captain
-         * @param role player to be new captain
+         * be the new captainRef
+         * @param role player to be new captainRef
          */
         fun newCaptain(role : Role){
             role.setIsCaptain(true)
         }
 
         /**
-         * Return the number of targets that could be affected by the captain.
+         * Return the number of targets that could be affected by the captainRef.
          */
         fun getCaptainTargets(): Int = App.TARGET_SINGLE
 
         /**
-         * Return the targets that could be chosen by the current captain to be a the new captain.
+         * Return the targets that could be chosen by the current captainRef to be a the new captainRef.
          * @param list list of alive players.
          */
         fun newCaptainTargets(list : ArrayList<Role>): ArrayList<Role>{
@@ -58,6 +58,20 @@ class Captain(context: Context) : Role() {
 
             return output
 
+        }
+
+        /**
+         * Seek and find the current captainRef in the list of players
+         * @param list list of players
+         * @return return the current captainRef
+         */
+        fun findCaptain(list : ArrayList<Role>): Role?{
+
+            for (role : Role in list){
+                if (role.getIsCaptain()!!)
+                    return role
+            }
+            return null
         }
 
     }
@@ -99,6 +113,17 @@ class Captain(context: Context) : Role() {
 
     override fun isATargetPrimary(role: Role): Boolean {
         return true
+    }
+
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Captain(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
     }
 
     override fun isUnique(): Boolean {

@@ -48,4 +48,15 @@ class Villager(context: Context) : Role() {
     override fun isATargetPrimary(role: Role): Boolean {
         return false
     }
+
+    override fun new(context: Context, name: String, role: Role?): Role {
+        val output = Villager(context)
+        output.setPlayer(name)
+
+        if (role != null){
+            output.copyStatusEffects(role)
+        }
+
+        return output
+    }
 }
