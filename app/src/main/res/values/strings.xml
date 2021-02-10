@@ -114,7 +114,7 @@
     <string name="guardian_effect">Guardian Shield</string>
     <string name="guardian_effect_description">This player is being Shielded by the Guardian of the village. This shield is only effective against the attack of the wolves. In fact, it is useless against other players attack.</string>
 
-    <string name="infection_effect">Infection of the father of wolves</string>
+    <string name="infection_effect">Infected</string>
     <string name="infection_effect_description">This player is infected by the power of the father of wolves, he can participate in the wolf pack.</string>
 
     <string name="captain_effect">Captain Armband</string>

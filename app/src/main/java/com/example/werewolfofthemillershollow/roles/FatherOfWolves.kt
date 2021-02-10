@@ -42,6 +42,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
 
         return if (role.getIsGuarded() == false){
             role.setIsInfected(true)
+            role.setIsKilled(false)
             setHasPrimary(false)
             true
         } else {

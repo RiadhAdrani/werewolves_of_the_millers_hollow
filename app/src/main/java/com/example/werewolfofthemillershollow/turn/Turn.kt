@@ -10,7 +10,7 @@ import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import kotlin.collections.ArrayList
 
-abstract class Turn<R : Role> {
+abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
 
     /**
      * Return the instructions said by the game master when the current turn begins.
@@ -164,7 +164,6 @@ abstract class Turn<R : Role> {
 
         val player = activity.servantRef!!.getPlayer() ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)!!
-        sub.setIsCaptain(true)
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
@@ -186,15 +185,23 @@ abstract class Turn<R : Role> {
                 activity: GameActivity,
                 dialog: UsePowerDialog?
             ) {
+                if (adapter.getTargets().isEmpty())
+                    return
+
+                Log.d("Role","Turn Class : using secondary ability")
+
                 for(index : Int in adapter.getTargets()){
 
                     val target : Role = adapter.getList()[index]
 
-                    val inListIndex = aliveList.indexOf(target)
+                    val i = gameActivity.playerList.indexOf(target)
 
-                    if (inListIndex != -1){
-                        usePrimary(aliveList[inListIndex])
-                    }
+                    if (i == -1)
+                        return
+
+                    usePrimary(gameActivity.playerList[i])
+                    gameActivity.playerList[i].debug()
+
                 }
             }
 
@@ -234,24 +241,15 @@ abstract class Turn<R : Role> {
 
                     val target : Role = adapter.getList()[index]
 
-                    Log.d("Role","Turn Class : Target : ${target.getName()} ...")
+                    val i = gameActivity.playerList.indexOf(target)
 
-                    for (role : Role in aliveList){
+                    if (i == -1)
+                        return
 
-                        Log.d("Role","Turn Class : Checking : ${role.getName()} ...")
+                    useSecondary(gameActivity.playerList[i])
+                    gameActivity.playerList[i].debug()
 
-                        if (role.getPlayer().equals(target.getPlayer())){
-
-                            Log.d("Role","Turn Class : Target Found ${role.getName()}")
-
-                            if (useSecondary(role)) {
-                                Log.d("Role","Turn Class : using secondary ability on ${role.getName()}")
-                            }
-                            break
-                        }
-                    }
                 }
-                Log.d("Role","Turn Class : used secondary ability")
             }
 
             override fun reset(
@@ -439,7 +437,7 @@ abstract class Turn<R : Role> {
      * Returns a list of the targets for the primary ability
      * @param list of roles to be extracted from.
      */
-    fun getTargetsPrimary(list : ArrayList<Role>) : ArrayList<Role>{
+    open fun getTargetsPrimary(list : ArrayList<Role>) : ArrayList<Role>{
 
         val output = ArrayList<Role>()
 
@@ -455,7 +453,7 @@ abstract class Turn<R : Role> {
      * Returns a list of the targets for the secondary ability
      * @param list of roles to be extracted from.
      */
-    fun getTargetsSecondary(list : ArrayList<Role>): ArrayList<Role>{
+    open fun getTargetsSecondary(list : ArrayList<Role>): ArrayList<Role>{
 
         val output = ArrayList<Role>()
 
@@ -472,7 +470,7 @@ abstract class Turn<R : Role> {
      * Returns a list of the targets for the tertiary ability
      * @param list of roles to be extracted from.
      */
-    fun getTargetsTertiary(list : ArrayList<Role>): ArrayList<Role>{
+    open fun getTargetsTertiary(list : ArrayList<Role>): ArrayList<Role>{
 
         val output = ArrayList<Role>()
 

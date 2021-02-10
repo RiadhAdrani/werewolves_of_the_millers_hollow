@@ -61,6 +61,13 @@ class Captain(context: Context) : Role() {
         }
 
         /**
+         * return the list of player that could be targeted.
+         */
+        fun targets(list : ArrayList<Role>): ArrayList<Role>{
+            return list
+        }
+
+        /**
          * Seek and find the current captainRef in the list of players
          * @param list list of players
          * @return return the current captainRef

@@ -2,11 +2,12 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Guardian
 import com.example.werewolfofthemillershollow.roles.Role
 
-class GuardianTurn(role : Guardian) : Turn<Guardian>() {
+class GuardianTurn(role : Guardian, var activity: GameActivity) : Turn<Guardian>(activity) {
 
     init {
         setRole(role)
@@ -33,7 +34,7 @@ class GuardianTurn(role : Guardian) : Turn<Guardian>() {
         val index = Role.roleInList(role = getRole(), list = list)
 
         if (index != -1) {
-            output.add(GuardianTurn(list[index] as Guardian))
+            output.add(GuardianTurn(list[index] as Guardian, activity))
             return true
         }
 

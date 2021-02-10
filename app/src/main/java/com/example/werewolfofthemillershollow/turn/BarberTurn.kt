@@ -12,7 +12,7 @@ import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
-class BarberTurn(role : Barber) : Turn<Barber>() {
+class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
     init {
         setRole(role)
@@ -42,7 +42,7 @@ class BarberTurn(role : Barber) : Turn<Barber>() {
         val index = Role.roleInList(role = getRole(), list = list)
 
         if (index != -1){
-            output.add(BarberTurn(list[index] as Barber))
+            output.add(BarberTurn(list[index] as Barber, activity = activity))
             return true
         }
 

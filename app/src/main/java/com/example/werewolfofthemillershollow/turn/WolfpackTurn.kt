@@ -2,13 +2,14 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Werewolf
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 
-class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
+class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>(activity) {
 
     init {
         setRole(role)
@@ -55,7 +56,17 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
     }
 
     override fun usePrimary(target: Role): Boolean {
-        return Werewolf.wolfPackPower(role = target)
+
+        val boolean = Werewolf.wolfPackPower(role = target)
+
+        if (boolean)
+            activity.wolfTargets.add(target)
+
+        return boolean
+    }
+
+    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
+        return list
     }
 
     override fun useSecondary(target: Role): Boolean {
@@ -70,7 +81,7 @@ class WolfpackTurn(role : Werewolf) : Turn<Werewolf>() {
 
         for (role : Role in list){
             if (role.isWolf()){
-                output.add(WolfpackTurn(Werewolf(context)))
+                output.add(WolfpackTurn(Werewolf(context), activity))
                 return true
             }
         }

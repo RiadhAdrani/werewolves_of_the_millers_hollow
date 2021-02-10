@@ -106,9 +106,21 @@ class GameActivity : AppCompatActivity() {
      */
     private lateinit var turn : TextView
 
+    /**
+     * reference to the servant in the game.
+     * * Null if no servant exists.
+     */
     var servantRef : Servant? = null
 
+    /**
+     * reference to the current captain in the game.
+     */
     lateinit var captainRef: Role
+
+    /**
+     * targets killed by the wolf pack this night.
+     */
+    var wolfTargets : ArrayList<Role> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -228,7 +240,7 @@ class GameActivity : AppCompatActivity() {
 
         val output = ArrayList<Turn<*>>()
 
-        val servant = ServantTurn(Servant(baseContext))
+        val servant = ServantTurn(Servant(baseContext),this)
         if (servant.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
                 if (role.getName() == getString(R.string.servant_name)){
@@ -239,28 +251,28 @@ class GameActivity : AppCompatActivity() {
             Log.d("Role","servantRef = ${this.servantRef!!.getName()} : ${this.servantRef!!.getPlayer()}")
         }
 
-        val guardian = GuardianTurn(Guardian(baseContext))
+        val guardian = GuardianTurn(Guardian(baseContext),this)
         guardian.addTurn(output = output, list = list, baseContext)
 
-        val wolfpack = WolfpackTurn(Werewolf(baseContext))
+        val wolfpack = WolfpackTurn(Werewolf(baseContext),this)
         wolfpack.addTurn(output = output, list = list, baseContext)
 
-        val infect = InfectTurn(FatherOfWolves(baseContext))
+        val infect = InfectTurn(FatherOfWolves(baseContext),this)
         infect.addTurn(output = output, list = list, baseContext)
 
-        val sorcerer = SorcererTurn(Sorcerer(baseContext))
+        val sorcerer = SorcererTurn(Sorcerer(baseContext),this)
         sorcerer.addTurn(output = output, list = list, baseContext)
 
-        val seer = SeerTurn(Seer(baseContext))
+        val seer = SeerTurn(Seer(baseContext),this)
         seer.addTurn(output = output, list = list, baseContext)
 
-        val knight = KnightTurn(Knight(baseContext))
+        val knight = KnightTurn(Knight(baseContext),this)
         knight.addTurn(output = output, list = list, baseContext)
 
-        val barber = BarberTurn(Barber(baseContext))
+        val barber = BarberTurn(Barber(baseContext), this)
         barber.addTurn(output = output, list = list, baseContext)
 
-        val captain = CaptainTurn(Captain(baseContext))
+        val captain = CaptainTurn(Captain(baseContext), this)
         if (captain.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
                 if (role.getIsCaptain()!!){
@@ -394,6 +406,7 @@ class GameActivity : AppCompatActivity() {
             index = 0
             round ++
             setTurn()
+            wolfTargets.clear()
         }
         else
             index ++
@@ -403,36 +416,6 @@ class GameActivity : AppCompatActivity() {
         else
             displayNext()
 
-    }
-
-    fun findServant() : Servant?{
-
-        for (role : Role in playerList){
-            if (role.javaClass == Servant::javaClass){
-                return role as Servant
-            }
-        }
-
-        return null
-    }
-
-    fun replaceServant(role : Role) : Role?{
-
-        for (player : Role in playerList){
-            if (player.javaClass == Servant::javaClass){
-                val i = playerList.indexOf(player)
-                Log.d("Servant","Size = ${playerList.size}")
-                Log.d("Servant","Player $i is ${playerList[i].getName()}")
-                playerList[i] = role.new(baseContext, player.getPlayer()!!)!!
-                servantRef = null
-                Log.d("Servant","Player $i become ${playerList[i].getName()}")
-                Log.d("Servant","Size ${playerList.size}")
-
-                return playerList[i]
-            }
-        }
-
-        return null
     }
 
 }

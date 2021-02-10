@@ -2,11 +2,12 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Seer
 
-class SeerTurn(role : Seer) : Turn<Seer>() {
+class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
 
     init {
         setRole(role)
@@ -33,7 +34,7 @@ class SeerTurn(role : Seer) : Turn<Seer>() {
         val index = Role.roleInList(role = getRole(), list = list)
 
         if (index != -1) {
-            output.add(SeerTurn(list[index] as Seer))
+            output.add(SeerTurn(list[index] as Seer, activity))
             return true
         }
 

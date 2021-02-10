@@ -12,7 +12,7 @@ import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
-class CaptainTurn(role : Role) : Turn<Role>() {
+class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity) {
 
     init {
         setRole(role)
@@ -42,13 +42,17 @@ class CaptainTurn(role : Role) : Turn<Role>() {
         val index = Role.roleInList(role = getRole(), list = list)
 
         if (index != -1) {
-            output.add(CaptainTurn(list[index] as Captain))
+            output.add(CaptainTurn(list[index] as Captain, activity))
             return true
         }
 
         else
             Log.d("AddTurn","Captain role not found")
         return false
+    }
+
+    override fun getIcon(): Int {
+        return Icons.captainChoose
     }
 
     override fun getPrimaryTargets(): Int {
@@ -94,6 +98,28 @@ class CaptainTurn(role : Role) : Turn<Role>() {
         return false
     }
 
+    override fun servant(activity: GameActivity): Int {
+
+        if (activity.servantRef == null)
+            return -1
+
+        val index : Int = activity.playerList.indexOf(activity.servantRef)
+        if (index == -1)
+            return -1
+
+        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val sub = getRole().new(activity, player, activity.servantRef)!!
+        sub.setIsCaptain(true)
+
+        activity.playerList.removeAt(index)
+        activity.playerList.add(index, sub)
+        return index
+    }
+
+    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
+        return Captain.targets(list)
+    }
+
     override fun getPrimaryIcon(): Int {
         return Icons.captainChoose
     }
@@ -120,15 +146,23 @@ class CaptainTurn(role : Role) : Turn<Role>() {
                     if (adapter.getTargets().isEmpty())
                         return
 
-                    val target : Role = adapter.getList()[0]
+                    Log.d("Role","Turn Class : using secondary ability")
 
-                    val inListIndex = aliveList.indexOf(target)
+                    for(index : Int in adapter.getTargets()){
 
-                    if (inListIndex != -1) {
-                        Captain.newCaptain(aliveList[inListIndex])
-                        setRole(aliveList[inListIndex])
+                        val target : Role = adapter.getList()[index]
+
+                        val i = activity.playerList.indexOf(target)
+
+                        if (i != -1){
+                            Captain.newCaptain(activity.playerList[i])
+                            activity.playerList[i].debug()
+                            setRole(activity.playerList[i])
+                        }
+
                         activity.displayNext()
                         dialog!!.dismiss()
+
                     }
 
                 }

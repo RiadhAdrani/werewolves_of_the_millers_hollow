@@ -793,7 +793,6 @@ abstract class Role : Serializable {
         if (isInfected == true){
             if (team == App.TEAM_VILLAGE){
                 team = App.TEAM_WOLVES
-                isInfected = false
             }
         }
 
