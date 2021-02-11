@@ -196,7 +196,6 @@ abstract class App {
         const val VILLAGER_CAN_SECONDARY : Boolean = false
         const val VILLAGER_PRIMARY_POWER : Int = ABILITY_NONE
         const val VILLAGER_SECONDARY_POWER : Int = ABILITY_NONE
-        const val VILLAGER_PRIMARY_TARGET : Int = TARGET_NONE
         const val VILLAGER_ICON : Int = Icons.person
 
         // ---------------------------------------------------------------------------------------

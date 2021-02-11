@@ -6,6 +6,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import kotlin.collections.ArrayList
@@ -185,8 +186,12 @@ abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
                 activity: GameActivity,
                 dialog: UsePowerDialog?
             ) {
-                if (adapter.getTargets().isEmpty())
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager,App.TAG_ALERT)
                     return
+                }
+
 
                 Log.d("Role","Turn Class : using secondary ability")
 
@@ -203,6 +208,9 @@ abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
                     gameActivity.playerList[i].debug()
 
                 }
+
+                dialog?.dismiss()
+                activity.next()
             }
 
             override fun reset(
@@ -250,6 +258,8 @@ abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
                     gameActivity.playerList[i].debug()
 
                 }
+
+                dialog?.dismiss()
             }
 
             override fun reset(
@@ -482,5 +492,10 @@ abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
         return output
 
     }
+
+    /**
+     * Return whether the current role should use his power or not.
+     */
+    abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
 
 }

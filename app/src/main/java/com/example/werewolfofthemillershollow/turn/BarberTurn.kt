@@ -90,4 +90,11 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         else null
     }
 
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        if (getRole().getIsKilled()!!)
+            return true
+
+        return false
+    }
+
 }

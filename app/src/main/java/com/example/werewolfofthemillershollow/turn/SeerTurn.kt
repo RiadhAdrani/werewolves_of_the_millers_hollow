@@ -42,4 +42,8 @@ class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
             Log.d("AddTurn","Seer role not found")
         return false
     }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return true
+    }
 }

@@ -89,4 +89,8 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
     override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
         return getTargetsPrimary(list)
     }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return getRole().getIsKilled()!!
+    }
 }

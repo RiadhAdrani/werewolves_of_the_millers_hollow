@@ -100,7 +100,6 @@ class UsePowerDialog(
                 dialog = this
             )
             onDismissed?.onDismissed()
-            dismiss()
         }
 
         cancelButton = dialog.findViewById(R.id.dialog_cancel)

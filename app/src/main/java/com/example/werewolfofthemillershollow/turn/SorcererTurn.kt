@@ -16,14 +16,37 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
 
         val output : String = context.getString(R.string.sorcerer_instruction_heal) + context.getString(R.string.sorcerer_instruction_kill)
+        val dead = ArrayList<Role>()
 
         for (role : Role in list!!){
             if (role.getIsKilled()!!){
-                return role.getName()+ " " + context.getString(R.string.was_killed) + ".. " + output
+                dead.add(role)
             }
         }
 
-        return context.getString(R.string.nobody_was_killed) + " " + output
+        var deadString = ""
+        if (dead.isNotEmpty()){
+            for (role : Role in dead){
+                if (dead.indexOf(role) == 0){
+                    deadString += role.getPlayer()
+                    continue
+                }
+                if (dead.indexOf(role) == dead.size-1){
+                    deadString += " " + context.getString(R.string.and) +" "+ role.getPlayer()
+                    continue
+                }
+                else
+                    deadString += ", "+role.getPlayer()
+            }
+
+            return if (dead.size == 1)
+                deadString +" " + context.getString(R.string.was_killed) + "... " + output
+            else
+                deadString +" " + context.getString(R.string.were_killed) + "... " + output
+
+        }
+
+        return context.getString(R.string.nobody_was_killed) + "..." + output
     }
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
@@ -54,6 +77,10 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
 
         else
             Log.d("AddTurn","role not found")
+        return false
+    }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return false
     }
 }

@@ -52,4 +52,8 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
             Log.d("AddTurn","role not found")
         return false
     }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return false
+    }
 }

@@ -43,4 +43,8 @@ class GuardianTurn(role : Guardian, var activity: GameActivity) : Turn<Guardian>
         return false
     }
 
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return true
+    }
+
 }

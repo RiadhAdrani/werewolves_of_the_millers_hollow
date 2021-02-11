@@ -50,4 +50,8 @@ class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(act
         return false
     }
 
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return true
+    }
+
 }

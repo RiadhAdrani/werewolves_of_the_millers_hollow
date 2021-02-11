@@ -31,7 +31,8 @@
     <string name="no_wolves">Not a single wolf was found in the list!</string>
     <string name="unbalanced_teams">The composition of players does not allow for a balanced game!</string>
     
-    <string name="was_killed">was killed.</string>
+    <string name="was_killed">was killed</string>
+    <string name="were_killed">were killed</string>
     <string name="nobody_was_killed">Nobody was killed. </string>
 
     <string name="bloc">Bloc</string>
@@ -45,7 +46,14 @@
     <string name="empty_name_alert">Player name is empty !!!</string>
     <string name="existing_name_alert">Player name already exits !!!</string>
 
+    <string name="should_use_power">Unable to proceed, This player should choose use his power on a target !</string>
+
     <string name="as">as</string>
+    <string name="and">and</string>
+
+    <string name="role">Role</string>
+
+    <string name="status_effect">Status Effect</string>
 
     <string name="turn">Turn</string>
 
@@ -103,10 +111,6 @@
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
-
-    <string name="role">Role</string>
-
-    <string name="status_effect">Status Effect</string>
 
     <string name="servant_effect">Servant Effect</string>
     <string name="servant_effect_description">This player is affected by the power of the servant, if he dies, his power will be transferred to the servant.</string>

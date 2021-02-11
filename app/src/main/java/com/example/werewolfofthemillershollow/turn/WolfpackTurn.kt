@@ -97,4 +97,8 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
     override fun getPrimaryTargets(): Int {
         return Werewolf.getPackTargets()
     }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return false
+    }
 }

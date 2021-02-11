@@ -26,7 +26,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     }
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
-        return getRole().canPlay(round)
+        return true
     }
 
     override fun usePrimary(target: Role): Boolean {
@@ -143,8 +143,11 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     dialog: UsePowerDialog?
                 ) {
 
-                    if (adapter.getTargets().isEmpty())
+                    if (adapter.getTargets().isEmpty()){
+                        val alert = AlertDialog(text = R.string.should_use_power)
+                        alert.show(activity.supportFragmentManager,App.TAG_ALERT)
                         return
+                    }
 
                     Log.d("Role","Turn Class : using secondary ability")
 
@@ -205,5 +208,9 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
         }
+    }
+
+    override fun shouldUsePower(gameActivity: GameActivity): Boolean {
+        return true
     }
 }

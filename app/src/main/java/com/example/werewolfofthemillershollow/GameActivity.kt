@@ -144,6 +144,11 @@ class GameActivity : AppCompatActivity() {
 
         skip = findViewById(R.id.skip)
         skip.setOnClickListener {
+            if (turnList[index].shouldUsePower(this)){
+                val dialog = AlertDialog(text = R.string.should_use_power)
+                dialog.show(supportFragmentManager,App.TAG_ALERT)
+                return@setOnClickListener
+            }
             next()
         }
 
@@ -309,14 +314,6 @@ class GameActivity : AppCompatActivity() {
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
 
-        val onDismissed = object : UsePowerDialog.OnDismissed{
-
-            override fun onDismissed() {
-                next()
-            }
-
-        }
-
         if (currentPlayer.onStart(this)!!){
 
             val dialog = UsePowerDialog(
@@ -336,6 +333,14 @@ class GameActivity : AppCompatActivity() {
             return
         }
 
+        val onDismissed = object : UsePowerDialog.OnDismissed{
+
+            override fun onDismissed() {
+                next()
+            }
+
+        }
+
         abilityOne.setOnClickListener {
 
             if (!currentPlayer.canPrimary()){
@@ -352,7 +357,7 @@ class GameActivity : AppCompatActivity() {
                     currentPlayer.getTargetsPrimary(playerList),
                     currentPlayer.getPrimaryOnClickHandler(),
                     currentPlayer.getPrimaryOnTargetHandler(),
-                    onDismissed,
+                    null,
                     true,
                     this
                 )
@@ -400,7 +405,7 @@ class GameActivity : AppCompatActivity() {
      * Move to the next role.
      * Uses Recursive call.
      */
-    private fun next(){
+    fun next(){
 
         if (index == turnList.size-1){
             index = 0
