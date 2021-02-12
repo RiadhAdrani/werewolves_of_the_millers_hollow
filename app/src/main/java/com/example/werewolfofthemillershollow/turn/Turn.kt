@@ -11,7 +11,7 @@ import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import kotlin.collections.ArrayList
 
-abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
+abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
     /**
      * Return the instructions said by the game master when the current turn begins.
@@ -154,23 +154,7 @@ abstract class Turn<R : Role>(private var gameActivity: GameActivity) {
     /**
      * Make the needed changes to the servantRef.
      */
-    open fun servant(activity: GameActivity): Int{
-
-        if (activity.servantRef == null)
-            return -1
-
-        val index : Int = activity.playerList.indexOf(activity.servantRef)
-        if (index == -1)
-            return -1
-
-        val player = activity.servantRef!!.getPlayer() ?: return -1
-        val sub = getRole().new(activity, player, activity.servantRef)!!
-
-        activity.playerList.removeAt(index)
-        activity.playerList.add(index, sub)
-        return index
-
-    }
+    abstract fun servant(activity: GameActivity): Int
 
     /**
      * Interface used to override the functionality of the fragment UsePowerDialog.

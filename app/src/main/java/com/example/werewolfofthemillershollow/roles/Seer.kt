@@ -30,13 +30,6 @@ class Seer(context: Context) : Role() {
         return seenRole
     }
 
-    /**
-     * setter for seen role
-     * @param roleName new seen role name
-     */
-    fun setSeenRole(roleName : String?) {
-        seenRole = roleName
-    }
 
     init {
         setName(context.getString(App.SEER_NAME))
@@ -72,7 +65,12 @@ class Seer(context: Context) : Role() {
         return true
     }
 
-    override fun new(context: Context, name: String, role: Role?): Role? {
+    override fun resetStatusEffects() {
+        super.resetStatusEffects()
+        seenRole = "None"
+    }
+
+    override fun new(context: Context, name: String, role: Role?): Role {
         val output = Seer(context)
         output.setPlayer(name)
 

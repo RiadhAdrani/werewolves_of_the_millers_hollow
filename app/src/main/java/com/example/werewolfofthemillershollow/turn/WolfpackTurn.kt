@@ -101,4 +101,8 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return false
     }
+
+    override fun servant(activity: GameActivity): Int {
+        return -1
+    }
 }

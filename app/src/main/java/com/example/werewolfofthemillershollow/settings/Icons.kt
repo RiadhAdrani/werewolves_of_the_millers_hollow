@@ -42,6 +42,8 @@ abstract class Icons {
         const val person : Int = R.drawable.ic_person
         const val pack : Int = R.drawable.ic_animal
         const val goal : Int = R.drawable.ic_goal
+        const val dead : Int = R.drawable.ic_no_person
+        const val talkFirst : Int = R.drawable.ic_talk
 
         const val noAbility : Int = R.drawable.ic_bloc
         const val servantTake : Int = R.drawable.ic_flip

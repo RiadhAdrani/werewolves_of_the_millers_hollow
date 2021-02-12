@@ -122,6 +122,8 @@ class GameActivity : AppCompatActivity() {
      */
     var wolfTargets : ArrayList<Role> = ArrayList()
 
+    var events : ArrayList<Event> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -408,6 +410,14 @@ class GameActivity : AppCompatActivity() {
     fun next(){
 
         if (index == turnList.size-1){
+
+            try {
+                updateEvents()
+                discuss()
+            }catch (error : Exception){
+                Log.d("morning",error.toString())
+            }
+
             index = 0
             round ++
             setTurn()
@@ -420,6 +430,68 @@ class GameActivity : AppCompatActivity() {
             next()
         else
             displayNext()
+
+    }
+
+    /**
+     * function used to initialize the discussion in the morning.
+     */
+    private fun discuss(){
+
+        var i = 0
+        while (i < turnList.size){
+            if (turnList[i].getRole().getIsKilled()!!){
+                turnList.removeAt(i)
+                i--
+            }
+
+            i++
+        }
+
+        i=0
+        while (i < playerList.size){
+            playerList[i].resetStatusEffects()
+
+            if (playerList[i].getIsKilled()!!){
+                deadList.add(playerList[i])
+                playerList.removeAt(i)
+                i--
+            }
+
+            i++
+        }
+
+    }
+
+    /**
+     * Update events that should be displayed before the discussion.
+     */
+    private fun updateEvents(){
+
+        for (role : Role in playerList){
+            if (role.getIsKilled()!!)
+                events.add(Event.died(this, role.getPlayer()!!))
+        }
+
+        for (role : Role in playerList){
+            if (role.getIsTalking()!!){
+                events.add(Event.talkFirst(this,role.getPlayer()!!))
+                break
+            }
+        }
+
+        for (turn : Turn<*> in turnList){
+            if (turn.getRole().getName() == getString(R.string.seer_name)){
+                val seer = turn as SeerTurn
+                events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
+            }
+        }
+
+        Log.d("morning","-------------")
+        for (event : Event in events){
+            Log.d("morning",event.getMessage())
+        }
+        Log.d("morning","-------------")
 
     }
 

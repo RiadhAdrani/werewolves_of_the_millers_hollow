@@ -9,13 +9,14 @@ import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.Event
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
     init {
-        setRole(role)
+        setRole(role,)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -96,5 +97,25 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         return false
     }
+
+    override fun servant(activity: GameActivity): Int {
+
+        if (activity.servantRef == null)
+            return -1
+
+        val index : Int = activity.playerList.indexOf(activity.servantRef)
+        if (index == -1)
+            return -1
+
+        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val sub = getRole().new(activity, player, activity.servantRef)
+        setRole(sub as Barber)
+
+        activity.playerList.removeAt(index)
+        activity.playerList.add(index, sub)
+        activity.events.add(Event.servant(activity,sub.getName()!!))
+        return index
+    }
+
 
 }

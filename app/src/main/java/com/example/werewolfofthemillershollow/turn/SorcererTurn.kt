@@ -4,13 +4,15 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Sorcerer
+import com.example.werewolfofthemillershollow.utility.Event
 
 class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>(activity) {
 
     init {
-        setRole(role)
+        setRole(role,)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -82,5 +84,23 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return false
+    }
+
+    override fun servant(activity: GameActivity): Int {
+        if (activity.servantRef == null)
+            return -1
+
+        val index : Int = activity.playerList.indexOf(activity.servantRef)
+        if (index == -1)
+            return -1
+
+        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val sub = getRole().new(activity, player, activity.servantRef)
+        setRole(sub as Sorcerer)
+
+        activity.playerList.removeAt(index)
+        activity.playerList.add(index, sub)
+        activity.events.add(Event.servant(activity,sub.getName()!!))
+        return index
     }
 }

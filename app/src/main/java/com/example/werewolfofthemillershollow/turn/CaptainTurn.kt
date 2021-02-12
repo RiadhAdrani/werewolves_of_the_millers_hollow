@@ -9,6 +9,7 @@ import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.Event
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
@@ -74,6 +75,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     return true
 
                 setRole(activity.playerList[index])
+                activity.captainRef = activity.playerList[index]
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(dialog: AlertDialog) {
@@ -113,6 +115,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
+        activity.events.add(Event.servant(activity,sub.getName()!!))
         return index
     }
 
@@ -160,7 +163,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         if (i != -1){
                             Captain.newCaptain(activity.playerList[i])
                             activity.playerList[i].debug()
-                            setRole(activity.playerList[i])
+                            setRole(activity.playerList[i],)
                         }
 
                         activity.displayNext()

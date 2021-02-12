@@ -4,18 +4,20 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Knight
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.Event
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activity) {
 
     init {
-        setRole(role)
+        setRole(role,)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -92,5 +94,23 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return getRole().getIsKilled()!!
+    }
+
+    override fun servant(activity: GameActivity): Int {
+        if (activity.servantRef == null)
+            return -1
+
+        val index : Int = activity.playerList.indexOf(activity.servantRef)
+        if (index == -1)
+            return -1
+
+        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val sub = getRole().new(activity, player, activity.servantRef)
+        setRole(sub as Knight)
+
+        activity.playerList.removeAt(index)
+        activity.playerList.add(index, sub)
+        activity.events.add(Event.servant(activity,sub.getName()!!))
+        return index
     }
 }

@@ -2,9 +2,11 @@ package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
 import android.util.Log
+import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.turn.Turn
 import com.example.werewolfofthemillershollow.utility.StatusEffect
 import java.io.Serializable
 import java.util.*
@@ -780,7 +782,7 @@ abstract class Role : Serializable {
      * @see isTalking
      * @see isInfected
      */
-    fun resetStatusEffects(){
+    open fun resetStatusEffects(){
 
         wasGuarded = false
 
@@ -859,6 +861,37 @@ abstract class Role : Serializable {
         }
 
         return output
+    }
+
+    /**
+     * make the appropriate changes to the game to and replace the servant with this role.
+     * @param gameActivity game activity class
+     * @return true if the operation succeeded, false otherwise.
+     */
+    open fun servant(gameActivity: GameActivity): Boolean{
+
+        if (gameActivity.servantRef == null)
+            return false
+
+        val index = gameActivity.playerList.indexOf(gameActivity.servantRef)
+
+        if (index == -1)
+            return false
+
+        val sub : Role = new(context = gameActivity, role = gameActivity.servantRef, name = getPlayer()!!)
+            ?: return false
+
+        for (turn : Turn<*> in gameActivity.turnList){
+            if (turn.getRole() == this && sub.javaClass == turn.javaClass){
+                turn.servant(activity = gameActivity)
+                return true
+            }
+        }
+
+        gameActivity.playerList.removeAt(index)
+        gameActivity.playerList.add(index, sub)
+        return true
+
     }
 
     /**
