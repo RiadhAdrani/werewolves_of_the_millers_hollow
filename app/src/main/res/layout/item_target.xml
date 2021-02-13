@@ -47,7 +47,7 @@
     <TextView
         android:id="@+id/item_role"
         android:text="@string/role"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_tiny"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"
         android:layout_width="0dp"

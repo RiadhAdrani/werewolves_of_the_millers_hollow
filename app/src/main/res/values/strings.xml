@@ -124,6 +124,7 @@
     <string name="captain_effect">Captain Armband</string>
     <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
 
+    <string name="today_event">What happened last night ?</string>
     <string name="servant_event">Servant transformed into</string>
     <string name="dead_event">died.</string>
     <string name="talk_first_event">talk first.</string>

@@ -409,22 +409,12 @@ class GameActivity : AppCompatActivity() {
      */
     fun next(){
 
-        if (index == turnList.size-1){
+        index ++
 
-            try {
-                updateEvents()
-                discuss()
-            }catch (error : Exception){
-                Log.d("morning",error.toString())
-            }
-
-            index = 0
-            round ++
-            setTurn()
-            wolfTargets.clear()
+        if (index == turnList.size){
+            morning()
+            return
         }
-        else
-            index ++
 
         if (!turnList[index].canPlay(round = round, list = playerList))
             next()
@@ -492,6 +482,47 @@ class GameActivity : AppCompatActivity() {
             Log.d("morning",event.getMessage())
         }
         Log.d("morning","-------------")
+
+    }
+
+    /**
+     * Start a new round.
+     * * Should be used only after dismissing every dialog.
+     */
+    private fun newRound(){
+        events.clear()
+        index = -1
+        next()
+    }
+
+    /**
+     * Start the after round process.
+     * * Display event dialog.
+     * * Display discussion dialog.
+     * * Display voting dialog. (in case of equality of votes, another discussion between the
+     *   affected players (who have equal votes) should take place. In case of equal voting for more than 2 players,
+     *   the process is repeated but with a free for all form of discussion : no captain needed to choose
+     *   which player should start talking first.
+     * * Display player defending dialog.
+     * * Display execution dialog : Players should vote who should be executed.
+     */
+    private fun morning(){
+
+        updateEvents()
+        discuss()
+        round ++
+        setTurn()
+        wolfTargets.clear()
+
+        val onClick = object : EventsDialog.OnClick{
+            override fun onClick(): Boolean {
+                newRound()
+                return true
+            }
+        }
+
+        val eventDialog = EventsDialog(events = events,onClick = onClick,cancelable = false)
+        eventDialog.show(supportFragmentManager,App.TAG_ALERT)
 
     }
 
