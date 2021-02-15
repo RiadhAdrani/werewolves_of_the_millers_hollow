@@ -46,7 +46,7 @@
     <string name="empty_name_alert">Player name is empty !!!</string>
     <string name="existing_name_alert">Player name already exits !!!</string>
 
-    <string name="should_use_power">Unable to proceed, This player should choose use his power on a target !</string>
+    <string name="should_use_power">Unable to proceed, This player should use his power on a target !</string>
 
     <string name="as">as</string>
     <string name="and">and</string>
@@ -129,5 +129,10 @@
     <string name="dead_event">died.</string>
     <string name="talk_first_event">talk first.</string>
     <string name="seen_event">The seer saw a</string>
+    <string name="discussion">Discussion</string>
+    <string name="vote">Vote</string>
+    <string name="discussion_description">Players are invited to discuss and formulate their opinions to help them in the voting phase. </string>
+    <string name="discussion_description_group">are invited to defend themselves.</string>
+    <string name="discussion_description_single">is invited to defend himself.</string>
 
 </resources>

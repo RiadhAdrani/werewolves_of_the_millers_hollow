@@ -1,6 +1,15 @@
 package com.example.werewolfofthemillershollow.settings
 
+import android.animation.Animator
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
+import android.content.Context
+import android.graphics.Color
+import android.view.animation.Animation
+import android.widget.ImageView
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Role
 
 /**
  * contains settings and constants for the app.
@@ -210,6 +219,49 @@ abstract class App {
         fun random(min : Int = 0, max : Int = 1): Int {
 
             return (Math.random()*max).toInt() + min
+
+        }
+
+        /**
+         * Return a well formatted string containing the list of players.
+         * @param list list of players.
+         * @param context calling context.
+         */
+        fun listToString(list : ArrayList<Role>, context: Context): String{
+            var output = ""
+            for (role : Role in list){
+                if (list.indexOf(role)==0){
+                    output += "${role.getPlayer()}"
+                    continue
+                }
+                if (list.indexOf(role) == list.size-1){
+                    output += "${context.getString(R.string.and)} ${role.getPlayer()}"
+                    continue
+                }
+                output += ", ${role.getPlayer()}"
+            }
+            return output
+        }
+
+        /**
+         * Make an icon blink indefinitely.
+         * @param icon target icon.
+         * @param color blinking color.
+         * @param duration animation duration.
+         */
+        fun blink(icon : ImageView, color : Int, duration : Long){
+
+            val animator = ObjectAnimator.ofInt(
+                icon,
+                "backgroundColor",
+                color,
+                )
+
+            animator.duration = duration
+            animator.setEvaluator(ArgbEvaluator())
+            animator.repeatMode = ValueAnimator.REVERSE
+            animator.repeatCount = ValueAnimator.INFINITE
+            animator.start()
 
         }
 

@@ -1,11 +1,13 @@
 package com.example.werewolfofthemillershollow
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import com.example.werewolfofthemillershollow.settings.App
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val newGame : CardView = findViewById(R.id.new_game_card)
-
         val loadGame : CardView = findViewById(R.id.load_game_card)
         val settings : CardView = findViewById(R.id.settings_card)
         val documentation : CardView = findViewById(R.id.documentation_card)

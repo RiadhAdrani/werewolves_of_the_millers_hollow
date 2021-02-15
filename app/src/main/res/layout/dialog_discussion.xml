@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/small">
+
+    <ImageView
+        android:id="@+id/dialog_icon"
+        android:src="@drawable/ic_talk"
+        android:contentDescription="@string/discussion"
+        android:layout_width="@dimen/giant"
+        android:layout_height="@dimen/giant"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/dialog_title"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:text="@string/discussion"
+        android:textSize="@dimen/text_giant_xx"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
+        android:singleLine="true"
+        android:paddingHorizontal="@dimen/tiny"/>
+
+    <ImageView
+        android:id="@+id/dialog_barber"
+        android:src="@drawable/ic_clean"
+        android:contentDescription="@string/barber_name"
+        android:layout_marginTop="@dimen/medium"
+        android:padding="@dimen/small"
+        android:layout_width="@dimen/giant"
+        android:layout_height="@dimen/giant"
+        app:layout_constraintTop_toBottomOf="@id/dialog_title"
+        app:layout_constraintBottom_toTopOf="@id/dialog_text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        app:tint="@color/grey_darker" />
+
+    <TextView
+        android:id="@+id/dialog_text"
+        android:text="@string/lorem"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/medium"
+        app:layout_constraintTop_toBottomOf="@id/dialog_barber"
+        app:layout_constraintBottom_toTopOf="@id/dialog_button"
+        android:paddingHorizontal="@dimen/tiny"
+        />
+
+    <TextView
+        android:id="@+id/dialog_button"
+        android:text="@string/vote"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="bold"
+        android:paddingVertical="@dimen/small"
+        android:paddingHorizontal="@dimen/medium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

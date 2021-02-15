@@ -1,5 +1,6 @@
 package com.example.werewolfofthemillershollow
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -122,6 +123,14 @@ class GameActivity : AppCompatActivity() {
      */
     var wolfTargets : ArrayList<Role> = ArrayList()
 
+    /**
+     * reference to the barber player.
+     */
+    var barberRef : Barber? = null
+
+    /**
+     * List of events that occured last night (round).
+     */
     var events : ArrayList<Event> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -277,7 +286,15 @@ class GameActivity : AppCompatActivity() {
         knight.addTurn(output = output, list = list, baseContext)
 
         val barber = BarberTurn(Barber(baseContext), this)
-        barber.addTurn(output = output, list = list, baseContext)
+        if (barber.addTurn(output = output, list = list, baseContext)){
+            for (role : Role in playerList){
+                if (role.getName()== barber.getRole().getName()){
+                    barberRef = role as Barber
+                    break
+                }
+            }
+            Log.d("Role","barberRef = ${barberRef!!.getName()} : ${this.barberRef!!.getPlayer()}")
+        }
 
         val captain = CaptainTurn(Captain(baseContext), this)
         if (captain.addTurn(output = output, list = list, baseContext)) {
@@ -426,7 +443,7 @@ class GameActivity : AppCompatActivity() {
     /**
      * function used to initialize the discussion in the morning.
      */
-    private fun discuss(){
+    private fun clearPlayers(){
 
         var i = 0
         while (i < turnList.size){
@@ -509,20 +526,39 @@ class GameActivity : AppCompatActivity() {
     private fun morning(){
 
         updateEvents()
-        discuss()
+        clearPlayers()
         round ++
         setTurn()
         wolfTargets.clear()
 
         val onClick = object : EventsDialog.OnClick{
             override fun onClick(): Boolean {
-                newRound()
+
+                val onVote = object : DiscussionDialog.OnVote{
+                    override fun onVote(): Boolean {
+                        newRound()
+                        return true
+                    }
+
+                }
+
+                discussion(playerList,onVote)
                 return true
             }
         }
 
         val eventDialog = EventsDialog(events = events,onClick = onClick,cancelable = false)
         eventDialog.show(supportFragmentManager,App.TAG_ALERT)
+
+    }
+
+    /**
+     * Open a discussion dialog.
+     */
+    private fun discussion(list : ArrayList<Role>, onVote: DiscussionDialog.OnVote){
+
+        val dialog = DiscussionDialog( list, this, onVote = onVote)
+        dialog.show(supportFragmentManager,App.TAG_ALERT)
 
     }
 

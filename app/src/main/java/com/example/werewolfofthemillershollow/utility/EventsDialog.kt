@@ -12,13 +12,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.Icons
 
-class EventsDialog(private var events : ArrayList<Event>, private var onClick: OnClick, private var cancelable : Boolean? = true): AppCompatDialogFragment() {
+/**
+ * Display Events that happened during the last night (round).
+ * @param events list of events.
+ * @param onClick override action with a new interface implementation.
+ * @param cancelable set if the dialog is cancelable or not. true by default.
+ */
+class EventsDialog(
+    private var events : ArrayList<Event>,
+    private var onClick: OnClick,
+    private var cancelable : Boolean? = true): AppCompatDialogFragment() {
 
     private lateinit var dialog : View
 
     interface OnClick{
 
         fun onClick(): Boolean
+
     }
 
     @SuppressLint("InflateParams")
