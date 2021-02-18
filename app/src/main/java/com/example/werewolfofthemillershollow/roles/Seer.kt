@@ -32,20 +32,20 @@ class Seer(context: Context) : Role() {
 
 
     init {
-        setName(context.getString(App.SEER_NAME))
-        setDescription(context.getString(App.SEER_DESCRIPTION))
-        setTeam(App.SEER_TEAM)
+        name = context.getString(App.SEER_NAME)
+        description = context.getString(App.SEER_DESCRIPTION)
+        team = App.SEER_TEAM
         setHasPrimary(App.SEER_CAN_PRIMARY)
         setHasSecondary(App.SEER_CAN_SECONDARY)
         setPrimaryType(App.SEER_PRIMARY_POWER)
         setSecondaryType(App.SEER_SECONDARY_POWER)
-        setIcon(App.SEER_ICON)
+        icon = App.SEER_ICON
         setPrimaryIcon(App.SEER_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     override fun primaryAbility(role: Role): Boolean {
-        seenRole = role.getName()
+        seenRole = role.name
         return true
     }
 
@@ -72,7 +72,8 @@ class Seer(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Seer(context)
-        output.setPlayer(name)
+
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

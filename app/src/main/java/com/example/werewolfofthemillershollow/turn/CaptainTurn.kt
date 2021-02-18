@@ -20,7 +20,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return context.getString(R.string.captain_instruction_inherit)
 
         return context.getString(R.string.captain_instruction)
@@ -66,9 +66,9 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     override fun onStart(activity: GameActivity): Boolean {
 
-        if (getRole().getIsKilled()!!){
+        if (getRole().isKilled){
 
-            if (getRole().getIsServed()!!){
+            if (getRole().isServed){
 
                 val index = servant(activity)
                 if (index == -1)
@@ -110,14 +110,14 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
 
         val sub = getRole().new(activity, player, activity.servantRef)!!
-        sub.setIsCaptain(true)
+        sub.isCaptain = true
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
 
         activity.servantRef = null
 
@@ -168,7 +168,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         if (i != -1){
                             Captain.newCaptain(activity.playerList[i])
                             activity.playerList[i].debug()
-                            setRole(activity.playerList[i],)
+                            setRole(activity.playerList[i])
                         }
 
                         activity.displayNext()

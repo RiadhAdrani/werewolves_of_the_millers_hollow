@@ -19,14 +19,14 @@ import com.example.werewolfofthemillershollow.settings.App
 class Knight(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.KNIGHT_NAME))
-        setDescription(context.getString(App.KNIGHT_DESCRIPTION))
-        setTeam(App.KNIGHT_TEAM)
+        name = context.getString(App.KNIGHT_NAME)
+        description = context.getString(App.KNIGHT_DESCRIPTION)
+        team = App.KNIGHT_TEAM
         setHasPrimary(App.KNIGHT_CAN_PRIMARY)
         setHasSecondary(App.KNIGHT_CAN_SECONDARY)
         setPrimaryType(App.KNIGHT_PRIMARY_POWER)
         setSecondaryType(App.KNIGHT_SECONDARY_POWER)
-        setIcon(App.KNIGHT_ICON)
+        icon = App.KNIGHT_ICON
         setPrimaryIcon(App.KNIGHT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
@@ -37,8 +37,8 @@ class Knight(context: Context) : Role() {
      * @return true
      */
     override fun primaryAbility(role: Role): Boolean {
-        setIsKilled(false)
-        role.setIsKilled(true)
+        isKilled = false
+        role.isKilled = true
         return true
     }
 
@@ -60,7 +60,8 @@ class Knight(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Knight(context)
-        output.setPlayer(name)
+
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

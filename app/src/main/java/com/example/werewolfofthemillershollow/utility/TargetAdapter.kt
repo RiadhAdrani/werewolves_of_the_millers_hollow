@@ -67,9 +67,9 @@ class TargetAdapter(
 
         val currentTarget = list[position]
 
-        holder.player.text = currentTarget.getPlayer()
-        holder.role.text = currentTarget.getName()
-        holder.icon.setImageResource(currentTarget.getIcon()!!)
+        holder.player.text = currentTarget.player
+        holder.role.text = currentTarget.name
+        holder.icon.setImageResource(currentTarget.icon)
 
         if (position !in targets){
             holder.use.setImageResource(Icons.done)

@@ -250,13 +250,13 @@ class NewGameActivity : AppCompatActivity() {
                     if (invalidPlayerNameAlert(input = inputText, list = list))
                         return
 
-                    list[dialog.getCurrentIndex()].setPlayer(inputText)
+                    list[dialog.getCurrentIndex()].player = inputText
 
                     Toast.makeText(
                         baseContext,
-                        "${list[dialog.getCurrentIndex()].getName()} " +
+                        "${list[dialog.getCurrentIndex()].name} " +
                                 "${getString(R.string.is_now_named)} " +
-                                "${list[dialog.getCurrentIndex()].getPlayer()} ",
+                                "${list[dialog.getCurrentIndex()].player} ",
                         Toast.LENGTH_SHORT).show()
 
                     dialog.clearInput()
@@ -278,9 +278,9 @@ class NewGameActivity : AppCompatActivity() {
 
                     dialog.setCurrentIndex(pickRandomAliveRole(list))
                     val role = list[dialog.getCurrentIndex()]
-                    role.setIsAlive(true)
-                    dialog.setIcon(role.getIcon()!!)
-                    dialog.setRoleText(role.getName()!!)
+                    role.isAlive = true
+                    dialog.setIcon(role.icon)
+                    dialog.setRoleText(role.name)
                     dialog.setState(false)
                     dialog.setRollButtonIcon(Icons.done)
                     dialog.clearInput()
@@ -291,8 +291,8 @@ class NewGameActivity : AppCompatActivity() {
 
                 if (!areAllRolesNamed(list)){
                     for (role : Role in list){
-                        role.setIsAlive(true)
-                        role.setPlayer(null)
+                        role.isAlive = true
+                        role.player = null
                     }
                 }
 
@@ -302,8 +302,8 @@ class NewGameActivity : AppCompatActivity() {
 
             override fun reset(list: ArrayList<Role>, dialog : RolesRollerDialog) {
                 for (role : Role in list){
-                    role.setIsAlive(false)
-                    role.setPlayer(null)
+                    role.isAlive = false
+                    role.player = null
                     dialog.setRoleText(getString(R.string.role))
                     dialog.setState(true)
                     dialog.setRollButtonIcon(Icons.roll)
@@ -332,7 +332,7 @@ class NewGameActivity : AppCompatActivity() {
         if (index < 0 && index >= list.size)
             return pickRandomAliveRole(list)
 
-        if (!list[index].getIsAlive()!!){
+        if (!list[index].isAlive){
             return index
         }
 
@@ -346,7 +346,7 @@ class NewGameActivity : AppCompatActivity() {
     private fun areAllRolesPicked(list : ArrayList<Role>) : Boolean{
 
         for (role : Role in list){
-            if (!role.getIsAlive()!!)
+            if (!role.isAlive)
                 return false
         }
 
@@ -361,7 +361,7 @@ class NewGameActivity : AppCompatActivity() {
     private fun areAllRolesNamed(list : ArrayList<Role>) : Boolean{
 
         for (role : Role in list){
-            if (role.getPlayer() == null)
+            if (role.player == null)
                 return false
         }
 
@@ -388,7 +388,7 @@ class NewGameActivity : AppCompatActivity() {
 
 
         for (role : Role in list){
-            if (role.getPlayer().equals(input) && !role.getPlayer()?.trim().equals(resources.getString(R.string.no_string))){
+            if (role.player.equals(input) && role.player!!.trim() != resources.getString(R.string.no_string)){
 
                 val dialog = AlertDialog(
                     icon = R.drawable.ic_info,

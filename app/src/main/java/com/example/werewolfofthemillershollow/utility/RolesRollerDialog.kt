@@ -91,7 +91,7 @@ class RolesRollerDialog(private var list: ArrayList<Role>, onClick : OnClick) : 
         builder.setView(dialog)
 
         for (role : Role in list){
-            role.setIsAlive(false)
+            role.isAlive = false
         }
 
         val roll = dialog?.findViewById<ImageView>(R.id.roll_button)

@@ -20,16 +20,16 @@ import com.example.werewolfofthemillershollow.settings.App
 class Sorcerer(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.SORCERER_NAME))
-        setDescription(context.getString(App.SORCERER_DESCRIPTION))
-        setTeam(App.SORCERER_TEAM)
+        name = context.getString(App.SORCERER_NAME)
+        description = context.getString(App.SORCERER_DESCRIPTION)
+        team = App.SORCERER_TEAM
         setHasPrimary(App.SORCERER_CAN_PRIMARY)
         setHasSecondary(App.SORCERER_CAN_SECONDARY)
         setPrimaryType(App.SORCERER_PRIMARY_POWER)
         setPrimaryTargets(App.SORCERER_PRIMARY_TARGET)
         setSecondaryType(App.SORCERER_SECONDARY_POWER)
         setSecondaryTargets(App.SORCERER_SECONDARY_TARGET)
-        setIcon(App.SORCERER_ICON)
+        icon = App.SORCERER_ICON
         setPrimaryIcon(App.SORCERER_PRIMARY_ICON)
         setSecondaryIcon(App.SORCERER_SECONDARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
@@ -42,7 +42,7 @@ class Sorcerer(context: Context) : Role() {
      * @return true
      */
     override fun primaryAbility(role: Role): Boolean {
-        role.setIsKilled(true)
+        role.isKilled = true
         return true
     }
 
@@ -52,8 +52,8 @@ class Sorcerer(context: Context) : Role() {
      * @return true
      */
     override fun secondaryAbility(role: Role): Boolean {
-        role.setIsKilled(false)
-        Log.d("SorcererClass","${role.getName()} is healed")
+        role.isKilled = false
+        Log.d("SorcererClass","${role.name} is healed")
         return true
     }
 
@@ -66,7 +66,7 @@ class Sorcerer(context: Context) : Role() {
     }
 
     override fun isATargetPrimary(role: Role): Boolean {
-        return role.getIsKilled() == false
+        return !role.isKilled
     }
 
     override fun isUnique(): Boolean {
@@ -74,12 +74,12 @@ class Sorcerer(context: Context) : Role() {
     }
 
     override fun isATargetSecondary(role: Role): Boolean {
-        return role.getIsKilled()!!
+        return role.isKilled
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Sorcerer(context)
-        output.setPlayer(name)
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

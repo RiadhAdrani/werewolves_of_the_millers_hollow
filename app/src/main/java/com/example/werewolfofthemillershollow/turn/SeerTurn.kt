@@ -12,7 +12,7 @@ import com.example.werewolfofthemillershollow.utility.Event
 class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
 
     init {
-        setRole(role,)
+        setRole(role)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -24,7 +24,7 @@ class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
     }
 
     override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target!!)
+        return getRole().usePrimaryAbility(role = target)
     }
 
     override fun useSecondary(target: Role): Boolean {
@@ -57,13 +57,13 @@ class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as Seer)
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
         return index
     }
 }

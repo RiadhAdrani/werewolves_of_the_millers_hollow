@@ -19,14 +19,14 @@ import com.example.werewolfofthemillershollow.settings.App
 class Servant(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.SERVANT_NAME))
-        setDescription(context.getString(App.SERVANT_DESCRIPTION))
-        setTeam(App.SERVANT_TEAM)
+        name = context.getString(App.SERVANT_NAME)
+        description = context.getString(App.SERVANT_DESCRIPTION)
+        team = App.SERVANT_TEAM
         setHasPrimary(App.SERVANT_CAN_PRIMARY)
         setHasSecondary(App.SERVANT_CAN_SECONDARY)
         setPrimaryType(App.SERVANT_PRIMARY_POWER)
         setSecondaryType(App.SERVANT_SECONDARY_POWER)
-        setIcon(App.SERVANT_ICON)
+        icon = App.SERVANT_ICON
         setPrimaryIcon(App.SERVANT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
@@ -37,7 +37,8 @@ class Servant(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Servant(context)
-        output.setPlayer(name)
+
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)
@@ -53,7 +54,7 @@ class Servant(context: Context) : Role() {
      * @return true (always)
      */
     override fun primaryAbility(role: Role): Boolean {
-        role.setIsServed(true)
+        role.isServed = true
         target = role
         return true
     }

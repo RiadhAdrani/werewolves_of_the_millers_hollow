@@ -102,7 +102,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
 
         for (role : Role in list!!){
-            if (role.getIsKilled()!!)
+            if (role.isKilled)
                 return context.getString(R.string.infect_instruction)
         }
 
@@ -114,7 +114,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         val output = ArrayList<Role>()
 
         for (role : Role in activity.wolfTargets){
-            if (!role.isWolf() && !role.getIsInfected()!!){
+            if (!role.isWolf() && !role.isInfected){
                 output.add(role)
             }
         }
@@ -168,14 +168,14 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as FatherOfWolves)
         
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
         return index
     }
 }

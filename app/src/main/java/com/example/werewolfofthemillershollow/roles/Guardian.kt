@@ -20,14 +20,14 @@ import com.example.werewolfofthemillershollow.settings.App
 class Guardian(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.GUARDIAN_NAME))
-        setDescription(context.getString(App.GUARDIAN_DESCRIPTION))
-        setTeam(App.GUARDIAN_TEAM)
+        name = context.getString(App.GUARDIAN_NAME)
+        description = context.getString(App.GUARDIAN_DESCRIPTION)
+        team = App.GUARDIAN_TEAM
         setHasPrimary(App.GUARDIAN_CAN_PRIMARY)
         setHasSecondary(App.GUARDIAN_CAN_SECONDARY)
         setPrimaryType(App.GUARDIAN_PRIMARY_POWER)
         setSecondaryType(App.GUARDIAN_SECONDARY_POWER)
-        setIcon(App.GUARDIAN_ICON)
+        icon = App.GUARDIAN_ICON
         setPrimaryIcon(App.GUARDIAN_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
@@ -41,7 +41,7 @@ class Guardian(context: Context) : Role() {
      * @return true (always)
      */
     override fun primaryAbility(role: Role): Boolean {
-        role.setIsGuarded(true)
+        role.isGuarded = true
         return true
     }
 
@@ -62,12 +62,13 @@ class Guardian(context: Context) : Role() {
     }
 
     override fun isATargetPrimary(role: Role): Boolean {
-        return !role.getWasGuarded()!!
+        return !role.wasGuarded
     }
 
     override fun new(context: Context, name: String, role: Role?): Role? {
         val output = Guardian(context)
-        output.setPlayer(name)
+
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

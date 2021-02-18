@@ -21,7 +21,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         val dead = ArrayList<Role>()
 
         for (role : Role in list!!){
-            if (role.getIsKilled()!!){
+            if (role.isKilled){
                 dead.add(role)
             }
         }
@@ -30,15 +30,15 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         if (dead.isNotEmpty()){
             for (role : Role in dead){
                 if (dead.indexOf(role) == 0){
-                    deadString += role.getPlayer()
+                    deadString += role.player
                     continue
                 }
                 if (dead.indexOf(role) == dead.size-1){
-                    deadString += " " + context.getString(R.string.and) +" "+ role.getPlayer()
+                    deadString += " " + context.getString(R.string.and) +" "+ role.player
                     continue
                 }
                 else
-                    deadString += ", "+role.getPlayer()
+                    deadString += ", "+role.player
             }
 
             return if (dead.size == 1)
@@ -94,13 +94,13 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as Sorcerer)
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
         return index
     }
 }

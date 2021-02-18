@@ -19,23 +19,23 @@ import com.example.werewolfofthemillershollow.settings.App
 class Barber(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.BARBER_NAME))
-        setDescription(context.getString(App.BARBER_DESCRIPTION))
-        setTeam(App.BARBER_TEAM)
+        name = context.getString(App.BARBER_NAME)
+        description = context.getString(App.BARBER_DESCRIPTION)
+        team = App.BARBER_TEAM
         setHasPrimary(App.BARBER_CAN_PRIMARY)
         setHasSecondary(App.BARBER_CAN_SECONDARY)
         setPrimaryType(App.BARBER_PRIMARY_POWER)
         setSecondaryType(App.BARBER_SECONDARY_POWER)
-        setIcon(App.BARBER_ICON)
+        icon = App.BARBER_ICON
         setPrimaryIcon(App.BARBER_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
 
     override fun primaryAbility(role: Role): Boolean {
-        role.setIsKilled(true)
+        role.isKilled = true
 
         if (role::class.java != Werewolf::class.java)
-            setIsKilled(true)
+            isKilled = true
 
         return true
     }
@@ -49,7 +49,7 @@ class Barber(context: Context) : Role() {
     }
 
     override fun canPlay(round: Int): Boolean {
-        return ( getIsKilled() == true || round == 1)
+        return (isKilled || round == 1)
     }
 
     override fun isATargetPrimary(role: Role): Boolean {
@@ -62,7 +62,7 @@ class Barber(context: Context) : Role() {
 
         output.debug(tag = "servant")
 
-        output.setPlayer(name)
+        output.player = name
 
         output.debug(tag = "servant")
 

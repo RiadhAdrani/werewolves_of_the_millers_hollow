@@ -1,6 +1,5 @@
 package com.example.werewolfofthemillershollow
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
@@ -13,8 +12,6 @@ import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.turn.*
 import com.example.werewolfofthemillershollow.utility.*
-
-import java.lang.Exception
 
 /**
  * Manage how game is played and progressed.
@@ -259,12 +256,12 @@ class GameActivity : AppCompatActivity() {
         val servant = ServantTurn(Servant(baseContext),this)
         if (servant.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
-                if (role.getName() == getString(R.string.servant_name)){
+                if (role.name == getString(R.string.servant_name)){
                     servantRef = role as Servant
                     break
                 }
             }
-            Log.d("Role","servantRef = ${this.servantRef!!.getName()} : ${this.servantRef!!.getPlayer()}")
+            Log.d("Role","servantRef = ${this.servantRef!!.name} : ${this.servantRef!!.player}")
         }
 
         val guardian = GuardianTurn(Guardian(baseContext),this)
@@ -288,23 +285,23 @@ class GameActivity : AppCompatActivity() {
         val barber = BarberTurn(Barber(baseContext), this)
         if (barber.addTurn(output = output, list = list, baseContext)){
             for (role : Role in playerList){
-                if (role.getName()== barber.getRole().getName()){
+                if (role.name == barber.getRole().name){
                     barberRef = role as Barber
                     break
                 }
             }
-            Log.d("Role","barberRef = ${barberRef!!.getName()} : ${this.barberRef!!.getPlayer()}")
+            Log.d("Role","barberRef = ${barberRef!!.name} : ${this.barberRef!!.player}")
         }
 
         val captain = CaptainTurn(Captain(baseContext), this)
         if (captain.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
-                if (role.getIsCaptain()!!){
+                if (role.isCaptain){
                     captainRef = role
                     break
                 }
             }
-            Log.d("Role","captainRef = ${this.captainRef.getName()} : ${this.captainRef.getPlayer()}")
+            Log.d("Role","captainRef = ${this.captainRef.name} : ${this.captainRef.player}")
         }
 
 
@@ -337,7 +334,7 @@ class GameActivity : AppCompatActivity() {
 
             val dialog = UsePowerDialog(
                 currentPlayer,
-                currentPlayer.getRole().getIcon()!!,
+                currentPlayer.getRole().icon,
                 playerList,
                 deadList,
                 currentPlayer.getOnStartTargets(playerList),
@@ -446,21 +443,21 @@ class GameActivity : AppCompatActivity() {
     private fun resolve(){
 
         for (role : Role in playerList){
-            if (role.getIsTalking()!!){
-                events.add(Event.talkFirst(this,role.getPlayer()!!))
+            if (role.isTalking){
+                events.add(Event.talkFirst(this,role.player!!))
                 break
             }
         }
 
         for (turn : Turn<*> in turnList){
-            if (turn.getRole().getName() == getString(R.string.seer_name)){
+            if (turn.getRole().name == getString(R.string.seer_name)){
                 val seer = turn as SeerTurn
-                if (!seer.getRole().getIsKilled()!!)
+                if (!seer.getRole().isKilled)
                     events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
             }
 
-            if (turn.getRole().getIsKilled()!!){
-                if (turn.getRole().getIsServed()!!)
+            if (turn.getRole().isKilled){
+                if (turn.getRole().isServed)
                     turn.servant(this)
             }
 
@@ -468,7 +465,7 @@ class GameActivity : AppCompatActivity() {
 
         var i = 0
         while (i < turnList.size){
-            if (turnList[i].getRole().getIsKilled()!! && !turnList[i].getRole().getIsServed()!!){
+            if (turnList[i].getRole().isKilled && !turnList[i].getRole().isServed){
                 turnList.removeAt(i)
                 i--
             }
@@ -480,11 +477,11 @@ class GameActivity : AppCompatActivity() {
         while (i < playerList.size){
             playerList[i].resetStatusEffects()
 
-            if (playerList[i].getIsKilled()!!){
-                if (playerList[i].getIsServed()!!){
+            if (playerList[i].isKilled){
+                if (playerList[i].isServed){
                     playerList[i].servant(this)
                 }
-                events.add(Event.died(this, playerList[i].getPlayer()!!))
+                events.add(Event.died(this, playerList[i].player!!))
                 deadList.add(playerList[i])
                 playerList.removeAt(i)
                 i--

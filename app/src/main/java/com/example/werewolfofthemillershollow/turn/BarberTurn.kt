@@ -20,7 +20,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return context.getString(R.string.barber_instruction_killed)
 
         return context.getString(R.string.barber_instruction)
@@ -53,12 +53,12 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
     }
 
     override fun canPrimary(): Boolean {
-        return getRole().getIsKilled()!!
+        return getRole().isKilled
     }
 
     override fun onStart(activity: GameActivity): Boolean {
 
-        if (getRole().getIsKilled()!!){
+        if (getRole().isKilled){
 
             if (!getHasPrimary()){
                 val dialog = AlertDialog(
@@ -92,7 +92,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return true
 
         return false
@@ -109,7 +109,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
 
         val sub = getRole().new(activity, player, activity.servantRef)
         sub.debug(tag = "servant")
@@ -119,7 +119,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
 
         activity.barberRef = getRole()
 

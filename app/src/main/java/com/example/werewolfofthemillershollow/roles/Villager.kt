@@ -19,14 +19,14 @@ import com.example.werewolfofthemillershollow.settings.App
 class Villager(context: Context) : Role() {
 
     init {
-        setName(context.getString(App.VILLAGER_NAME))
-        setDescription(context.getString(App.VILLAGER_DESCRIPTION))
-        setTeam(App.VILLAGER_TEAM)
+        name = context.getString(App.VILLAGER_NAME)
+        description = context.getString(App.VILLAGER_DESCRIPTION)
+        team = App.VILLAGER_TEAM
         setHasPrimary(App.VILLAGER_CAN_PRIMARY)
         setHasSecondary(App.VILLAGER_CAN_SECONDARY)
         setPrimaryType(App.VILLAGER_PRIMARY_POWER)
         setSecondaryType(App.VILLAGER_SECONDARY_POWER)
-        setIcon(App.VILLAGER_ICON)
+        icon = App.VILLAGER_ICON
     }
 
     override fun primaryAbility(role: Role): Boolean {
@@ -51,7 +51,7 @@ class Villager(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Villager(context)
-        output.setPlayer(name)
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

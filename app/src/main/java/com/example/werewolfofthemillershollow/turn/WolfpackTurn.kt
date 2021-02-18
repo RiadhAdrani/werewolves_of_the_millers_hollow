@@ -37,21 +37,14 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
 
     override fun getPlayer(list: ArrayList<Role>?): String {
 
-        var output = ""
-        var index = 0
+        val team = ArrayList<Role>()
         for (role : Role in list!!){
-            if (role.isWolf() || role.getIsInfected()!! || role.getTeam()!! == App.WOLF_TEAM){
-                output += if (index == 0)
-                    role.getPlayer()
-                else
-                    ", " + role.getPlayer()
-
-                index++
+            if (role.isWolf() || role.isInfected || role.team == App.WOLF_TEAM){
+                team.add(role)
             }
         }
 
-        output += "."
-        return output
+        return App.listToString(team, activity)
 
     }
 

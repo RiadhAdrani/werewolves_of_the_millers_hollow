@@ -26,8 +26,8 @@ open class Werewolf(context: Context) : Role() {
          * @param role player to kill
          */
         fun wolfPackPower(role : Role) : Boolean{
-            if (!role.getIsGuarded()!!) {
-                role.setIsKilled(true)
+            if (!role.isGuarded) {
+                role.isKilled = true
                 return true
             }
 
@@ -42,8 +42,8 @@ open class Werewolf(context: Context) : Role() {
 
             val output = ArrayList<Role>()
             for (role : Role in list){
-                if (role.isWolf() || role.getIsInfected()!! || role.getTeam() == App.WOLF_TEAM)
-                    if (role.getIsAlive()!!)
+                if (role.isWolf() || role.isInfected || role.team == App.WOLF_TEAM)
+                    if (role.isAlive)
                         output.add((role))
             }
 
@@ -73,14 +73,14 @@ open class Werewolf(context: Context) : Role() {
     }
 
     init {
-        setName(context.getString(App.WOLF_NAME))
-        setDescription(context.getString(App.WOLF_DESCRIPTION))
-        setTeam(App.WOLF_TEAM)
+        name = context.getString(App.WOLF_NAME)
+        description = context.getString(App.WOLF_DESCRIPTION)
+        team = App.WOLF_TEAM
         setHasPrimary(App.WOLF_CAN_PRIMARY)
         setHasSecondary(App.WOLF_CAN_SECONDARY)
         setPrimaryType(App.WOLF_PRIMARY_POWER)
         setSecondaryType(App.WOLF_SECONDARY_POWER)
-        setIcon(App.WOLF_ICON)
+        icon = App.WOLF_ICON
     }
 
     /**
@@ -113,7 +113,7 @@ open class Werewolf(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role? {
         val output = Werewolf(context)
-        output.setPlayer(name)
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

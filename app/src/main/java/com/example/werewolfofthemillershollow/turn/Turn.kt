@@ -44,14 +44,14 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
      * Returns the name to be displayed.
      */
     open fun getPlayer(list : ArrayList<Role>? = null): String{
-        return role?.getPlayer()!!
+        return role?.player!!
     }
 
     /**
      * Returns the displayed icon of the current role turn.
      */
     open fun getIcon(): Int{
-        return role?.getIcon()!!
+        return role?.icon!!
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
      * Return the name of the role to be displayed.
      */
     open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
-        return role?.getName()!!
+        return role?.name!!
     }
 
     /**

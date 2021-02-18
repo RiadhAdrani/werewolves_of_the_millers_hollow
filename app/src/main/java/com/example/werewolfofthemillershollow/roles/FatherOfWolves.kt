@@ -19,14 +19,14 @@ import com.example.werewolfofthemillershollow.settings.App
 class FatherOfWolves(context: Context) :Werewolf(context) {
 
     init {
-        setName(context.getString(App.INFECT_NAME))
-        setDescription(context.getString(App.INFECT_DESCRIPTION))
-        setTeam(App.INFECT_TEAM)
+        name = context.getString(App.INFECT_NAME)
+        description = context.getString(App.INFECT_DESCRIPTION)
+        team = App.INFECT_TEAM
         setHasPrimary(App.INFECT_CAN_PRIMARY)
         setHasSecondary(App.INFECT_CAN_SECONDARY)
         setPrimaryType(App.INFECT_PRIMARY_POWER)
         setSecondaryType(App.INFECT_SECONDARY_POWER)
-        setIcon(App.INFECT_ICON)
+        icon = App.INFECT_ICON
         setPrimaryIcon(App.INFECT_PRIMARY_ICON)
         setPrimaryTargets(App.TARGET_SINGLE)
     }
@@ -40,9 +40,9 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
      */
     override fun primaryAbility(role: Role): Boolean {
 
-        return if (role.getIsGuarded() == false){
-            role.setIsInfected(true)
-            role.setIsKilled(false)
+        return if (!role.isGuarded){
+            role.isInfected = true
+            role.isKilled = false
             setHasPrimary(false)
             true
         } else {
@@ -67,12 +67,12 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
     }
 
     override fun isATargetPrimary(role: Role): Boolean {
-        return role.getIsKilled() == true
+        return role.isKilled
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = FatherOfWolves(context)
-        output.setPlayer(name)
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)

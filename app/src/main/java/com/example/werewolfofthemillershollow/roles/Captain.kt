@@ -25,7 +25,7 @@ class Captain(context: Context) : Role() {
          * @param role chosen player
          */
         fun chooseTalker(role : Role){
-            role.setIsTalking(true)
+            role.isTalking = true
         }
 
         /**
@@ -35,7 +35,7 @@ class Captain(context: Context) : Role() {
          * @param role player to be new captainRef
          */
         fun newCaptain(role : Role){
-            role.setIsCaptain(true)
+            role.isCaptain = true
         }
 
         /**
@@ -52,7 +52,7 @@ class Captain(context: Context) : Role() {
             val output = ArrayList<Role>()
 
             for (role : Role in list){
-                if (!role.getIsCaptain()!!)
+                if (!role.isCaptain)
                     output.add(role)
             }
 
@@ -75,7 +75,7 @@ class Captain(context: Context) : Role() {
         fun findCaptain(list : ArrayList<Role>): Role?{
 
             for (role : Role in list){
-                if (role.getIsCaptain()!!)
+                if (role.isCaptain)
                     return role
             }
             return null
@@ -84,15 +84,15 @@ class Captain(context: Context) : Role() {
     }
 
     init {
-        setName(context.getString(App.CAPTAIN_NAME))
-        setDescription(context.getString(App.CAPTAIN_DESCRIPTION))
-        setTeam(App.CAPTAIN_TEAM)
-        setIsCaptain(true)
+        name = context.getString(App.CAPTAIN_NAME)
+        description = context.getString(App.CAPTAIN_DESCRIPTION)
+        team = App.CAPTAIN_TEAM
+        isCaptain = true
         setHasPrimary(App.CAPTAIN_CAN_PRIMARY)
         setHasSecondary(App.CAPTAIN_CAN_SECONDARY)
         setPrimaryType(App.CAPTAIN_PRIMARY_POWER)
         setSecondaryType(App.CAPTAIN_SECONDARY_POWER)
-        setIcon(App.CAPTAIN_ICON)
+        icon = App.CAPTAIN_ICON
         setPrimaryIcon(App.CAPTAIN_PRIMARY_ICON)
     }
 
@@ -124,7 +124,8 @@ class Captain(context: Context) : Role() {
 
     override fun new(context: Context, name: String, role: Role?): Role {
         val output = Captain(context)
-        output.setPlayer(name)
+
+        output.player = name
 
         if (role != null){
             output.copyStatusEffects(role)
