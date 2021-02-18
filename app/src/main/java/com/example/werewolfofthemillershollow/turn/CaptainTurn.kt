@@ -106,16 +106,21 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             return -1
 
         val index : Int = activity.playerList.indexOf(activity.servantRef)
+
         if (index == -1)
             return -1
 
         val player = activity.servantRef!!.getPlayer() ?: return -1
+
         val sub = getRole().new(activity, player, activity.servantRef)!!
         sub.setIsCaptain(true)
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
         activity.events.add(Event.servant(activity,sub.getName()!!))
+
+        activity.servantRef = null
+
         return index
     }
 

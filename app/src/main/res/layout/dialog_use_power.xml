@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/small"
+    android:padding="@dimen/tiny"
     android:layout_height="wrap_content">
 
     <ImageView
@@ -55,6 +55,7 @@
         android:layout_height="@dimen/yo_mama_extra_extra"
         android:layout_marginVertical="@dimen/small"
         app:layout_constraintTop_toBottomOf="@id/dialog_instruction"
+        app:layout_constraintBottom_toTopOf="@id/dialog_cancel"
         />
 
     <TextView
@@ -81,10 +82,10 @@
         android:textSize="@dimen/text_small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/tiny"
         android:layout_marginEnd="@dimen/medium"
+        app:layout_constraintTop_toTopOf="@id/dialog_cancel"
         app:layout_constraintTop_toBottomOf="@id/dialog_targets_rv"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/dialog_cancel"
         app:layout_constraintRight_toRightOf="parent"
         android:paddingVertical="@dimen/tiny_extra"
         android:paddingHorizontal="@dimen/tiny"

@@ -878,18 +878,15 @@ abstract class Role : Serializable {
         if (index == -1)
             return false
 
-        val sub : Role = new(context = gameActivity, role = gameActivity.servantRef, name = getPlayer()!!)
+        val sub : Role = new(context = gameActivity, role = gameActivity.servantRef, name = gameActivity.servantRef!!.getPlayer()!!)
             ?: return false
-
-        for (turn : Turn<*> in gameActivity.turnList){
-            if (turn.getRole() == this && sub.javaClass == turn.javaClass){
-                turn.servant(activity = gameActivity)
-                return true
-            }
-        }
 
         gameActivity.playerList.removeAt(index)
         gameActivity.playerList.add(index, sub)
+
+        gameActivity.servantRef = null
+        setIsServed(false)
+
         return true
 
     }
@@ -902,7 +899,10 @@ abstract class Role : Serializable {
      * @see Role
      * @see Log.d
      */
-    fun debug(name : String? = getName(), tag : String = "DEBUG_ROLE") {
+    fun debug(
+        name : String? = getName(),
+        tag : String = "DEBUG_ROLE",
+        ) {
         Log.d(tag,"$name Debug Start ----------------------------------------------")
         Log.d(tag,"$name Name : ${getName()}")
         Log.d(tag,"$name Player : ${getPlayer()}")
@@ -912,14 +912,14 @@ abstract class Role : Serializable {
         Log.d(tag,"$name PrimaryPower : ${getPrimaryType()}")
         Log.d(tag,"$name Secondary : ${getHasSecondary()}")
         Log.d(tag,"$name SecondaryPower : ${getHasSecondary()}")
-        Log.d(tag,"$name isAlive : ${getIsAlive()}")
-        Log.d(tag,"$name isKilled : ${getIsKilled()}")
-        Log.d(tag,"$name isInfected : ${getIsInfected()}")
-        Log.d(tag,"$name isServed : ${getIsServed()}")
-        Log.d(tag,"$name isGuarded : ${getIsGuarded()}")
-        Log.d(tag,"$name wasGuarded : ${getWasGuarded()}")
-        Log.d(tag,"$name isTalking : ${getIsTalking()}")
-        Log.d(tag,"$name isCaptain : ${getIsCaptain()}")
+        if (isAlive!!) Log.d(tag,"$name isAlive : ${getIsAlive()}")
+        if (isKilled!! )Log.d(tag,"$name isKilled : ${getIsKilled()}")
+        if (isInfected!!) Log.d(tag,"$name isInfected : ${getIsInfected()}")
+        if (isServed!!) Log.d(tag,"$name isServed : ${getIsServed()}")
+        if (isGuarded!!) Log.d(tag,"$name isGuarded : ${getIsGuarded()}")
+        if (wasGuarded!!) Log.d(tag,"$name wasGuarded : ${getWasGuarded()}")
+        if (isTalking!!) Log.d(tag,"$name isTalking : ${getIsTalking()}")
+        if (isCaptain!!) Log.d(tag,"$name isCaptain : ${getIsCaptain()}")
         Log.d(tag,"Debug End ----------------------------------------------")
     }
 
@@ -1156,7 +1156,7 @@ abstract class Role : Serializable {
         fun fillWithDummyNames(list : ArrayList<Role>) : ArrayList<Role>{
 
             for (role : Role in list){
-                role.setPlayer(UUID.randomUUID().toString())
+                role.setPlayer("${role.getName()} ${App.random(min = 1, max = 100)}")
             }
 
             return list

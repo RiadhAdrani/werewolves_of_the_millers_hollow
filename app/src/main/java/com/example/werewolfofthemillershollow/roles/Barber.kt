@@ -57,14 +57,21 @@ class Barber(context: Context) : Role() {
     }
 
 
-    override fun new(context: Context, name: String, role: Role?): Role {
+    override fun new(context: Context, name: String, role: Role?): Barber {
         val output = Barber(context)
+
+        output.debug(tag = "servant")
+
         output.setPlayer(name)
+
+        output.debug(tag = "servant")
 
         if (role != null){
             output.copyStatusEffects(role)
+
         }
 
+        output.debug(tag = "servant")
         return output
     }
 

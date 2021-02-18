@@ -443,11 +443,32 @@ class GameActivity : AppCompatActivity() {
     /**
      * function used to initialize the discussion in the morning.
      */
-    private fun clearPlayers(){
+    private fun resolve(){
+
+        for (role : Role in playerList){
+            if (role.getIsTalking()!!){
+                events.add(Event.talkFirst(this,role.getPlayer()!!))
+                break
+            }
+        }
+
+        for (turn : Turn<*> in turnList){
+            if (turn.getRole().getName() == getString(R.string.seer_name)){
+                val seer = turn as SeerTurn
+                if (!seer.getRole().getIsKilled()!!)
+                    events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
+            }
+
+            if (turn.getRole().getIsKilled()!!){
+                if (turn.getRole().getIsServed()!!)
+                    turn.servant(this)
+            }
+
+        }
 
         var i = 0
         while (i < turnList.size){
-            if (turnList[i].getRole().getIsKilled()!!){
+            if (turnList[i].getRole().getIsKilled()!! && !turnList[i].getRole().getIsServed()!!){
                 turnList.removeAt(i)
                 i--
             }
@@ -460,6 +481,10 @@ class GameActivity : AppCompatActivity() {
             playerList[i].resetStatusEffects()
 
             if (playerList[i].getIsKilled()!!){
+                if (playerList[i].getIsServed()!!){
+                    playerList[i].servant(this)
+                }
+                events.add(Event.died(this, playerList[i].getPlayer()!!))
                 deadList.add(playerList[i])
                 playerList.removeAt(i)
                 i--
@@ -467,38 +492,6 @@ class GameActivity : AppCompatActivity() {
 
             i++
         }
-
-    }
-
-    /**
-     * Update events that should be displayed before the discussion.
-     */
-    private fun updateEvents(){
-
-        for (role : Role in playerList){
-            if (role.getIsKilled()!!)
-                events.add(Event.died(this, role.getPlayer()!!))
-        }
-
-        for (role : Role in playerList){
-            if (role.getIsTalking()!!){
-                events.add(Event.talkFirst(this,role.getPlayer()!!))
-                break
-            }
-        }
-
-        for (turn : Turn<*> in turnList){
-            if (turn.getRole().getName() == getString(R.string.seer_name)){
-                val seer = turn as SeerTurn
-                events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
-            }
-        }
-
-        Log.d("morning","-------------")
-        for (event : Event in events){
-            Log.d("morning",event.getMessage())
-        }
-        Log.d("morning","-------------")
 
     }
 
@@ -525,8 +518,7 @@ class GameActivity : AppCompatActivity() {
      */
     private fun morning(){
 
-        updateEvents()
-        clearPlayers()
+        resolve()
         round ++
         setTurn()
         wolfTargets.clear()

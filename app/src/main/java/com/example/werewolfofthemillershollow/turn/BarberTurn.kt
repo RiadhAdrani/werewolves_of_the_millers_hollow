@@ -16,7 +16,7 @@ import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
     init {
-        setRole(role,)
+        setRole(role)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -104,16 +104,25 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
             return -1
 
         val index : Int = activity.playerList.indexOf(activity.servantRef)
+        Log.d("servant","servant index = $index")
+
         if (index == -1)
             return -1
 
         val player = activity.servantRef!!.getPlayer() ?: return -1
+
         val sub = getRole().new(activity, player, activity.servantRef)
-        setRole(sub as Barber)
+        sub.debug(tag = "servant")
+
+        setRole(sub)
+        getRole().debug(tag = "servant")
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
         activity.events.add(Event.servant(activity,sub.getName()!!))
+
+        activity.barberRef = getRole()
+
         return index
     }
 

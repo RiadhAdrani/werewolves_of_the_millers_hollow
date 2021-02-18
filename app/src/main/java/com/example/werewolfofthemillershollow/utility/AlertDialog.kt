@@ -41,7 +41,7 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
 
     interface OnClick{
 
-        fun onClick(dialog :AlertDialog)
+        fun onClick(alertDialog :AlertDialog)
 
     }
 

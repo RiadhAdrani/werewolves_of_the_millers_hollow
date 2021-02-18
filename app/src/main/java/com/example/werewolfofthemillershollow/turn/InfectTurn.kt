@@ -4,15 +4,99 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.utility.TargetAdapter
+import com.example.werewolfofthemillershollow.utility.UsePowerDialog
+import com.example.werewolfofthemillershollow.settings.Icons
 
 class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<FatherOfWolves>(activity) {
 
     init {
-        setRole(role,)
+        setRole(role)
+    }
+
+    override fun getHasPrimary(): Boolean {
+        return true
+    }
+
+    override fun getPrimaryOnClickHandler(): UsePowerDialog.OnClickListener {
+
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ) {
+
+                var done = false
+
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        dialog?.dismiss()
+                        activity.next()
+                    }
+                }
+
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(
+                        icon = Icons.fatherInfect,
+                        text = R.string.infect_action_fail,
+                        rightButton = onClick,
+                        cancelable = false
+                    )
+
+                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                    return
+                }
+
+
+                Log.d("Role","Turn Class : using secondary ability")
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = activity.playerList.indexOf(target)
+
+                    if (i == -1)
+                        return
+
+                    if (usePrimary(activity.playerList[i]))
+                        done = true
+                    activity.playerList[i].debug()
+
+                }
+
+                val text = if (done) R.string.infect_action_success
+                           else      R.string.infect_action_fail
+
+                val alert = AlertDialog(
+                    icon = Icons.fatherInfect,
+                    text = text,
+                    rightButton = onClick,
+                    cancelable = false
+                )
+
+                alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+
+        }
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -26,7 +110,24 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-        return activity.wolfTargets
+
+        val output = ArrayList<Role>()
+
+        for (role : Role in activity.wolfTargets){
+            if (!role.isWolf() && !role.getIsInfected()!!){
+                output.add(role)
+            }
+        }
+
+        return output
+    }
+
+    override fun canPrimary(): Boolean {
+        return true
+    }
+
+    override fun getPrimaryIcon(): Int {
+        return Icons.fatherInfect
     }
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
@@ -56,7 +157,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return false
+        return true
     }
 
     override fun servant(activity: GameActivity): Int {
@@ -70,6 +171,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         val player = activity.servantRef!!.getPlayer() ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as FatherOfWolves)
+        
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
