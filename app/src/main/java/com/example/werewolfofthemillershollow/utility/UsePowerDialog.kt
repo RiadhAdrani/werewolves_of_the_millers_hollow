@@ -24,6 +24,7 @@ import com.example.werewolfofthemillershollow.turn.Turn
  */
 class UsePowerDialog(
     private var turn : Turn<*>,
+    var ability: Ability,
     private var headerIcon : Int,
     private var alivePlayers : ArrayList<Role>,
     private var deadPlayers : ArrayList<Role>,
@@ -54,7 +55,7 @@ class UsePowerDialog(
 
     interface OnClickListener{
 
-        fun done(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter, activity: GameActivity, dialog : UsePowerDialog? = null)
+        fun done(ability: Ability, aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter, activity: GameActivity, dialog : UsePowerDialog? = null)
 
         fun reset(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
@@ -93,6 +94,7 @@ class UsePowerDialog(
         doneButton = dialog.findViewById(R.id.dialog_done)
         doneButton.setOnClickListener {
             onClick?.done(
+                ability = ability,
                 aliveList = alivePlayers,
                 deadList = deadPlayers,
                 adapter = targetAdapter,

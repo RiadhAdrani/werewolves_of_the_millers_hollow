@@ -23,13 +23,6 @@ class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(act
         return getRole().canPlay(round)
     }
 
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
-    }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 

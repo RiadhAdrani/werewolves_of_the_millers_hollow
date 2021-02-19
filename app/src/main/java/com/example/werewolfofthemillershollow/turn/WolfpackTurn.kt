@@ -8,12 +8,30 @@ import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Werewolf
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.Ability
 
 class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>(activity) {
 
+    private var primaryAbility : Ability
+
     init {
         setRole(role)
+
+        val primary = object : Ability.Specification{
+            override fun use(self: Role, role: Role): Boolean {
+                return Werewolf.wolfPackPower(role = role)
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return true
+            }
+        }
+
+        primaryAbility = Ability(primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.packAttack)
+
     }
+
+
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
         return context.getString(R.string.wolf_instruction)
@@ -27,14 +45,6 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
         return Werewolf.getPackIcon()
     }
 
-    override fun getPrimaryIcon(): Int {
-        return Werewolf.getPackPowerIcon()
-    }
-
-    override fun getSecondaryIcon(): Int {
-        return Icons.noAbility
-    }
-
     override fun getPlayer(list: ArrayList<Role>?): String {
 
         val team = ArrayList<Role>()
@@ -46,28 +56,6 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
 
         return App.listToString(team, activity)
 
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-
-        val boolean = Werewolf.wolfPackPower(role = target)
-
-        if (boolean)
-            activity.wolfTargets.add(target)
-
-        return boolean
-    }
-
-    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-        return list
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
-    }
-
-    override fun getHasPrimary(): Boolean {
-        return true
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -87,8 +75,8 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
         return context?.getString(R.string.wolfpack) + " (${Werewolf.getWolfPack(list!!).size})"
     }
 
-    override fun getPrimaryTargets(): Int {
-        return Werewolf.getPackTargets()
+    override fun getPrimaryAbility(): Ability {
+        return primaryAbility
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {

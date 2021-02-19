@@ -31,14 +31,6 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
         return getRole().canPlay(round)
     }
 
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
-    }
-
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
@@ -53,15 +45,11 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
         return false
     }
 
-    override fun canPrimary(): Boolean {
-        return getRole().isKilled
-    }
-
     override fun onStart(activity: GameActivity): Boolean {
 
         if (getRole().isKilled){
 
-            if (!getHasPrimary()){
+            if (getPrimaryAbility()!!.times != App.ABILITY_NONE){
                 val dialog = AlertDialog(
                     text = R.string.no_power,
                     icon = Icons.noAbility,
@@ -77,18 +65,18 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
     }
 
     override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
-        return getPrimaryOnClickHandler()
+        return getOnClickHandler()
     }
 
     override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
 
-        return if (getHasPrimary())
-            getPrimaryOnTargetHandler()
+        return if (getPrimaryAbility()!!.times != App.ABILITY_NONE)
+            getOnTargetHandler()
         else null
     }
 
     override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return getTargetsPrimary(list)
+        return getPrimaryAbility()!!.targetList(self = getRole(),list = list)
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {

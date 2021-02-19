@@ -333,7 +333,7 @@ class GameActivity : AppCompatActivity() {
         if (currentPlayer.onStart(this)!!){
 
             val dialog = UsePowerDialog(
-                currentPlayer,
+                currentPlayer,,
                 currentPlayer.getRole().icon,
                 playerList,
                 deadList,
@@ -366,13 +366,13 @@ class GameActivity : AppCompatActivity() {
 
             if (currentPlayer.getHasPrimary()){
                 val dialog = UsePowerDialog(
-                    currentPlayer,
+                    currentPlayer,,
                     currentPlayer.getPrimaryIcon(),
                     playerList,
                     deadList,
                     currentPlayer.getTargetsPrimary(playerList),
-                    currentPlayer.getPrimaryOnClickHandler(),
-                    currentPlayer.getPrimaryOnTargetHandler(),
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
                     null,
                     true,
                     this
@@ -395,7 +395,7 @@ class GameActivity : AppCompatActivity() {
 
             if (currentPlayer.getHasSecondary()){
                 val dialog = UsePowerDialog(
-                    currentPlayer,
+                    currentPlayer,,
                     currentPlayer.getSecondaryIcon(),
                     playerList,
                     deadList,

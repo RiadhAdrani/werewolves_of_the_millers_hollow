@@ -8,10 +8,7 @@ import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
+import com.example.werewolfofthemillershollow.utility.*
 
 class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity) {
 
@@ -28,14 +25,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return true
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -56,14 +45,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return Icons.captainChoose
     }
 
-    override fun getPrimaryTargets(): Int {
-        return Captain.getCaptainTargets()
-    }
-
-    override fun getHasPrimary(): Boolean {
-        return true
-    }
-
     override fun onStart(activity: GameActivity): Boolean {
 
         if (getRole().isKilled){
@@ -78,9 +59,9 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 activity.captainRef = activity.playerList[index]
 
                 val onClick = object : AlertDialog.OnClick{
-                    override fun onClick(dialog: AlertDialog) {
+                    override fun onClick(alertDialog: AlertDialog) {
                         activity.displayNext()
-                        dialog.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 
@@ -124,14 +105,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return index
     }
 
-    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-        return Captain.targets(list)
-    }
-
-    override fun getPrimaryIcon(): Int {
-        return Icons.captainChoose
-    }
-
     override fun getRoleToDisplay(context: Context?, list: ArrayList<Role>?): String {
         return context!!.getString(R.string.captain_name)
     }
@@ -144,6 +117,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
             return object : UsePowerDialog.OnClickListener{
                 override fun done(
+                    ability: Ability,
                     aliveList: ArrayList<Role>,
                     deadList: ArrayList<Role>,
                     adapter: TargetAdapter,
@@ -192,7 +166,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         return object : TargetAdapter.OnClickListener{
 
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
+            override fun onClick(
+                ability: Ability,
+                position: Int,
+                dialog: UsePowerDialog,
+                adapter: TargetAdapter
+            ) {
 
                 if (position in adapter.getTargets()){
                     Log.d("TargetAdapter","item $position removed from target list.")

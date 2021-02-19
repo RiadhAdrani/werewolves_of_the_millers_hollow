@@ -2,18 +2,13 @@ package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.Ability
 
 /**
  * The Father of the Werewolves : Sided the wolf pack.
  * Has the ability to infect a non-wolf player once in the game.
  * @see Role
- * @see App.INFECT_NAME
- * @see App.INFECT_DESCRIPTION
- * @see App.INFECT_TEAM
- * @see App.INFECT_CAN_PRIMARY
- * @See App.INFECT_PRIMARY_POWER
- * @see App.INFECT_CAN_SECONDARY
- * @see App.INFECT_SECONDARY_POWER
  * @param context context in which the class object is created
  */
 class FatherOfWolves(context: Context) :Werewolf(context) {
@@ -22,52 +17,28 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         name = context.getString(App.INFECT_NAME)
         description = context.getString(App.INFECT_DESCRIPTION)
         team = App.INFECT_TEAM
-        setHasPrimary(App.INFECT_CAN_PRIMARY)
-        setHasSecondary(App.INFECT_CAN_SECONDARY)
-        setPrimaryType(App.INFECT_PRIMARY_POWER)
-        setSecondaryType(App.INFECT_SECONDARY_POWER)
         icon = App.INFECT_ICON
-        setPrimaryIcon(App.INFECT_PRIMARY_ICON)
-        setPrimaryTargets(App.TARGET_SINGLE)
-    }
 
-    /**
-     * Infect a non-wolf chosen player
-     * If he is not protected, the target joins the wolf pack : return false
-     * If he is protected, the operation fails : return false
-     * @return success -> true | fail -> fail
-     * @param role player to be infected
-     */
-    override fun primaryAbility(role: Role): Boolean {
+        val primary = object : Ability.Specification{
+            override fun use(self: Role, role: Role): Boolean {
+                if (!role.isKilled)
+                    return false
 
-        return if (!role.isGuarded){
-            role.isInfected = true
-            role.isKilled = false
-            setHasPrimary(false)
-            true
-        } else {
-            false
+                role.isKilled = false
+                role.isInfected = true
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return targetRole.isKilled
+            }
         }
-    }
+        primaryAbility = Ability(primary,App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.fatherInfect)
 
-    /**
-     * Not Available
-     * @see App.INFECT_CAN_SECONDARY
-     */
-    override fun secondaryAbility(role: Role): Boolean {
-        return false
-    }
-
-    override fun onDeath(role: Role): Boolean {
-        return true
     }
 
     override fun canPlay(round: Int): Boolean {
         return round > 1
-    }
-
-    override fun isATargetPrimary(role: Role): Boolean {
-        return role.isKilled
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {

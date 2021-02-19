@@ -7,11 +7,8 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.*
 
 class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<FatherOfWolves>(activity) {
 
@@ -19,14 +16,11 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         setRole(role)
     }
 
-    override fun getHasPrimary(): Boolean {
-        return true
-    }
-
-    override fun getPrimaryOnClickHandler(): UsePowerDialog.OnClickListener {
+    override fun getOnClickHandler(): UsePowerDialog.OnClickListener {
 
         return object : UsePowerDialog.OnClickListener{
             override fun done(
+                ability: Ability,
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
                 adapter: TargetAdapter,
@@ -68,7 +62,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     if (i == -1)
                         return
 
-                    if (usePrimary(activity.playerList[i]))
+                    if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i]))
                         done = true
                     activity.playerList[i].debug()
 
@@ -109,37 +103,8 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         return context.getString(R.string.infect_instruction_nobody)
     }
 
-    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-
-        val output = ArrayList<Role>()
-
-        for (role : Role in activity.wolfTargets){
-            if (!role.isWolf() && !role.isInfected){
-                output.add(role)
-            }
-        }
-
-        return output
-    }
-
-    override fun canPrimary(): Boolean {
-        return true
-    }
-
-    override fun getPrimaryIcon(): Int {
-        return Icons.fatherInfect
-    }
-
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {

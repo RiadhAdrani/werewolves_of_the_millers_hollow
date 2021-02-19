@@ -30,14 +30,6 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         return getRole().canPlay(round)
     }
 
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
-    }
-
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)
@@ -52,42 +44,18 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
     }
 
-    override fun canPrimary(): Boolean {
-        return getRole().isKilled
-    }
-
-    override fun onStart(activity: GameActivity): Boolean {
-
-        if (getRole().isKilled){
-
-            if (!getHasPrimary()){
-                val dialog = AlertDialog(
-                    text = R.string.no_power,
-                    icon = Icons.noAbility,
-                    cancelable = false
-                )
-                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
-                return false
-            }
-
-            return true
-        }
-
-        return false
-    }
-
     override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
-        return getPrimaryOnClickHandler()
+        return getOnClickHandler()
     }
 
     override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return getTargetsPrimary(list)
+        return getPrimaryAbility()!!.targetList(self = getRole(), list = list)
     }
 
     override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
 
-        return if (getHasPrimary())
-            getPrimaryOnTargetHandler()
+        return if (getPrimaryAbility()!!.times != App.ABILITY_NONE)
+            getOnTargetHandler()
         else null
     }
 

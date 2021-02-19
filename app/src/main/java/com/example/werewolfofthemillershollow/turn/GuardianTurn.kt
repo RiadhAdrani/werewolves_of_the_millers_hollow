@@ -22,14 +22,6 @@ class GuardianTurn(role : Guardian, var activity: GameActivity) : Turn<Guardian>
         return getRole().canPlay(round)
     }
 
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
-    }
-
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
 
         val index = Role.roleInList(role = getRole(), list = list)

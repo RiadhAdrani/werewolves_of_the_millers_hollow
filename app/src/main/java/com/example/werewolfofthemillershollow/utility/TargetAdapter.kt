@@ -45,7 +45,7 @@ class TargetAdapter(
 
     interface OnClickListener{
 
-        fun onClick(position: Int, dialog: UsePowerDialog, adapter : TargetAdapter)
+        fun onClick(ability: Ability, position: Int, dialog: UsePowerDialog, adapter : TargetAdapter)
     }
 
     class MyViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -80,6 +80,7 @@ class TargetAdapter(
 
         holder.use.setOnClickListener {
             handler?.onClick(
+                dialog.ability,
                 holder.adapterPosition,
                 dialog,
                 this

@@ -8,13 +8,6 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * Werewolf : Sided with the wolf pack.
  * No remarkable ability on his own
  * @see Role
- * @see App.WOLF_NAME
- * @see App.WOLF_DESCRIPTION
- * @see App.WOLF_TEAM
- * @see App.WOLF_CAN_PRIMARY
- * @See App.WOLF_PRIMARY_POWER
- * @see App.WOLF_CAN_SECONDARY
- * @see App.WOLF_SECONDARY_POWER
  * @param context context in which the class object is created
  */
 open class Werewolf(context: Context) : Role() {
@@ -76,40 +69,13 @@ open class Werewolf(context: Context) : Role() {
         name = context.getString(App.WOLF_NAME)
         description = context.getString(App.WOLF_DESCRIPTION)
         team = App.WOLF_TEAM
-        setHasPrimary(App.WOLF_CAN_PRIMARY)
-        setHasSecondary(App.WOLF_CAN_SECONDARY)
-        setPrimaryType(App.WOLF_PRIMARY_POWER)
-        setSecondaryType(App.WOLF_SECONDARY_POWER)
         icon = App.WOLF_ICON
-    }
-
-    /**
-     * Not Available
-     * @see App.WOLF_CAN_PRIMARY
-     */
-    override fun primaryAbility(role: Role): Boolean {
-        return false
-    }
-
-    /**
-     * Not Available
-     * @see App.WOLF_CAN_SECONDARY
-     */
-    override fun secondaryAbility(role: Role): Boolean {
-        return false
-    }
-
-    override fun onDeath(role: Role): Boolean {
-        return true
     }
 
     override fun canPlay(round: Int): Boolean {
         return true
     }
 
-    override fun isATargetPrimary(role: Role): Boolean {
-        return true
-    }
 
     override fun new(context: Context, name: String, role: Role?): Role? {
         val output = Werewolf(context)

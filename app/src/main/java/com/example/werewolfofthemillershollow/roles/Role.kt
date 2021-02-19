@@ -6,6 +6,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.Ability
 import com.example.werewolfofthemillershollow.utility.StatusEffect
 import java.io.Serializable
 
@@ -34,9 +35,7 @@ abstract class Role : Serializable {
 
     /**
      * team with which the player is sided.
-     * three (3) teams are available : village, wolves and solos
-     * @see getTeam
-     * @see setTeam
+     * three (3) teams are available : village, wolves and solo.
      * @see App.TEAM_VILLAGE
      * @see App.TEAM_WOLVES
      * @see App.TEAM_SOLO
@@ -44,160 +43,25 @@ abstract class Role : Serializable {
     var team : Int? = null
 
     /**
-     * the number of times this role can use its primary ability
-     * @see getPrimaryType
-     * @see setPrimaryType
-     * @see App.ABILITY_NONE
-     * @see App.ABILITY_ONCE
-     * @see App.ABILITY_INFINITE
+     * Primary ability of the current role.
+     * @see Ability
      */
-    private var primaryType : Int? = null
+    var primaryAbility : Ability? = null
 
     /**
-     * getter for Role.primaryType
-     * @return id of the power type from App
-     * @see primaryType
-     * @see setPrimaryType
-     * @see App.ABILITY_NONE
-     * @see App.ABILITY_ONCE
-     * @see App.ABILITY_INFINITE
+     * Secondary ability of the current role.
+     * @see Ability
      */
-    fun getPrimaryType() : Int? = primaryType
+    var secondaryAbility : Ability? = null
 
     /**
-     * setter for Role.primaryType
-     * @param primary id of the power type from App
-     * @see primaryType
-     * @see getPrimaryType
-     * @see App.ABILITY_NONE
-     * @see App.ABILITY_ONCE
-     * @see App.ABILITY_INFINITE
+     * Tertiary ability of the current role.
+     * @see Ability
      */
-    fun setPrimaryType(primary : Int?) {
-        this.primaryType = primary
-    }
-
-    /**
-     * the number of times this role can use its secondary ability
-     */
-    private var secondaryType : Int? = null
-
-    /**
-     * getter for Role.secondaryType
-     * @return id of the power type from App
-     * @see secondaryType
-     * @see setSecondaryType
-     * @see App.ABILITY_NONE
-     * @see App.ABILITY_ONCE
-     * @see App.ABILITY_INFINITE
-     */
-    fun getSecondaryType() : Int? = secondaryType
-
-    /**
-     * setter for Role.secondaryType
-     * @param secondary id of the power type from App
-     * @see secondaryType
-     * @see getSecondaryType
-     * @see App.ABILITY_NONE
-     * @see App.ABILITY_ONCE
-     * @see App.ABILITY_INFINITE
-     */
-    fun setSecondaryType(secondary : Int?) {
-        this.secondaryType = secondary
-    }
-
-    /**
-     * allow this role to use its primary ability
-     * most roles has at least one ability
-     * @see getHasPrimary
-     * @see setHasPrimary
-     * @see App
-     */
-    private var hasPrimary :Boolean? = false
-
-    /**
-     * getter for Role.hasPrimary
-     * @return the ability to use primary or not
-     * @see setHasPrimary
-     * @see App
-     */
-    fun getHasPrimary() : Boolean? = hasPrimary
-
-    /**
-     * setter for Role.hasPrimary
-     * @param can new value
-     * @see App
-     */
-    fun setHasPrimary(can : Boolean?) {
-        hasPrimary = can
-    }
-
-    /**
-     * allow this role to use its secondary ability
-     * only few roles has a second ability
-     * @see App
-     */
-    private var hasSecondary : Boolean? = false
-
-    /**
-     * getter for Role.hasSecondary
-     * @return the ability to use secondary or not
-     * @see App
-     */
-    fun getHasSecondary() : Boolean? = hasSecondary
-
-    /**
-     * setter for Role.hasSecondary
-     * @param can new value
-     * @see App
-     */
-    fun setHasSecondary(can : Boolean?) {
-        hasSecondary = can
-    }
-
-    /**
-     * determine whether this role can use its tertiary ability or no.
-     */
-    private var hasTertiary : Boolean = false
-
-    /**
-     * getter for Role.hasTertiary
-     * @return (true) if this role has the ability, (false) otherwise.
-     */
-    fun getHasTertiary(): Boolean = hasSecondary!!
-
-    /**
-     * setter for Role.hasTertiary.
-     * @param can new value.
-     */
-    fun setHasTertiary(can : Boolean){
-        hasTertiary = can
-    }
-
-    /**
-     * determine how many times can this role use its tertiary ability
-     * @see hasTertiary
-     */
-    private var tertiaryType : Int = App.ABILITY_NONE
-
-    /**
-     * getter for Role.tertiaryType
-     * @return (Boolean) true, false
-     */
-    fun getTertiaryType() : Int = tertiaryType
-
-    /**
-     * setter for Role.tertiaryType
-     * @param power new value.
-     */
-    fun setTertiaryType(power : Int){
-        tertiaryType = power
-    }
+    var tertiaryAbility : Ability? = null
 
     /**
      * indicates if the player is still playing or not
-     * @see onDeath
-     * @see die
      */
     var isAlive : Boolean = true
 
@@ -253,167 +117,11 @@ abstract class Role : Serializable {
     var icon : Int = Icons.person
 
     /**
-     * Primary ability icon
-     */
-    private var primaryIcon : Int? = Icons.noAbility
-
-    /**
-     * getter for Role.primaryIcon
-     * @return icon as id in res
-     */
-    fun getPrimaryIcon() : Int? = primaryIcon
-
-    /**
-     * setter for Role.primaryIcon
-     * @param icon new icon id
-     */
-    fun setPrimaryIcon(icon : Int?) {
-        this.primaryIcon = icon
-    }
-
-    /**
-     * Secondary ability icon
-     */
-    private var secondaryIcon : Int? = Icons.noAbility
-
-    /**
-     * getter for Role.secondaryIcon
-     * @return icon as id in res
-     */
-    fun getSecondaryIcon() : Int? = secondaryIcon
-
-    /**
-     * setter for Role.secondaryIcon.
-     * @param icon new icon id
-     */
-    fun setSecondaryIcon(icon : Int?){
-        this.secondaryIcon = icon
-    }
-
-    /**
-     * Tertiary ability icon
-     */
-    private var tertiaryIcon : Int = Icons.noAbility
-
-    /**
-     * getter for Role.tertiaryIcon
-     * @return icon as id in res
-     */
-    fun getTertiaryIcon() : Int = tertiaryIcon
-
-    /**
-     * setter for Role.tertiaryIcon.
-     * @param icon new icon id
-     */
-    fun setTertiaryIcon(icon : Int){
-        this.tertiaryIcon = icon
-    }
-
-    /**
-     * determine how many player could be targeted with the primary ability.
-     */
-    private var primaryTargets : Int = App.TARGET_NONE
-
-    /**
-     * getter for Role.primaryTargets
-     */
-    fun getPrimaryTargets() : Int = primaryTargets
-
-    /**
-     * setter for Role.primaryTargets
-     * @param targets new target rule
-     */
-    fun setPrimaryTargets(targets : Int){
-        primaryTargets = targets
-    }
-
-    /**
-     * determine how many player could be targeted with the secondary ability.
-     */
-    private var secondaryTargets : Int = App.TARGET_NONE
-
-    /**
-     * getter for Role.secondaryTargets
-     */
-    fun getSecondaryTargets() : Int = secondaryTargets
-
-    /**
-     * setter for Role.secondaryTargets
-     * @param targets new target rule
-     */
-    fun setSecondaryTargets(targets : Int){
-        secondaryTargets = targets
-    }
-
-    /**
-     * determine how many player could be targeted with the tertiary ability.
-     */
-    private var tertiaryTargets: Int = App.TARGET_NONE
-
-    /**
-     * getter for Role.tertiaryTargets
-     */
-    fun getTertiaryTargets() : Int = tertiaryTargets
-
-    /**
-     * setter for Role.tertiaryTargets
-     * @param targets new target rule
-     */
-    fun setTertiaryTargets(targets : Int){
-        tertiaryTargets = targets
-    }
-
-    /**
-     * primary ability of this role
-     * @return return true if the operation was successful else false
-     * @param role target role
-     * @see hasPrimary
-     * @see primaryType
-     */
-    abstract fun primaryAbility(role : Role) : Boolean
-
-    /**
-     * secondary ability of this role
-     * @return return true if the operation was successful else false
-     * @param role target role
-     * @see hasSecondary
-     * @see secondaryType
-     */
-    abstract fun secondaryAbility(role : Role) : Boolean
-
-    /**
-     * third ability of this role
-     * @return return true if the operation was successful else false
-     * @param role target role
-     * @see hasTertiary
-     * @see tertiaryType
-     */
-    open fun tertiaryAbility(role : Role): Boolean{
-        return false
-    }
-
-    /**
-     * action that will be executed just before the death
-     * of the role
-     * @param role possible target role
-     * @see die
-     * @see isAlive
-     */
-    abstract fun onDeath(role : Role) : Boolean
-
-    /**
      * indicates if the role can play this round or not
      * @param round current night (round)
      * @return return true if the player can play this round
      */
     abstract fun canPlay(round : Int) : Boolean
-
-    /**
-     * indicates if the specified role could be targeted with the primary ability or not
-     * @param role role to check
-     * @return true if role could be targeted, else false
-     */
-    abstract fun isATargetPrimary(role : Role) : Boolean
 
     /**
      * indicates if the specified role could be targeted with the secondary ability or not.
@@ -430,80 +138,6 @@ abstract class Role : Serializable {
      * @return true if could be targeted, else false.
      */
     open fun isATargetTertiary(role: Role): Boolean{
-        return false
-    }
-    /**
-     * kill the role
-     * @return return nothing
-     * @see onDeath
-     */
-    fun die(){
-        this.isAlive = false
-    }
-
-    /**
-     * use the primary ability of this role
-     * @param role target role
-     * @return true if the operation executed successfully, else false
-     * @see primaryType
-     * @see hasPrimary
-     * @see primaryAbility
-     */
-    fun usePrimaryAbility(role : Role) : Boolean{
-
-        if (hasPrimary == true){
-            if (primaryAbility(role)){
-                if (primaryType == App.ABILITY_ONCE) hasPrimary = false
-                return true
-            }
-        }
-
-        return false
-    }
-
-    /**
-     * use the secondary ability of this role
-     * @param role target role
-     * @return true if the operation executed successfully, else false
-     * @see secondaryType
-     * @see hasSecondary
-     * @see secondaryAbility
-     */
-    fun useSecondaryAbility(role : Role) : Boolean{
-
-        Log.d("Role","Role Class: Using secondary")
-
-        if (hasSecondary == true){
-            if (secondaryAbility(role)){
-                Log.d("Role","Used Secondary")
-                if (secondaryType == App.ABILITY_ONCE) hasSecondary = false
-
-                Log.d("Role","Role Class: Used secondary")
-                return true
-            }
-        }
-
-        Log.d("Role","Role Class: Cannot use secondary")
-        return false
-    }
-
-    /**
-     * use the secondary ability of this role
-     * @param role target role
-     * @return true if the operation executed successfully, else false
-     * @see tertiaryType
-     * @see hasTertiary
-     * @see tertiaryAbility
-     */
-    fun useTertiaryAbility(role : Role) : Boolean{
-
-        if (hasTertiary){
-            if (tertiaryAbility(role)){
-                if (tertiaryType == App.ABILITY_ONCE) hasTertiary = false
-                return true
-            }
-        }
-
         return false
     }
 
@@ -640,10 +274,6 @@ abstract class Role : Serializable {
         Log.d(tag,"$name Player : ${this.player}")
         Log.d(tag,"$name Description : $description")
         Log.d(tag,"$name Team : ${this.team}")
-        Log.d(tag,"$name Primary : ${getHasPrimary()}")
-        Log.d(tag,"$name PrimaryPower : ${getPrimaryType()}")
-        Log.d(tag,"$name Secondary : ${getHasSecondary()}")
-        Log.d(tag,"$name SecondaryPower : ${getHasSecondary()}")
         if (isAlive) Log.d(tag,"$name isAlive : $isAlive")
         if (isKilled )Log.d(tag,"$name isKilled : $isKilled")
         if (isInfected) Log.d(tag,"$name isInfected : $isInfected")
@@ -659,37 +289,31 @@ abstract class Role : Serializable {
 
         /**
          * value = (-1)
-         * @sample isListValid
          */
         const val NO_ERROR : Int = -1
 
         /**
          * value = (0)
-         * @sample isListValid
          */
         const val NO_CAPTAIN : Int = 0
 
         /**
          * value = (1)
-         * @sample isListValid
          */
         const val NO_VILLAGER : Int = 1
 
         /**
          * value = (2)
-         * @sample isListValid
          */
         const val NO_WOLVES : Int = 2
 
         /**
          * value = (3)
-         * @sample isListValid
          */
         const val UNBALANCED_TEAMS : Int = 3
 
         /**
          * value = (4)
-         * @sample isListValid
          */
         const val FEW_PLAYERS : Int = 4
 

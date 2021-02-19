@@ -5,13 +5,14 @@ import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.Ability
 import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
-import kotlin.collections.ArrayList
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
+
+    private var role : R? = null
 
     /**
      * Return the instructions said by the game master when the current turn begins.
@@ -21,24 +22,31 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
      */
     abstract fun getInstructions(context: Context, list : ArrayList<Role>? = null):String
 
+    /**
+     * Add this turn to the list containing game turns [output], if the current role needed for this this object
+     * exists in the game [list].
+     * @return return true if a Turn was added, otherwise false.
+     */
     abstract fun addTurn(output : ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean
 
-    private var role : R? = null
+    /**
+     * Make the needed changes to the servantRef.
+     */
+    abstract fun servant(activity: GameActivity): Int
 
     /**
-     * getter for Turn.role
+     * Returns whether the current role turn is playable or not.
+     * * Returning (true) means that the turn will be played normally.
+     * * Returning (false) means that the turn will be skipped.
+     * @param round current round
+     * @param list list of alive players
      */
-    fun getRole() : R{
-        return role!!
-    }
+    abstract fun canPlay(round : Int, list : ArrayList<Role>? = null) : Boolean
 
     /**
-     * setter for Turn.Role
-     * @param role new role
+     * Return whether the current role should use his power or not.
      */
-    fun setRole(role : R){
-        this.role = role
-    }
+    abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
 
     /**
      * Returns the name to be displayed.
@@ -55,26 +63,6 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
-     * Returns the icon representing the primary ability.
-     */
-    open fun getPrimaryIcon(): Int{
-        if (role?.getHasPrimary()!!)
-            return role?.getPrimaryIcon()!!
-
-        return Icons.noAbility
-    }
-
-    /**
-     * Returns the icon representing the secondary ability.
-     */
-    open fun getSecondaryIcon(): Int{
-        if (role?.getHasSecondary()!!)
-            return role?.getSecondaryIcon()!!
-
-        return Icons.noAbility
-    }
-
-    /**
      * Return the name of the role to be displayed.
      */
     open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
@@ -82,88 +70,29 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
-     * Return whether this role can use its primary ability or no.
+     * Return the primary ability of this turn role
      */
-    open fun getHasPrimary(): Boolean{
-        return role?.getHasPrimary()!!
-    }
+    open fun getPrimaryAbility(): Ability? = getRole().primaryAbility
 
     /**
-     * Returns whether the role can use its primary ability in the current round.
+     * Return the secondary ability of this turn role
      */
-    open fun canPrimary(): Boolean{
-        return true
-    }
+    open fun getSecondaryAbility(): Ability? = getRole().secondaryAbility
 
     /**
-     * Return whether this role can use its secondary ability or no.
+     * Return the tertiary ability of this turn role
      */
-    open fun getHasSecondary(): Boolean{
-        return role?.getHasSecondary()!!
-    }
-
-    /**
-     * Returns whether the role can use its secondary ability in the current round.
-     */
-    open fun canSecondary(): Boolean{
-        return false
-    }
-
-    /**
-     * Return whether this role can use its tertiary ability or no.
-     */
-    open fun getHasTertiary(): Boolean{
-        return role?.getHasTertiary()!!
-    }
-
-    /**
-     * Returns whether the role can use its tertiary ability in the current round.
-     */
-    open fun canTertiary(): Boolean{
-        return false
-    }
-
-    /**
-     * Return whether this role can use its tertiary ability or no.
-     */
-    open fun getCanUseTertiary(): Boolean{
-        return role?.getHasTertiary()!!
-    }
-
-    /**
-     * returns the number of players that can be targeted with the primary ability
-     */
-    open fun getPrimaryTargets() : Int{
-        return role!!.getPrimaryTargets()
-    }
-
-    /**
-     * returns the number of players that can be targeted with the secondary ability
-     */
-    open fun getSecondaryTargets(): Int{
-        return role!!.getSecondaryTargets()
-    }
-
-    /**
-     * returns the number of players that can be targeted with the tertiary ability
-     */
-    open fun getTertiaryTargets(): Int{
-        return role!!.getTertiaryTargets()
-    }
-
-    /**
-     * Make the needed changes to the servantRef.
-     */
-    abstract fun servant(activity: GameActivity): Int
+    open fun getTertiaryAbility(): Ability? = getRole().tertiaryAbility
 
     /**
      * Interface used to override the functionality of the fragment UsePowerDialog.
      * @see UsePowerDialog
      */
-    open fun getPrimaryOnClickHandler() : UsePowerDialog.OnClickListener{
+    open fun getOnClickHandler() : UsePowerDialog.OnClickListener{
 
         return object : UsePowerDialog.OnClickListener{
             override fun done(
+                ability: Ability,
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
                 adapter: TargetAdapter,
@@ -176,7 +105,6 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-
                 Log.d("Role","Turn Class : using secondary ability")
 
                 for(index : Int in adapter.getTargets()){
@@ -188,7 +116,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     if (i == -1)
                         return
 
-                    usePrimary(gameActivity.playerList[i])
+                    ability.use(self = getRole(), role = gameActivity.playerList[i])
                     gameActivity.playerList[i].debug()
 
                 }
@@ -210,68 +138,24 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
-     * Interface used to override the functionality of the fragment UsePowerDialog.
+     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
      * @see UsePowerDialog
+     * @see TargetAdapter
      */
-    open fun getSecondaryOnClickHandler() : UsePowerDialog.OnClickListener{
+    open fun getOnTargetHandler() : TargetAdapter.OnClickListener{
 
-        return object : UsePowerDialog.OnClickListener{
-            override fun done(
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
-                adapter: TargetAdapter,
-                activity: GameActivity,
-                dialog: UsePowerDialog?
-            ) {
+        return object : TargetAdapter.OnClickListener{
 
-                if (adapter.getTargets().isEmpty())
-                    return
-
-                Log.d("Role","Turn Class : using secondary ability")
-
-                for(index : Int in adapter.getTargets()){
-
-                    val target : Role = adapter.getList()[index]
-
-                    val i = gameActivity.playerList.indexOf(target)
-
-                    if (i == -1)
-                        return
-
-                    useSecondary(gameActivity.playerList[i])
-                    gameActivity.playerList[i].debug()
-
-                }
-
-                dialog?.dismiss()
-            }
-
-            override fun reset(
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
+            override fun onClick(
+                ability: Ability,
+                position: Int,
+                dialog: UsePowerDialog,
                 adapter: TargetAdapter
             ) {
-                adapter.emptyTargets()
-            }
-
-        }
-
-    }
-
-    /**
-     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
-     * @see UsePowerDialog
-     * @see TargetAdapter
-     */
-    open fun getPrimaryOnTargetHandler() : TargetAdapter.OnClickListener{
-
-        return object : TargetAdapter.OnClickListener{
-
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
 
                 Log.d("TargetAdapter","Clicked on pos $position")
 
-                if (getPrimaryTargets() == App.TARGET_NONE)
+                if (ability.times == App.TARGET_NONE)
                     return
 
                 if (position in adapter.getTargets()){
@@ -284,7 +168,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-                if (getPrimaryTargets() == App.TARGET_SINGLE){
+                if (ability.targets == App.TARGET_SINGLE){
 
                     if (adapter.getTargets().size > 0){
                         adapter.emptyTargets()
@@ -297,64 +181,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-                if (getPrimaryTargets() == App.TARGET_TWO){
-
-                    if (adapter.getTargets().size > 1){
-                        adapter.getTargets().removeAt(0)
-                    }
-
-                    adapter.addTarget(position)
-                    dialog.setResetState()
-                    Log.d("TargetAdapter","item $position added to target list")
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                }
-
-            }
-
-        }
-
-    }
-
-    /**
-     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
-     * @see UsePowerDialog
-     * @see TargetAdapter
-     */
-    open fun getSecondaryOnTargetHandler() : TargetAdapter.OnClickListener{
-
-        return object : TargetAdapter.OnClickListener{
-
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
-
-                Log.d("TargetAdapter","Clicked on pos $position")
-
-                if (getSecondaryTargets() == App.TARGET_NONE)
-                    return
-
-                if (position in adapter.getTargets()){
-                    Log.d("TargetAdapter","item $position removed from target list.")
-                    adapter.removeTarget(position)
-                    if (adapter.getTargets().size == 0){
-                        dialog.setCancelState()
-                    }
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (getSecondaryTargets() == App.TARGET_SINGLE){
-
-                    if (adapter.getTargets().size > 0){
-                        adapter.emptyTargets()
-                    }
-
-                    adapter.addTarget(position)
-                    dialog.setResetState()
-                    Log.d("TargetAdapter","item $position added to target list")
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (getSecondaryTargets() == App.TARGET_TWO){
+                if (ability.targets == App.TARGET_TWO){
 
                     if (adapter.getTargets().size > 1){
                         adapter.getTargets().removeAt(0)
@@ -405,81 +232,19 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
-     * Returns whether the current role turn is playable or not.
-     * * Returning (true) means that the turn will be played normally.
-     * * Returning (false) means that the turn will be skipped.
-     * @param round current round
-     * @param list list of alive players
+     * getter for Turn.role
      */
-    abstract fun canPlay(round : Int, list : ArrayList<Role>? = null) : Boolean
-
-    /**
-     * Allow the use of the primary ability of the role.
-     * @param target only used when the ability supports only one target.
-     * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
-     */
-    abstract fun usePrimary(target : Role): Boolean
-
-    /**
-     * Allow the use of the secondary ability of the role.
-     * @param target only used when the ability supports only one target.
-     * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
-     */
-    abstract fun useSecondary(target : Role): Boolean
-
-    /**
-     * Returns a list of the targets for the primary ability
-     * @param list of roles to be extracted from.
-     */
-    open fun getTargetsPrimary(list : ArrayList<Role>) : ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetPrimary(r))
-                output.add(r)
-        }
-
-        return output
+    fun getRole() : R{
+        return role!!
     }
 
     /**
-     * Returns a list of the targets for the secondary ability
-     * @param list of roles to be extracted from.
+     * setter for Turn.Role
+     * @param role new role
      */
-    open fun getTargetsSecondary(list : ArrayList<Role>): ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetSecondary(r))
-                output.add(r)
-        }
-
-        return output
-
+    fun setRole(role : R){
+        this.role = role
     }
 
-    /**
-     * Returns a list of the targets for the tertiary ability
-     * @param list of roles to be extracted from.
-     */
-    open fun getTargetsTertiary(list : ArrayList<Role>): ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetTertiary(r))
-                output.add(r)
-        }
-
-        return output
-
-    }
-
-    /**
-     * Return whether the current role should use his power or not.
-     */
-    abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
 
 }

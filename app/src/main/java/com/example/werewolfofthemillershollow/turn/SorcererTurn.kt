@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Sorcerer
 import com.example.werewolfofthemillershollow.utility.Event
@@ -12,7 +11,7 @@ import com.example.werewolfofthemillershollow.utility.Event
 class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>(activity) {
 
     init {
-        setRole(role,)
+        setRole(role)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -53,19 +52,6 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun canSecondary(): Boolean {
-        return getRole().getHasSecondary()!!
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        Log.d("Role","using secondary")
-        return getRole().useSecondaryAbility(role = target)
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
