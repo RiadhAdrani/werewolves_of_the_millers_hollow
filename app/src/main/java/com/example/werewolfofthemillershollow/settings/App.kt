@@ -170,11 +170,11 @@ abstract class App {
             var output = ""
             for (role : Role in list){
                 if (list.indexOf(role)==0){
-                    output += "${role.player}"
+                    output += "${role.player} "
                     continue
                 }
                 if (list.indexOf(role) == list.size-1){
-                    output += "${context.getString(R.string.and)} ${role.player}"
+                    output += " ${context.getString(R.string.and)} ${role.player}"
                     continue
                 }
                 output += ", ${role.player}"

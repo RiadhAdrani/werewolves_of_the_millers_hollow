@@ -8,10 +8,7 @@ import com.example.werewolfofthemillershollow.roles.Knight
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
+import com.example.werewolfofthemillershollow.utility.*
 
 class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activity) {
 
@@ -29,6 +26,10 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
+    }
+
+    override fun getOnStartAbility(): Ability? {
+        return getPrimaryAbility()
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -66,17 +67,6 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
     override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
         return getOnClickHandler()
-    }
-
-    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
-
-        return if (getPrimaryAbility()!!.times != App.ABILITY_NONE)
-            getOnTargetHandler()
-        else null
-    }
-
-    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return getPrimaryAbility()!!.targetList(self = getRole(),list = list)
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {

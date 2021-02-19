@@ -122,7 +122,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return true
+        return getPrimaryAbility()!!.times == App.ABILITY_ONCE
     }
 
     override fun servant(activity: GameActivity): Int {

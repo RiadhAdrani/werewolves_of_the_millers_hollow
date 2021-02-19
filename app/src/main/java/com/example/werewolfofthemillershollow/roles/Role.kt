@@ -7,6 +7,7 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
+import com.example.werewolfofthemillershollow.utility.Event
 import com.example.werewolfofthemillershollow.utility.StatusEffect
 import java.io.Serializable
 
@@ -249,6 +250,7 @@ abstract class Role : Serializable {
 
         gameActivity.playerList.removeAt(index)
         gameActivity.playerList.add(index, sub)
+        gameActivity.events.add(Event.servant(context = gameActivity, targetRole = name))
 
         gameActivity.servantRef = null
         isServed = false

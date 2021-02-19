@@ -2,6 +2,7 @@ package com.example.werewolfofthemillershollow
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.turn.*
 import com.example.werewolfofthemillershollow.utility.*
 
@@ -95,6 +97,11 @@ class GameActivity : AppCompatActivity() {
     private lateinit var abilityTwo : ImageView
 
     /**
+     * Allow the current player to use his tertiary ability if he has one.
+     */
+    private lateinit var abilityThree : ImageView
+
+    /**
      * Allow the user to skip this player
      */
     private lateinit var skip : ImageView
@@ -174,6 +181,8 @@ class GameActivity : AppCompatActivity() {
         abilityOne = findViewById(R.id.ability_one)
 
         abilityTwo = findViewById(R.id.ability_two)
+
+        abilityThree = findViewById(R.id.ability_three)
 
         deadList = ArrayList()
 
@@ -324,8 +333,17 @@ class GameActivity : AppCompatActivity() {
         }
 
         setIcon(currentPlayer.getIcon())
-        setPrimaryIcon(currentPlayer.getPrimaryIcon())
-        setSecondaryIcon(currentPlayer.getSecondaryIcon())
+
+        if (currentPlayer.getPrimaryAbility() != null)
+            setPrimaryIcon(currentPlayer.getPrimaryAbility()!!.icon)
+        else
+            setPrimaryIcon(Icons.noAbility)
+
+        if (currentPlayer.getSecondaryAbility() != null)
+            setSecondaryIcon(currentPlayer.getSecondaryAbility()!!.icon)
+        else
+            setSecondaryIcon(Icons.noAbility)
+
         setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
@@ -333,13 +351,14 @@ class GameActivity : AppCompatActivity() {
         if (currentPlayer.onStart(this)!!){
 
             val dialog = UsePowerDialog(
-                currentPlayer,,
+                currentPlayer,
+                currentPlayer.getOnStartAbility()!!,
                 currentPlayer.getRole().icon,
                 playerList,
                 deadList,
-                currentPlayer.getOnStartTargets(playerList),
+                currentPlayer.getOnStartAbility()!!.targetList(currentPlayer.getRole(),playerList),
                 currentPlayer.getOnStartOnClickHandler(),
-                currentPlayer.getOnStartOnTargetHandler(),
+                currentPlayer.getOnTargetHandler(),
                 null,
                 false,
                 this
@@ -357,20 +376,32 @@ class GameActivity : AppCompatActivity() {
 
         }
 
+        if (currentPlayer.getPrimaryAbility() != null)
+            abilityOne.visibility = View.VISIBLE
+        else
+            abilityOne.visibility = View.GONE
+
         abilityOne.setOnClickListener {
 
-            if (!currentPlayer.canPrimary()){
+            if (currentPlayer.getPrimaryAbility() == null) {
+                Log.d("Ability","No Primary Ability")
+                return@setOnClickListener
+            }
+
+            if (!currentPlayer.getPrimaryAbility()!!.isUsable()){
+                Log.d("Ability","Primary is not usable")
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getHasPrimary()){
+            if (currentPlayer.getPrimaryAbility()!!.times != App.ABILITY_NONE){
                 val dialog = UsePowerDialog(
-                    currentPlayer,,
-                    currentPlayer.getPrimaryIcon(),
+                    currentPlayer,
+                    currentPlayer.getPrimaryAbility()!!,
+                    currentPlayer.getPrimaryAbility()!!.icon,
                     playerList,
                     deadList,
-                    currentPlayer.getTargetsPrimary(playerList),
+                    currentPlayer.getPrimaryAbility()!!.targetList(currentPlayer.getRole(),playerList),
                     currentPlayer.getOnClickHandler(),
                     currentPlayer.getOnTargetHandler(),
                     null,
@@ -386,22 +417,69 @@ class GameActivity : AppCompatActivity() {
 
         }
 
+        if (currentPlayer.getSecondaryAbility() != null)
+            abilityTwo.visibility = View.VISIBLE
+        else
+            abilityTwo.visibility = View.GONE
+
         abilityTwo.setOnClickListener {
 
-            if (!currentPlayer.canSecondary()){
+            if (currentPlayer.getSecondaryAbility() == null)
+                return@setOnClickListener
+
+            if (!currentPlayer.getSecondaryAbility()!!.isUsable()){
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getHasSecondary()){
+            if (currentPlayer.getSecondaryAbility()!!.times != App.ABILITY_NONE){
                 val dialog = UsePowerDialog(
-                    currentPlayer,,
-                    currentPlayer.getSecondaryIcon(),
+                    currentPlayer,
+                    currentPlayer.getSecondaryAbility()!!,
+                    currentPlayer.getSecondaryAbility()!!.icon,
                     playerList,
                     deadList,
-                    currentPlayer.getTargetsSecondary(playerList),
-                    currentPlayer.getSecondaryOnClickHandler(),
-                    currentPlayer.getSecondaryOnTargetHandler(),
+                    currentPlayer.getSecondaryAbility()!!.targetList(currentPlayer.getRole(), playerList),
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
+                    onDismissed,
+                    true,
+                    this
+                )
+
+                dialog.show(supportFragmentManager, App.TAG_ALERT)
+            }
+            else {
+                Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+        if (currentPlayer.getTertiaryAbility() != null)
+            abilityThree.visibility = View.VISIBLE
+        else
+            abilityThree.visibility = View.GONE
+
+        abilityThree.setOnClickListener {
+
+            if (currentPlayer.getTertiaryAbility() == null)
+                return@setOnClickListener
+
+            if (!currentPlayer.getTertiaryAbility()!!.isUsable()){
+                Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (currentPlayer.getTertiaryAbility()!!.times != App.ABILITY_NONE){
+                val dialog = UsePowerDialog(
+                    currentPlayer,
+                    currentPlayer.getTertiaryAbility()!!,
+                    currentPlayer.getTertiaryAbility()!!.icon,
+                    playerList,
+                    deadList,
+                    currentPlayer.getTertiaryAbility()!!.targetList(currentPlayer.getRole(), playerList),
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
                     onDismissed,
                     true,
                     this

@@ -48,7 +48,7 @@ class DiscussionDialog(
                 barber.visibility = View.GONE
                 Log.d("Role","Barber does not exist")
             }
-            gameActivity.barberRef!!.getPrimaryType() == App.ABILITY_NONE || !gameActivity.barberRef!!.isAlive -> {
+            gameActivity.barberRef!!.primaryAbility!!.times == App.ABILITY_NONE || !gameActivity.barberRef!!.isAlive -> {
                 barber.visibility = View.GONE
                 Log.d("Role","Barber has no ability")
             }

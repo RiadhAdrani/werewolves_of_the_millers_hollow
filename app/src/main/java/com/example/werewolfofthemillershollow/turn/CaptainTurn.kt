@@ -12,8 +12,53 @@ import com.example.werewolfofthemillershollow.utility.*
 
 class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity) {
 
+    private var chooseNewCaptain : Ability
+
+    private var chooseTalker : Ability
+
     init {
         setRole(role)
+
+        val ability = object :Ability.Specification{
+
+            override fun use(self: Role, role: Role): Boolean {
+                self.isCaptain = false
+                role.isCaptain = true
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return role != self
+            }
+
+        }
+        chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainChoose)
+
+        val talker = object :Ability.Specification{
+            override fun use(self: Role, role: Role): Boolean {
+                role.isTalking = true
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return true
+            }
+
+        }
+        chooseTalker = Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.talkFirst)
+
+    }
+
+    override fun getPrimaryAbility(): Ability {
+        return chooseTalker
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -109,10 +154,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return context!!.getString(R.string.captain_name)
     }
 
-    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return Captain.newCaptainTargets(list)
-    }
-
     override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
 
             return object : UsePowerDialog.OnClickListener{
@@ -130,8 +171,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         alert.show(activity.supportFragmentManager,App.TAG_ALERT)
                         return
                     }
-
-                    Log.d("Role","Turn Class : using secondary ability")
 
                     for(index : Int in adapter.getTargets()){
 
@@ -162,42 +201,11 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
     }
 
-    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener {
-
-        return object : TargetAdapter.OnClickListener{
-
-            override fun onClick(
-                ability: Ability,
-                position: Int,
-                dialog: UsePowerDialog,
-                adapter: TargetAdapter
-            ) {
-
-                if (position in adapter.getTargets()){
-                    Log.d("TargetAdapter","item $position removed from target list.")
-                    adapter.removeTarget(position)
-                    if (adapter.getTargets().size == 0){
-                        dialog.setCancelState()
-                    }
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (adapter.getTargets().size > 0){
-                    adapter.emptyTargets()
-                }
-
-                adapter.addTarget(position)
-                dialog.setResetState()
-                Log.d("TargetAdapter","item $position added to target list")
-                Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-
-            }
-
-        }
-    }
-
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return true
+    }
+
+    override fun getOnStartAbility(): Ability {
+        return chooseNewCaptain
     }
 }

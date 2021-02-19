@@ -29,6 +29,10 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
                 return true
             }
 
+            override fun isUsable(): Boolean {
+                return true
+            }
+
             override fun isTarget(self: Role, targetRole: Role): Boolean {
                 return targetRole.isKilled
             }

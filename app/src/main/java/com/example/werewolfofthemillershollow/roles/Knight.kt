@@ -29,6 +29,10 @@ class Knight(context: Context) : Role() {
                 return true
             }
 
+            override fun isUsable(): Boolean {
+                return isKilled
+            }
+
             override fun isTarget(self: Role, targetRole: Role): Boolean {
                 return targetRole != self
             }

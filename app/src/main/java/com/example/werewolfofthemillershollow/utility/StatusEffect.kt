@@ -1,7 +1,5 @@
 package com.example.werewolfofthemillershollow.utility
 import android.content.Context
-import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.Icons
@@ -21,37 +19,12 @@ class StatusEffect(
     /**
      * Icon representing the status effect.
      */
-    private var icon : Int? = 0
-
-    /**
-     * Getter for StatusEffects.icon.
-     * @return icon res id.
-     */
-    fun getIcon(): Int{
-        return icon!!
-    }
-
-    /**
-     * Getter for StatusEffects.icon.
-     * @param context calling context.
-     * @return icon drawable.
-     */
-    fun getIcon(context: Context): Drawable{
-        return ContextCompat.getDrawable(context,icon!!)!!
-    }
+    var icon : Int? = 0
 
     /**
      * A descriptive name of the effect.
      */
-    private var name : Int? = null
-
-    /**
-     * Getter for StatusEffects.name.
-     * @return name res id.
-     */
-    fun getName(): Int{
-        return name!!
-    }
+    var name : Int? = null
 
     /**
      * Getter for StatusEffects.name.
@@ -65,24 +38,7 @@ class StatusEffect(
     /**
      * Detailed information about the effect.
      */
-    private var description : Int? = null
-
-    /**
-     * Getter for StatusEffects.description.
-     * @return description res id.
-     */
-    fun getDescription():Int{
-        return description!!
-    }
-
-    /**
-     * Getter for StatusEffects.description.
-     * @param context calling context.
-     * @return description as string.
-     */
-    fun getDescription(context: Context): String{
-        return context.getString(description!!)
-    }
+    var description : Int? = null
 
     init {
         this.icon = icon

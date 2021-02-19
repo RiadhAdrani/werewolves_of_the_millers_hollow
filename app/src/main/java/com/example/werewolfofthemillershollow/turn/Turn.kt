@@ -85,6 +85,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     open fun getTertiaryAbility(): Ability? = getRole().tertiaryAbility
 
     /**
+     * Return the ability executed on turn start.
+     */
+    open fun getOnStartAbility() : Ability? = null
+
+    /**
      * Interface used to override the functionality of the fragment UsePowerDialog.
      * @see UsePowerDialog
      */
@@ -206,30 +211,15 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
         return false
     }
 
-    /**
-     * Returns the list of player that could be targeted in emergency cases.
-     * @param list list of alive players.
-     * @return returns empty list by default. could be overridden in inheriting classes.
-     */
-    open fun getOnStartTargets(list : ArrayList<Role>): ArrayList<Role>{
-        return ArrayList()
-    }
 
     /**
      * Interface used to handle clicking on buttons in the fragment UsePowerDialog
      * @see UsePowerDialog
      */
     open fun getOnStartOnClickHandler() : UsePowerDialog.OnClickListener?{
-        return null
+        return getOnClickHandler()
     }
 
-    /**
-     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
-     * @see TargetAdapter
-     */
-    open fun getOnStartOnTargetHandler() : TargetAdapter.OnClickListener?{
-        return null
-    }
 
     /**
      * getter for Turn.role

@@ -7,16 +7,17 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.Ability
 import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
     init {
         setRole(role)
+    }
+
+    override fun getOnStartAbility(): Ability? {
+        return getPrimaryAbility()
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -44,19 +45,8 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
     }
 
-    override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
-        return getOnClickHandler()
-    }
-
-    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return getPrimaryAbility()!!.targetList(self = getRole(), list = list)
-    }
-
-    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
-
-        return if (getPrimaryAbility()!!.times != App.ABILITY_NONE)
-            getOnTargetHandler()
-        else null
+    override fun onStart(activity: GameActivity): Boolean {
+        return getRole().isKilled && getOnStartAbility()!!.times != App.ABILITY_NONE
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {

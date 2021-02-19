@@ -51,18 +51,6 @@ open class Werewolf(context: Context) : Role() {
             return Icons.pack
         }
 
-        /**
-         * Return the icon representing the ability of the pack.
-         */
-        fun getPackPowerIcon(): Int{
-            return Icons.packAttack
-        }
-
-        /**
-         * returns how many players could be targeted by the wolfpack
-         */
-        fun getPackTargets(): Int = App.TARGET_SINGLE
-
     }
 
     init {

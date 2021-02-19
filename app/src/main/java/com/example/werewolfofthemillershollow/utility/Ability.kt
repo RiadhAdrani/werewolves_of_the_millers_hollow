@@ -3,6 +3,7 @@ package com.example.werewolfofthemillershollow.utility
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
+import java.io.Serializable
 
 /**
  * Class describe ability object.
@@ -16,12 +17,16 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * @param icon ability icon. recommended to get the icon from [Icons]
  * @see Role
  */
-class Ability(private var specifications : Specification, var times : Int, var targets : Int, var icon: Int) {
+class Ability(
+    private var specifications : Specification,
+    var times : Int,
+    var targets : Int,
+    var icon: Int): Serializable {
 
     /**
      * Interface for custom ability specification.
      */
-    interface Specification {
+    interface Specification : Serializable {
 
         /**
          * Use the ability.
@@ -29,6 +34,11 @@ class Ability(private var specifications : Specification, var times : Int, var t
          * @return true if everything was alright, false if the operation failed for some reason.
          */
         fun use(self : Role, role : Role): Boolean
+
+        /**
+         * indicates if the current role could be used at the current state or not.
+         */
+        fun isUsable(): Boolean
 
         /**
          * indicates if the specified role is a target or not.
@@ -60,6 +70,13 @@ class Ability(private var specifications : Specification, var times : Int, var t
             return specifications.use(self, role)
 
         return false
+    }
+
+    /**
+     * indicates if this ability could be used at the moment or not.
+     */
+    fun isUsable(): Boolean{
+        return specifications.isUsable()
     }
 
     /**

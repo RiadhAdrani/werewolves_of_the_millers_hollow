@@ -38,6 +38,10 @@ class Seer(context: Context) : Role() {
                 return true
             }
 
+            override fun isUsable(): Boolean {
+                return true
+            }
+
             override fun isTarget(self: Role, targetRole: Role): Boolean {
                 return true
             }

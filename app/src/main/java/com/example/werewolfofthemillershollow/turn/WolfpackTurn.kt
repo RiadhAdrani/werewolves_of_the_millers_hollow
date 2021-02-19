@@ -22,6 +22,10 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
                 return Werewolf.wolfPackPower(role = role)
             }
 
+            override fun isUsable(): Boolean {
+                return true
+            }
+
             override fun isTarget(self: Role, targetRole: Role): Boolean {
                 return true
             }
