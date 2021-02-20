@@ -324,6 +324,8 @@ class GameActivity : AppCompatActivity() {
 
         val currentPlayer = turnList[index]
 
+        currentPlayer.debug()
+
         try {
             setName(currentPlayer.getPlayer(list = playerList))
         }catch (e : Exception){
@@ -353,10 +355,6 @@ class GameActivity : AppCompatActivity() {
             val dialog = UsePowerDialog(
                 currentPlayer,
                 currentPlayer.getOnStartAbility()!!,
-                currentPlayer.getRole().icon,
-                playerList,
-                deadList,
-                currentPlayer.getOnStartAbility()!!.targetList(currentPlayer.getRole(),playerList),
                 currentPlayer.getOnStartOnClickHandler(),
                 currentPlayer.getOnTargetHandler(),
                 null,
@@ -398,10 +396,6 @@ class GameActivity : AppCompatActivity() {
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getPrimaryAbility()!!,
-                    currentPlayer.getPrimaryAbility()!!.icon,
-                    playerList,
-                    deadList,
-                    currentPlayer.getPrimaryAbility()!!.targetList(currentPlayer.getRole(),playerList),
                     currentPlayer.getOnClickHandler(),
                     currentPlayer.getOnTargetHandler(),
                     null,
@@ -436,10 +430,6 @@ class GameActivity : AppCompatActivity() {
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getSecondaryAbility()!!,
-                    currentPlayer.getSecondaryAbility()!!.icon,
-                    playerList,
-                    deadList,
-                    currentPlayer.getSecondaryAbility()!!.targetList(currentPlayer.getRole(), playerList),
                     currentPlayer.getOnClickHandler(),
                     currentPlayer.getOnTargetHandler(),
                     onDismissed,
@@ -474,10 +464,6 @@ class GameActivity : AppCompatActivity() {
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getTertiaryAbility()!!,
-                    currentPlayer.getTertiaryAbility()!!.icon,
-                    playerList,
-                    deadList,
-                    currentPlayer.getTertiaryAbility()!!.targetList(currentPlayer.getRole(), playerList),
                     currentPlayer.getOnClickHandler(),
                     currentPlayer.getOnTargetHandler(),
                     onDismissed,

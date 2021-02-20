@@ -6,7 +6,7 @@ import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
 
 /**
- * Seer : has the ability
+ * Seer : has the ability to know the real role of players.
  * @see Role
  * @param context context in which the class object is created
  */
@@ -52,11 +52,6 @@ class Seer(context: Context) : Role() {
 
     override fun canPlay(round: Int): Boolean {
         return true
-    }
-
-    override fun resetStatusEffects() {
-        super.resetStatusEffects()
-        seenRole = "None"
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {

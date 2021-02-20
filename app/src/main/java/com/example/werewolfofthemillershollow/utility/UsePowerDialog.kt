@@ -16,19 +16,18 @@ import com.example.werewolfofthemillershollow.turn.Turn
 
 /**
  * Fragment dialog allowing the current player to target the a chosen player with his ability.
- * @param turn current role turn.
- * @param alivePlayers list of players.
+ * @param turn current role turn. see [Turn].
+ * @param ability ability to use. see [Ability].
  * @param onClick handle click event in the dialog fragment.
  * @param onTargetClick handle click event in the recycler view displaying target players.
+ * @param onDismissed handle on dismissed event.
+ * @param cancelable indicates if the dialog is cancelable or not.
+ * @param gameActivity context. see [GameActivity].
  * @see TargetAdapter
  */
 class UsePowerDialog(
     private var turn : Turn<*>,
     var ability: Ability,
-    private var headerIcon : Int,
-    private var alivePlayers : ArrayList<Role>,
-    private var deadPlayers : ArrayList<Role>,
-    private var targetPlayers : ArrayList<Role>,
     private var onClick : OnClickListener? = null,
     private var onTargetClick : TargetAdapter.OnClickListener? = null,
     private var onDismissed : OnDismissed? = null,
@@ -77,15 +76,15 @@ class UsePowerDialog(
         builder.setView(dialog)
 
         icon = dialog.findViewById(R.id.dialog_icon)
-        icon.setImageResource(headerIcon)
+        icon.setImageResource(ability.icon)
 
         role = dialog.findViewById(R.id.dialog_header)
-        role.text = turn.getRoleToDisplay(context, alivePlayers)
+        role.text = turn.getRoleToDisplay(context, gameActivity.playerList)
 
         targetRV = dialog.findViewById(R.id.dialog_targets_rv)
         targetRV.layoutManager = LinearLayoutManager(context)
         targetAdapter = TargetAdapter(
-            list = targetPlayers,
+            list = ability.targetList(turn.getRole(),gameActivity.playerList),
             dialog =  this,
             handler = onTargetClick
         )
@@ -95,8 +94,8 @@ class UsePowerDialog(
         doneButton.setOnClickListener {
             onClick?.done(
                 ability = ability,
-                aliveList = alivePlayers,
-                deadList = deadPlayers,
+                aliveList = gameActivity.playerList,
+                deadList = gameActivity.deadList,
                 adapter = targetAdapter,
                 activity = gameActivity,
                 dialog = this
@@ -110,13 +109,13 @@ class UsePowerDialog(
                 dismiss()
             }
             else{
-                onClick?.reset(aliveList = alivePlayers, deadList = deadPlayers, adapter = targetAdapter)
+                onClick?.reset(aliveList = gameActivity.playerList, deadList = gameActivity.deadList, adapter = targetAdapter)
                 setCancelState()
             }
         }
 
         instruction = dialog.findViewById(R.id.dialog_instruction)
-        instruction.text = turn.getInstructions(context!!,alivePlayers)
+        instruction.text = turn.getInstructions(context!!, gameActivity.playerList)
 
         isCancelable = false
 

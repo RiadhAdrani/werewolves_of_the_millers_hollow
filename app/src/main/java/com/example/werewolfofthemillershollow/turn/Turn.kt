@@ -220,6 +220,39 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
         return getOnClickHandler()
     }
 
+    /**
+     * Used to debug the current turn.
+     * @param tag custom tag. By default, it is set to "Turn".
+     * @param name custom name to be displayed. By default, it is set to [getRoleToDisplay].
+     */
+    open fun debug(tag : String = "Turn", name : String = getRoleToDisplay(gameActivity,gameActivity.playerList)){
+
+        if (getPrimaryAbility() != null) {
+            Log.d(tag,"$name : primary ability -> targets : ${getPrimaryAbility()!!.targets}")
+            Log.d(tag,"$name : primary ability -> times : ${getPrimaryAbility()!!.times}")
+            Log.d(tag,"$name : primary ability -> target list : ${getPrimaryAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no primary ability")
+        }
+
+        if (getSecondaryAbility() != null) {
+            Log.d(tag,"$name : secondary ability -> targets : ${getSecondaryAbility()!!.targets}")
+            Log.d(tag,"$name : secondary ability -> times : ${getSecondaryAbility()!!.times}")
+            Log.d(tag,"$name : secondary ability -> target list : ${getSecondaryAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no secondary ability")
+        }
+
+        if (getOnStartAbility() != null) {
+            Log.d(tag,"$name : start ability -> targets : ${getOnStartAbility()!!.targets}")
+            Log.d(tag,"$name : start ability -> times : ${getOnStartAbility()!!.times}")
+            Log.d(tag,"$name : start ability -> target list : ${getOnStartAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no onStart ability")
+        }
+
+    }
+
 
     /**
      * getter for Turn.role

@@ -32,7 +32,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
             override fun isTarget(self: Role, targetRole: Role): Boolean {
-                return role != self
+                return targetRole != self
             }
 
         }
@@ -59,6 +59,14 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     override fun getPrimaryAbility(): Ability {
         return chooseTalker
+    }
+
+    override fun getSecondaryAbility(): Ability? {
+        return null
+    }
+
+    override fun getTertiaryAbility(): Ability? {
+        return null
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -179,7 +187,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         val i = activity.playerList.indexOf(target)
 
                         if (i != -1){
-                            Captain.newCaptain(activity.playerList[i])
+                            ability.use(getRole(),activity.playerList[i])
                             activity.playerList[i].debug()
                             setRole(activity.playerList[i])
                         }
