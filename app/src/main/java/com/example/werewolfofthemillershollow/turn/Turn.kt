@@ -49,6 +49,35 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
 
     /**
+     * executes onSkip routine for this turn
+     * @param activity activity, which should be [GameActivity].
+     * @return true if the skip happened, false otherwise.
+     */
+    open fun onSkip(activity: GameActivity): Boolean{
+
+        if (shouldUsePower(activity)){
+            val dialog = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
+            dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            return false
+        } else {
+            val onClick = object : AlertDialog.OnClick{
+                override fun onClick(alertDialog: AlertDialog) {
+                    alertDialog.dismiss()
+                    activity.next()
+                }
+
+            }
+            val dialog = AlertDialog(
+                text = com.example.werewolfofthemillershollow.R.string.good_night,
+                rightButton = onClick,
+                cancelable = false)
+            dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            return true
+        }
+
+    }
+
+    /**
      * Returns the name to be displayed.
      */
     open fun getPlayer(list : ArrayList<Role>? = null): String{
@@ -126,8 +155,20 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 }
 
-                dialog?.dismiss()
-                activity.next()
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        dialog!!.dismiss()
+                        activity.next()
+                    }
+                }
+
+                val goodNightDialog = AlertDialog(
+                    text = com.example.werewolfofthemillershollow.R.string.good_night,
+                    rightButton = onClick,
+                    cancelable = false)
+                goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
             }
 
             override fun reset(

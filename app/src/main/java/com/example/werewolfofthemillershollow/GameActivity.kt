@@ -159,12 +159,7 @@ class GameActivity : AppCompatActivity() {
 
         skip = findViewById(R.id.skip)
         skip.setOnClickListener {
-            if (turnList[index].shouldUsePower(this)){
-                val dialog = AlertDialog(text = R.string.should_use_power)
-                dialog.show(supportFragmentManager,App.TAG_ALERT)
-                return@setOnClickListener
-            }
-            next()
+            turnList[index].onSkip(this)
         }
 
         roleIcon = findViewById(R.id.role_icon)

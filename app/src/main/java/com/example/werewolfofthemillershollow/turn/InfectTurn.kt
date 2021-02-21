@@ -16,6 +16,37 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         setRole(role)
     }
 
+    override fun onSkip(activity: GameActivity): Boolean {
+
+        val onClick = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+
+                alertDialog.dismiss()
+
+                val skip = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        activity.next()
+                    }
+                }
+
+                val dialog = AlertDialog(
+                    text = R.string.good_night,
+                    rightButton = skip,
+                    cancelable = false)
+                dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            }
+        }
+
+        val dialog = AlertDialog(
+            text = R.string.infect_wake_pack,
+            cancelable = false,
+            rightButton = onClick)
+        dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
+        return true
+    }
+
     override fun getOnClickHandler(): UsePowerDialog.OnClickListener {
 
         return object : UsePowerDialog.OnClickListener{
@@ -32,9 +63,23 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
+
                         alertDialog.dismiss()
-                        dialog?.dismiss()
-                        activity.next()
+
+                        val gn = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                alertDialog.dismiss()
+                                dialog!!.dismiss()
+                                activity.next()
+                            }
+                        }
+
+                        val goodNightDialog = AlertDialog(
+                            text = R.string.good_night,
+                            rightButton = gn,
+                            cancelable = false)
+                        goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+                        return
                     }
                 }
 
@@ -64,7 +109,6 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
                     if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i]))
                         done = true
-                    activity.playerList[i].debug()
 
                 }
 
@@ -77,9 +121,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     rightButton = onClick,
                     cancelable = false
                 )
-
                 alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-
             }
 
             override fun reset(
@@ -122,7 +164,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return getPrimaryAbility()!!.times == App.ABILITY_ONCE
+        return false
     }
 
     override fun servant(activity: GameActivity): Int {
