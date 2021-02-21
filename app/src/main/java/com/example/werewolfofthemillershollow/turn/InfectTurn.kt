@@ -7,11 +7,8 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.*
 
 class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<FatherOfWolves>(activity) {
 
@@ -19,14 +16,42 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         setRole(role)
     }
 
-    override fun getHasPrimary(): Boolean {
+    override fun onSkip(activity: GameActivity): Boolean {
+
+        val onClick = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+
+                alertDialog.dismiss()
+
+                val skip = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        activity.next()
+                    }
+                }
+
+                val dialog = AlertDialog(
+                    text = R.string.good_night,
+                    rightButton = skip,
+                    cancelable = false)
+                dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            }
+        }
+
+        val dialog = AlertDialog(
+            text = R.string.infect_wake_pack,
+            cancelable = false,
+            rightButton = onClick)
+        dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
         return true
     }
 
-    override fun getPrimaryOnClickHandler(): UsePowerDialog.OnClickListener {
+    override fun getOnClickHandler(): UsePowerDialog.OnClickListener {
 
         return object : UsePowerDialog.OnClickListener{
             override fun done(
+                ability: Ability,
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
                 adapter: TargetAdapter,
@@ -38,9 +63,23 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
+
                         alertDialog.dismiss()
-                        dialog?.dismiss()
-                        activity.next()
+
+                        val gn = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                alertDialog.dismiss()
+                                dialog!!.dismiss()
+                                activity.next()
+                            }
+                        }
+
+                        val goodNightDialog = AlertDialog(
+                            text = R.string.good_night,
+                            rightButton = gn,
+                            cancelable = false)
+                        goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+                        return
                     }
                 }
 
@@ -68,9 +107,8 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     if (i == -1)
                         return
 
-                    if (usePrimary(activity.playerList[i]))
+                    if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i]))
                         done = true
-                    activity.playerList[i].debug()
 
                 }
 
@@ -83,9 +121,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     rightButton = onClick,
                     cancelable = false
                 )
-
                 alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-
             }
 
             override fun reset(
@@ -102,44 +138,15 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
 
         for (role : Role in list!!){
-            if (role.getIsKilled()!!)
+            if (role.isKilled)
                 return context.getString(R.string.infect_instruction)
         }
 
         return context.getString(R.string.infect_instruction_nobody)
     }
 
-    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-
-        val output = ArrayList<Role>()
-
-        for (role : Role in activity.wolfTargets){
-            if (!role.isWolf() && !role.getIsInfected()!!){
-                output.add(role)
-            }
-        }
-
-        return output
-    }
-
-    override fun canPrimary(): Boolean {
-        return true
-    }
-
-    override fun getPrimaryIcon(): Int {
-        return Icons.fatherInfect
-    }
-
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -157,7 +164,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return true
+        return false
     }
 
     override fun servant(activity: GameActivity): Int {
@@ -168,14 +175,14 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as FatherOfWolves)
         
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
         return index
     }
 }

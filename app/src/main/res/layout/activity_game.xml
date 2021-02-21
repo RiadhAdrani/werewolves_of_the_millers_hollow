@@ -151,7 +151,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/ability_two"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="@dimen/giant"
         android:padding="@dimen/small"
         android:foreground="?android:attr/selectableItemBackground"
         />
@@ -165,6 +164,21 @@
         app:layout_constraintTop_toTopOf="@id/ability_one"
         app:layout_constraintBottom_toBottomOf="@id/ability_one"
         app:layout_constraintLeft_toRightOf="@id/ability_one"
+        app:layout_constraintRight_toRightOf="@id/ability_three"
+        android:layout_marginStart="@dimen/giant"
+        android:padding="@dimen/small"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <ImageView
+        android:id="@+id/ability_three"
+        android:contentDescription="@string/use_ability"
+        android:src="@drawable/ic_info"
+        android:layout_width="@dimen/giant_extra"
+        android:layout_height="@dimen/giant_extra"
+        app:layout_constraintTop_toTopOf="@id/ability_two"
+        app:layout_constraintBottom_toBottomOf="@id/ability_two"
+        app:layout_constraintLeft_toRightOf="@id/ability_two"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/giant"
         android:padding="@dimen/small"

@@ -1,13 +1,11 @@
 package com.example.werewolfofthemillershollow
 
 import android.content.Intent
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import com.example.werewolfofthemillershollow.settings.App
 
 class MainActivity : AppCompatActivity() {
 

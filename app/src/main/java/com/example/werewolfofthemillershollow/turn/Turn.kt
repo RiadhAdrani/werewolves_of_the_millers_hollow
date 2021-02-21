@@ -5,13 +5,14 @@ import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.utility.Ability
 import com.example.werewolfofthemillershollow.utility.AlertDialog
 import com.example.werewolfofthemillershollow.utility.TargetAdapter
 import com.example.werewolfofthemillershollow.utility.UsePowerDialog
-import kotlin.collections.ArrayList
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
+
+    private var role : R? = null
 
     /**
      * Return the instructions said by the game master when the current turn begins.
@@ -21,135 +22,12 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
      */
     abstract fun getInstructions(context: Context, list : ArrayList<Role>? = null):String
 
+    /**
+     * Add this turn to the list containing game turns [output], if the current role needed for this this object
+     * exists in the game [list].
+     * @return return true if a Turn was added, otherwise false.
+     */
     abstract fun addTurn(output : ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean
-
-    private var role : R? = null
-
-    /**
-     * getter for Turn.role
-     */
-    fun getRole() : R{
-        return role!!
-    }
-
-    /**
-     * setter for Turn.Role
-     * @param role new role
-     */
-    fun setRole(role : R){
-        this.role = role
-    }
-
-    /**
-     * Returns the name to be displayed.
-     */
-    open fun getPlayer(list : ArrayList<Role>? = null): String{
-        return role?.getPlayer()!!
-    }
-
-    /**
-     * Returns the displayed icon of the current role turn.
-     */
-    open fun getIcon(): Int{
-        return role?.getIcon()!!
-    }
-
-    /**
-     * Returns the icon representing the primary ability.
-     */
-    open fun getPrimaryIcon(): Int{
-        if (role?.getHasPrimary()!!)
-            return role?.getPrimaryIcon()!!
-
-        return Icons.noAbility
-    }
-
-    /**
-     * Returns the icon representing the secondary ability.
-     */
-    open fun getSecondaryIcon(): Int{
-        if (role?.getHasSecondary()!!)
-            return role?.getSecondaryIcon()!!
-
-        return Icons.noAbility
-    }
-
-    /**
-     * Return the name of the role to be displayed.
-     */
-    open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
-        return role?.getName()!!
-    }
-
-    /**
-     * Return whether this role can use its primary ability or no.
-     */
-    open fun getHasPrimary(): Boolean{
-        return role?.getHasPrimary()!!
-    }
-
-    /**
-     * Returns whether the role can use its primary ability in the current round.
-     */
-    open fun canPrimary(): Boolean{
-        return true
-    }
-
-    /**
-     * Return whether this role can use its secondary ability or no.
-     */
-    open fun getHasSecondary(): Boolean{
-        return role?.getHasSecondary()!!
-    }
-
-    /**
-     * Returns whether the role can use its secondary ability in the current round.
-     */
-    open fun canSecondary(): Boolean{
-        return false
-    }
-
-    /**
-     * Return whether this role can use its tertiary ability or no.
-     */
-    open fun getHasTertiary(): Boolean{
-        return role?.getHasTertiary()!!
-    }
-
-    /**
-     * Returns whether the role can use its tertiary ability in the current round.
-     */
-    open fun canTertiary(): Boolean{
-        return false
-    }
-
-    /**
-     * Return whether this role can use its tertiary ability or no.
-     */
-    open fun getCanUseTertiary(): Boolean{
-        return role?.getHasTertiary()!!
-    }
-
-    /**
-     * returns the number of players that can be targeted with the primary ability
-     */
-    open fun getPrimaryTargets() : Int{
-        return role!!.getPrimaryTargets()
-    }
-
-    /**
-     * returns the number of players that can be targeted with the secondary ability
-     */
-    open fun getSecondaryTargets(): Int{
-        return role!!.getSecondaryTargets()
-    }
-
-    /**
-     * returns the number of players that can be targeted with the tertiary ability
-     */
-    open fun getTertiaryTargets(): Int{
-        return role!!.getTertiaryTargets()
-    }
 
     /**
      * Make the needed changes to the servantRef.
@@ -157,13 +35,98 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     abstract fun servant(activity: GameActivity): Int
 
     /**
+     * Returns whether the current role turn is playable or not.
+     * * Returning (true) means that the turn will be played normally.
+     * * Returning (false) means that the turn will be skipped.
+     * @param round current round
+     * @param list list of alive players
+     */
+    abstract fun canPlay(round : Int, list : ArrayList<Role>? = null) : Boolean
+
+    /**
+     * Return whether the current role should use his power or not.
+     */
+    abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
+
+    /**
+     * executes onSkip routine for this turn
+     * @param activity activity, which should be [GameActivity].
+     * @return true if the skip happened, false otherwise.
+     */
+    open fun onSkip(activity: GameActivity): Boolean{
+
+        if (shouldUsePower(activity)){
+            val dialog = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
+            dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            return false
+        } else {
+            val onClick = object : AlertDialog.OnClick{
+                override fun onClick(alertDialog: AlertDialog) {
+                    alertDialog.dismiss()
+                    activity.next()
+                }
+
+            }
+            val dialog = AlertDialog(
+                text = com.example.werewolfofthemillershollow.R.string.good_night,
+                rightButton = onClick,
+                cancelable = false)
+            dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+            return true
+        }
+
+    }
+
+    /**
+     * Returns the name to be displayed.
+     */
+    open fun getPlayer(list : ArrayList<Role>? = null): String{
+        return role?.player!!
+    }
+
+    /**
+     * Returns the displayed icon of the current role turn.
+     */
+    open fun getIcon(): Int{
+        return role?.icon!!
+    }
+
+    /**
+     * Return the name of the role to be displayed.
+     */
+    open fun getRoleToDisplay(context: Context? = null, list : ArrayList<Role>? = null): String{
+        return role?.name!!
+    }
+
+    /**
+     * Return the primary ability of this turn role
+     */
+    open fun getPrimaryAbility(): Ability? = getRole().primaryAbility
+
+    /**
+     * Return the secondary ability of this turn role
+     */
+    open fun getSecondaryAbility(): Ability? = getRole().secondaryAbility
+
+    /**
+     * Return the tertiary ability of this turn role
+     */
+    open fun getTertiaryAbility(): Ability? = getRole().tertiaryAbility
+
+    /**
+     * Return the ability executed on turn start.
+     */
+    open fun getOnStartAbility() : Ability? = null
+
+    /**
      * Interface used to override the functionality of the fragment UsePowerDialog.
      * @see UsePowerDialog
      */
-    open fun getPrimaryOnClickHandler() : UsePowerDialog.OnClickListener{
+    open fun getOnClickHandler() : UsePowerDialog.OnClickListener{
 
         return object : UsePowerDialog.OnClickListener{
             override fun done(
+                ability: Ability,
                 aliveList: ArrayList<Role>,
                 deadList: ArrayList<Role>,
                 adapter: TargetAdapter,
@@ -176,7 +139,6 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-
                 Log.d("Role","Turn Class : using secondary ability")
 
                 for(index : Int in adapter.getTargets()){
@@ -188,62 +150,25 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     if (i == -1)
                         return
 
-                    usePrimary(gameActivity.playerList[i])
+                    ability.use(self = getRole(), role = gameActivity.playerList[i])
                     gameActivity.playerList[i].debug()
 
                 }
 
-                dialog?.dismiss()
-                activity.next()
-            }
-
-            override fun reset(
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
-                adapter: TargetAdapter
-            ) {
-                adapter.emptyTargets()
-            }
-
-        }
-
-    }
-
-    /**
-     * Interface used to override the functionality of the fragment UsePowerDialog.
-     * @see UsePowerDialog
-     */
-    open fun getSecondaryOnClickHandler() : UsePowerDialog.OnClickListener{
-
-        return object : UsePowerDialog.OnClickListener{
-            override fun done(
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
-                adapter: TargetAdapter,
-                activity: GameActivity,
-                dialog: UsePowerDialog?
-            ) {
-
-                if (adapter.getTargets().isEmpty())
-                    return
-
-                Log.d("Role","Turn Class : using secondary ability")
-
-                for(index : Int in adapter.getTargets()){
-
-                    val target : Role = adapter.getList()[index]
-
-                    val i = gameActivity.playerList.indexOf(target)
-
-                    if (i == -1)
-                        return
-
-                    useSecondary(gameActivity.playerList[i])
-                    gameActivity.playerList[i].debug()
-
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        dialog!!.dismiss()
+                        activity.next()
+                    }
                 }
 
-                dialog?.dismiss()
+                val goodNightDialog = AlertDialog(
+                    text = com.example.werewolfofthemillershollow.R.string.good_night,
+                    rightButton = onClick,
+                    cancelable = false)
+                goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
             }
 
             override fun reset(
@@ -263,15 +188,20 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
      * @see UsePowerDialog
      * @see TargetAdapter
      */
-    open fun getPrimaryOnTargetHandler() : TargetAdapter.OnClickListener{
+    open fun getOnTargetHandler() : TargetAdapter.OnClickListener{
 
         return object : TargetAdapter.OnClickListener{
 
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
+            override fun onClick(
+                ability: Ability,
+                position: Int,
+                dialog: UsePowerDialog,
+                adapter: TargetAdapter
+            ) {
 
                 Log.d("TargetAdapter","Clicked on pos $position")
 
-                if (getPrimaryTargets() == App.TARGET_NONE)
+                if (ability.times == App.TARGET_NONE)
                     return
 
                 if (position in adapter.getTargets()){
@@ -284,7 +214,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-                if (getPrimaryTargets() == App.TARGET_SINGLE){
+                if (ability.targets == App.TARGET_SINGLE){
 
                     if (adapter.getTargets().size > 0){
                         adapter.emptyTargets()
@@ -297,64 +227,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     return
                 }
 
-                if (getPrimaryTargets() == App.TARGET_TWO){
-
-                    if (adapter.getTargets().size > 1){
-                        adapter.getTargets().removeAt(0)
-                    }
-
-                    adapter.addTarget(position)
-                    dialog.setResetState()
-                    Log.d("TargetAdapter","item $position added to target list")
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                }
-
-            }
-
-        }
-
-    }
-
-    /**
-     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
-     * @see UsePowerDialog
-     * @see TargetAdapter
-     */
-    open fun getSecondaryOnTargetHandler() : TargetAdapter.OnClickListener{
-
-        return object : TargetAdapter.OnClickListener{
-
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
-
-                Log.d("TargetAdapter","Clicked on pos $position")
-
-                if (getSecondaryTargets() == App.TARGET_NONE)
-                    return
-
-                if (position in adapter.getTargets()){
-                    Log.d("TargetAdapter","item $position removed from target list.")
-                    adapter.removeTarget(position)
-                    if (adapter.getTargets().size == 0){
-                        dialog.setCancelState()
-                    }
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (getSecondaryTargets() == App.TARGET_SINGLE){
-
-                    if (adapter.getTargets().size > 0){
-                        adapter.emptyTargets()
-                    }
-
-                    adapter.addTarget(position)
-                    dialog.setResetState()
-                    Log.d("TargetAdapter","item $position added to target list")
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (getSecondaryTargets() == App.TARGET_TWO){
+                if (ability.targets == App.TARGET_TWO){
 
                     if (adapter.getTargets().size > 1){
                         adapter.getTargets().removeAt(0)
@@ -379,107 +252,63 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
         return false
     }
 
-    /**
-     * Returns the list of player that could be targeted in emergency cases.
-     * @param list list of alive players.
-     * @return returns empty list by default. could be overridden in inheriting classes.
-     */
-    open fun getOnStartTargets(list : ArrayList<Role>): ArrayList<Role>{
-        return ArrayList()
-    }
 
     /**
      * Interface used to handle clicking on buttons in the fragment UsePowerDialog
      * @see UsePowerDialog
      */
     open fun getOnStartOnClickHandler() : UsePowerDialog.OnClickListener?{
-        return null
+        return getOnClickHandler()
     }
 
     /**
-     * Interface used to handle clicking on targets in the fragment UsePowerDialog.
-     * @see TargetAdapter
+     * Used to debug the current turn.
+     * @param tag custom tag. By default, it is set to "Turn".
+     * @param name custom name to be displayed. By default, it is set to [getRoleToDisplay].
      */
-    open fun getOnStartOnTargetHandler() : TargetAdapter.OnClickListener?{
-        return null
-    }
+    open fun debug(tag : String = "Turn", name : String = getRoleToDisplay(gameActivity,gameActivity.playerList)){
 
-    /**
-     * Returns whether the current role turn is playable or not.
-     * * Returning (true) means that the turn will be played normally.
-     * * Returning (false) means that the turn will be skipped.
-     * @param round current round
-     * @param list list of alive players
-     */
-    abstract fun canPlay(round : Int, list : ArrayList<Role>? = null) : Boolean
-
-    /**
-     * Allow the use of the primary ability of the role.
-     * @param target only used when the ability supports only one target.
-     * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
-     */
-    abstract fun usePrimary(target : Role): Boolean
-
-    /**
-     * Allow the use of the secondary ability of the role.
-     * @param target only used when the ability supports only one target.
-     * @return (true) if the target was successfully affected and can use his ability, (false) otherwise.
-     */
-    abstract fun useSecondary(target : Role): Boolean
-
-    /**
-     * Returns a list of the targets for the primary ability
-     * @param list of roles to be extracted from.
-     */
-    open fun getTargetsPrimary(list : ArrayList<Role>) : ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetPrimary(r))
-                output.add(r)
+        if (getPrimaryAbility() != null) {
+            Log.d(tag,"$name : primary ability -> targets : ${getPrimaryAbility()!!.targets}")
+            Log.d(tag,"$name : primary ability -> times : ${getPrimaryAbility()!!.times}")
+            Log.d(tag,"$name : primary ability -> target list : ${getPrimaryAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no primary ability")
         }
 
-        return output
-    }
-
-    /**
-     * Returns a list of the targets for the secondary ability
-     * @param list of roles to be extracted from.
-     */
-    open fun getTargetsSecondary(list : ArrayList<Role>): ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetSecondary(r))
-                output.add(r)
+        if (getSecondaryAbility() != null) {
+            Log.d(tag,"$name : secondary ability -> targets : ${getSecondaryAbility()!!.targets}")
+            Log.d(tag,"$name : secondary ability -> times : ${getSecondaryAbility()!!.times}")
+            Log.d(tag,"$name : secondary ability -> target list : ${getSecondaryAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no secondary ability")
         }
 
-        return output
-
-    }
-
-    /**
-     * Returns a list of the targets for the tertiary ability
-     * @param list of roles to be extracted from.
-     */
-    open fun getTargetsTertiary(list : ArrayList<Role>): ArrayList<Role>{
-
-        val output = ArrayList<Role>()
-
-        for (r : Role in list){
-            if (role!!.isATargetTertiary(r))
-                output.add(r)
+        if (getOnStartAbility() != null) {
+            Log.d(tag,"$name : start ability -> targets : ${getOnStartAbility()!!.targets}")
+            Log.d(tag,"$name : start ability -> times : ${getOnStartAbility()!!.times}")
+            Log.d(tag,"$name : start ability -> target list : ${getOnStartAbility()!!.targetList(getRole(),gameActivity.playerList)}")
+        } else {
+            Log.d(tag,"$name : no onStart ability")
         }
 
-        return output
+    }
 
+
+    /**
+     * getter for Turn.role
+     */
+    fun getRole() : R{
+        return role!!
     }
 
     /**
-     * Return whether the current role should use his power or not.
+     * setter for Turn.Role
+     * @param role new role
      */
-    abstract fun shouldUsePower(gameActivity: GameActivity): Boolean
+    fun setRole(role : R){
+        this.role = role
+    }
+
 
 }

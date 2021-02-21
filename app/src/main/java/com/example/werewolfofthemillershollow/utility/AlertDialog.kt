@@ -52,8 +52,8 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
          */
         val okButton = object : OnClick{
 
-            override fun onClick(dialog: AlertDialog) {
-                dialog.dismiss()
+            override fun onClick(alertDialog: AlertDialog) {
+                alertDialog.dismiss()
             }
 
         }

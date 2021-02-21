@@ -61,8 +61,8 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item : Role = list[position]
 
-        holder.icon.setImageDrawable(Icons.getDrawableIcon(icon = item.getIcon()!!, context = context))
-        holder.text.text = item.getName()
+        holder.icon.setImageDrawable(Icons.getDrawableIcon(icon = item.icon, context = context))
+        holder.text.text = item.name
 
         holder.itemView.setOnClickListener {
             if (listener != null) listener!!.onClick(holder.adapterPosition)

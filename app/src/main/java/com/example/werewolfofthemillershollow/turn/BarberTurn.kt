@@ -7,11 +7,8 @@ import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
+import com.example.werewolfofthemillershollow.utility.Ability
 import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
 
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
@@ -19,8 +16,12 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         setRole(role)
     }
 
+    override fun getOnStartAbility(): Ability? {
+        return getPrimaryAbility()
+    }
+
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return context.getString(R.string.barber_instruction_killed)
 
         return context.getString(R.string.barber_instruction)
@@ -28,14 +29,6 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -52,47 +45,12 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
     }
 
-    override fun canPrimary(): Boolean {
-        return getRole().getIsKilled()!!
-    }
-
     override fun onStart(activity: GameActivity): Boolean {
-
-        if (getRole().getIsKilled()!!){
-
-            if (!getHasPrimary()){
-                val dialog = AlertDialog(
-                    text = R.string.no_power,
-                    icon = Icons.noAbility,
-                    cancelable = false
-                )
-                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
-                return false
-            }
-
-            return true
-        }
-
-        return false
-    }
-
-    override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
-        return getPrimaryOnClickHandler()
-    }
-
-    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return getTargetsPrimary(list)
-    }
-
-    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener? {
-
-        return if (getHasPrimary())
-            getPrimaryOnTargetHandler()
-        else null
+        return getRole().isKilled && getOnStartAbility()!!.times != App.ABILITY_NONE
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return true
 
         return false
@@ -109,7 +67,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
 
         val sub = getRole().new(activity, player, activity.servantRef)
         sub.debug(tag = "servant")
@@ -119,7 +77,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
 
         activity.barberRef = getRole()
 

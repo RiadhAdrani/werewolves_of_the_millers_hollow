@@ -47,6 +47,7 @@
     <string name="existing_name_alert">Player name already exits !!!</string>
 
     <string name="should_use_power">Unable to proceed, This player should use his power on a target !</string>
+    <string name="good_night">Good Night!</string>
 
     <string name="as">as</string>
     <string name="and">and</string>
@@ -67,10 +68,14 @@
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>
     <string name="servant_instructions">Choose a player, and upon his death you will take his power.</string>
+    <string name="servant_effect">Servant Effect</string>
+    <string name="servant_effect_description">This player is affected by the power of the servant, if he dies, his power will be transferred to the servant.</string>
 
     <string name="guardian_name">Guardian</string>
     <string name="guardian_description">Guardian Description</string>
     <string name="guardian_instruction">Choose a player to defend this night against the attacks of the wolves. You may guard yourself, but you cannot guard the same player twice in a row.</string>
+    <string name="guardian_effect">Guardian Shield</string>
+    <string name="guardian_effect_description">This player is being Shielded by the Guardian of the village. This shield is only effective against the attack of the wolves. In fact, it is useless against other players attack.</string>
 
     <string name="wolf_name">Werewolf</string>
     <string name="wolfpack">Wolfpack</string>
@@ -82,7 +87,10 @@
     <string name="infect_instruction">Father of wolves, would you like to infect the player killed by the wolves so he can join you?</string>
     <string name="infect_instruction_nobody">Nobody was harmed this night …</string>
     <string name="infect_action_success">The target was successfully infected! Make the wolves know each other.</string>
-    <string name="infect_action_fail">The target was not infected! Make the wolves and know each other.</string>
+    <string name="infect_action_fail">The target was not infected! Wake up wolves and know each other.</string>
+    <string name="infect_wake_pack">Wake up wolves and know each other!</string>
+    <string name="infection_effect">Infected</string>
+    <string name="infection_effect_description">This player is infected by the power of the father of wolves, he can participate in the wolf pack.</string>
 
     <string name="sorcerer_name">Sorcerer</string>
     <string name="sorcerer_description">Sorcerer Description</string>
@@ -110,21 +118,11 @@
     <string name="captain_instruction_equal">Choose one of the convicted players to start talking first.</string>
     <string name="captain_instruction_execute">Choose which one of the convicted players to die, choose wisely!</string>
     <string name="captain_instruction_inherit_servant">The current captain is dead and the servant took his role!</string>
+    <string name="captain_effect">Captain Armband</string>
+    <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
-
-    <string name="servant_effect">Servant Effect</string>
-    <string name="servant_effect_description">This player is affected by the power of the servant, if he dies, his power will be transferred to the servant.</string>
-
-    <string name="guardian_effect">Guardian Shield</string>
-    <string name="guardian_effect_description">This player is being Shielded by the Guardian of the village. This shield is only effective against the attack of the wolves. In fact, it is useless against other players attack.</string>
-
-    <string name="infection_effect">Infected</string>
-    <string name="infection_effect_description">This player is infected by the power of the father of wolves, he can participate in the wolf pack.</string>
-
-    <string name="captain_effect">Captain Armband</string>
-    <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
 
     <string name="today_event">What happened last night ?</string>
     <string name="servant_event">Servant transformed into</string>

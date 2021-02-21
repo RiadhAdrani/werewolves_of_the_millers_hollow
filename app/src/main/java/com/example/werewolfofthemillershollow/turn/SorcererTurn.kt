@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Sorcerer
 import com.example.werewolfofthemillershollow.utility.Event
@@ -12,7 +11,7 @@ import com.example.werewolfofthemillershollow.utility.Event
 class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>(activity) {
 
     init {
-        setRole(role,)
+        setRole(role)
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
@@ -21,7 +20,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         val dead = ArrayList<Role>()
 
         for (role : Role in list!!){
-            if (role.getIsKilled()!!){
+            if (role.isKilled){
                 dead.add(role)
             }
         }
@@ -30,15 +29,15 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         if (dead.isNotEmpty()){
             for (role : Role in dead){
                 if (dead.indexOf(role) == 0){
-                    deadString += role.getPlayer()
+                    deadString += role.player
                     continue
                 }
                 if (dead.indexOf(role) == dead.size-1){
-                    deadString += " " + context.getString(R.string.and) +" "+ role.getPlayer()
+                    deadString += " " + context.getString(R.string.and) +" "+ role.player
                     continue
                 }
                 else
-                    deadString += ", "+role.getPlayer()
+                    deadString += ", "+role.player
             }
 
             return if (dead.size == 1)
@@ -53,19 +52,6 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return getRole().canPlay(round)
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun canSecondary(): Boolean {
-        return getRole().getHasSecondary()!!
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        Log.d("Role","using secondary")
-        return getRole().useSecondaryAbility(role = target)
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -94,13 +80,13 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
         setRole(sub as Sorcerer)
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
         return index
     }
 }

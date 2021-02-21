@@ -1,8 +1,8 @@
 package com.example.werewolfofthemillershollow
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,10 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.*
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.turn.*
 import com.example.werewolfofthemillershollow.utility.*
-
-import java.lang.Exception
 
 /**
  * Manage how game is played and progressed.
@@ -98,6 +97,11 @@ class GameActivity : AppCompatActivity() {
     private lateinit var abilityTwo : ImageView
 
     /**
+     * Allow the current player to use his tertiary ability if he has one.
+     */
+    private lateinit var abilityThree : ImageView
+
+    /**
      * Allow the user to skip this player
      */
     private lateinit var skip : ImageView
@@ -155,12 +159,7 @@ class GameActivity : AppCompatActivity() {
 
         skip = findViewById(R.id.skip)
         skip.setOnClickListener {
-            if (turnList[index].shouldUsePower(this)){
-                val dialog = AlertDialog(text = R.string.should_use_power)
-                dialog.show(supportFragmentManager,App.TAG_ALERT)
-                return@setOnClickListener
-            }
-            next()
+            turnList[index].onSkip(this)
         }
 
         roleIcon = findViewById(R.id.role_icon)
@@ -177,6 +176,8 @@ class GameActivity : AppCompatActivity() {
         abilityOne = findViewById(R.id.ability_one)
 
         abilityTwo = findViewById(R.id.ability_two)
+
+        abilityThree = findViewById(R.id.ability_three)
 
         deadList = ArrayList()
 
@@ -259,12 +260,12 @@ class GameActivity : AppCompatActivity() {
         val servant = ServantTurn(Servant(baseContext),this)
         if (servant.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
-                if (role.getName() == getString(R.string.servant_name)){
+                if (role.name == getString(R.string.servant_name)){
                     servantRef = role as Servant
                     break
                 }
             }
-            Log.d("Role","servantRef = ${this.servantRef!!.getName()} : ${this.servantRef!!.getPlayer()}")
+            Log.d("Role","servantRef = ${this.servantRef!!.name} : ${this.servantRef!!.player}")
         }
 
         val guardian = GuardianTurn(Guardian(baseContext),this)
@@ -288,23 +289,23 @@ class GameActivity : AppCompatActivity() {
         val barber = BarberTurn(Barber(baseContext), this)
         if (barber.addTurn(output = output, list = list, baseContext)){
             for (role : Role in playerList){
-                if (role.getName()== barber.getRole().getName()){
+                if (role.name == barber.getRole().name){
                     barberRef = role as Barber
                     break
                 }
             }
-            Log.d("Role","barberRef = ${barberRef!!.getName()} : ${this.barberRef!!.getPlayer()}")
+            Log.d("Role","barberRef = ${barberRef!!.name} : ${this.barberRef!!.player}")
         }
 
         val captain = CaptainTurn(Captain(baseContext), this)
         if (captain.addTurn(output = output, list = list, baseContext)) {
             for (role : Role in playerList){
-                if (role.getIsCaptain()!!){
+                if (role.isCaptain){
                     captainRef = role
                     break
                 }
             }
-            Log.d("Role","captainRef = ${this.captainRef.getName()} : ${this.captainRef.getPlayer()}")
+            Log.d("Role","captainRef = ${this.captainRef.name} : ${this.captainRef.player}")
         }
 
 
@@ -318,6 +319,8 @@ class GameActivity : AppCompatActivity() {
 
         val currentPlayer = turnList[index]
 
+        currentPlayer.debug()
+
         try {
             setName(currentPlayer.getPlayer(list = playerList))
         }catch (e : Exception){
@@ -327,8 +330,17 @@ class GameActivity : AppCompatActivity() {
         }
 
         setIcon(currentPlayer.getIcon())
-        setPrimaryIcon(currentPlayer.getPrimaryIcon())
-        setSecondaryIcon(currentPlayer.getSecondaryIcon())
+
+        if (currentPlayer.getPrimaryAbility() != null)
+            setPrimaryIcon(currentPlayer.getPrimaryAbility()!!.icon)
+        else
+            setPrimaryIcon(Icons.noAbility)
+
+        if (currentPlayer.getSecondaryAbility() != null)
+            setSecondaryIcon(currentPlayer.getSecondaryAbility()!!.icon)
+        else
+            setSecondaryIcon(Icons.noAbility)
+
         setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
@@ -337,12 +349,9 @@ class GameActivity : AppCompatActivity() {
 
             val dialog = UsePowerDialog(
                 currentPlayer,
-                currentPlayer.getRole().getIcon()!!,
-                playerList,
-                deadList,
-                currentPlayer.getOnStartTargets(playerList),
+                currentPlayer.getOnStartAbility()!!,
                 currentPlayer.getOnStartOnClickHandler(),
-                currentPlayer.getOnStartOnTargetHandler(),
+                currentPlayer.getOnTargetHandler(),
                 null,
                 false,
                 this
@@ -360,22 +369,30 @@ class GameActivity : AppCompatActivity() {
 
         }
 
+        if (currentPlayer.getPrimaryAbility() != null)
+            abilityOne.visibility = View.VISIBLE
+        else
+            abilityOne.visibility = View.GONE
+
         abilityOne.setOnClickListener {
 
-            if (!currentPlayer.canPrimary()){
+            if (currentPlayer.getPrimaryAbility() == null) {
+                Log.d("Ability","No Primary Ability")
+                return@setOnClickListener
+            }
+
+            if (!currentPlayer.getPrimaryAbility()!!.isUsable()){
+                Log.d("Ability","Primary is not usable")
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getHasPrimary()){
+            if (currentPlayer.getPrimaryAbility()!!.times != App.ABILITY_NONE){
                 val dialog = UsePowerDialog(
                     currentPlayer,
-                    currentPlayer.getPrimaryIcon(),
-                    playerList,
-                    deadList,
-                    currentPlayer.getTargetsPrimary(playerList),
-                    currentPlayer.getPrimaryOnClickHandler(),
-                    currentPlayer.getPrimaryOnTargetHandler(),
+                    currentPlayer.getPrimaryAbility()!!,
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
                     null,
                     true,
                     this
@@ -389,22 +406,61 @@ class GameActivity : AppCompatActivity() {
 
         }
 
+        if (currentPlayer.getSecondaryAbility() != null)
+            abilityTwo.visibility = View.VISIBLE
+        else
+            abilityTwo.visibility = View.GONE
+
         abilityTwo.setOnClickListener {
 
-            if (!currentPlayer.canSecondary()){
+            if (currentPlayer.getSecondaryAbility() == null)
+                return@setOnClickListener
+
+            if (!currentPlayer.getSecondaryAbility()!!.isUsable()){
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getHasSecondary()){
+            if (currentPlayer.getSecondaryAbility()!!.times != App.ABILITY_NONE){
                 val dialog = UsePowerDialog(
                     currentPlayer,
-                    currentPlayer.getSecondaryIcon(),
-                    playerList,
-                    deadList,
-                    currentPlayer.getTargetsSecondary(playerList),
-                    currentPlayer.getSecondaryOnClickHandler(),
-                    currentPlayer.getSecondaryOnTargetHandler(),
+                    currentPlayer.getSecondaryAbility()!!,
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
+                    onDismissed,
+                    true,
+                    this
+                )
+
+                dialog.show(supportFragmentManager, App.TAG_ALERT)
+            }
+            else {
+                Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
+            }
+
+        }
+
+        if (currentPlayer.getTertiaryAbility() != null)
+            abilityThree.visibility = View.VISIBLE
+        else
+            abilityThree.visibility = View.GONE
+
+        abilityThree.setOnClickListener {
+
+            if (currentPlayer.getTertiaryAbility() == null)
+                return@setOnClickListener
+
+            if (!currentPlayer.getTertiaryAbility()!!.isUsable()){
+                Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
+            if (currentPlayer.getTertiaryAbility()!!.times != App.ABILITY_NONE){
+                val dialog = UsePowerDialog(
+                    currentPlayer,
+                    currentPlayer.getTertiaryAbility()!!,
+                    currentPlayer.getOnClickHandler(),
+                    currentPlayer.getOnTargetHandler(),
                     onDismissed,
                     true,
                     this
@@ -446,21 +502,21 @@ class GameActivity : AppCompatActivity() {
     private fun resolve(){
 
         for (role : Role in playerList){
-            if (role.getIsTalking()!!){
-                events.add(Event.talkFirst(this,role.getPlayer()!!))
+            if (role.isTalking){
+                events.add(Event.talkFirst(this,role.player!!))
                 break
             }
         }
 
         for (turn : Turn<*> in turnList){
-            if (turn.getRole().getName() == getString(R.string.seer_name)){
+            if (turn.getRole().name == getString(R.string.seer_name)){
                 val seer = turn as SeerTurn
-                if (!seer.getRole().getIsKilled()!!)
+                if (!seer.getRole().isKilled)
                     events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
             }
 
-            if (turn.getRole().getIsKilled()!!){
-                if (turn.getRole().getIsServed()!!)
+            if (turn.getRole().isKilled){
+                if (turn.getRole().isServed)
                     turn.servant(this)
             }
 
@@ -468,7 +524,7 @@ class GameActivity : AppCompatActivity() {
 
         var i = 0
         while (i < turnList.size){
-            if (turnList[i].getRole().getIsKilled()!! && !turnList[i].getRole().getIsServed()!!){
+            if (turnList[i].getRole().isKilled && !turnList[i].getRole().isServed){
                 turnList.removeAt(i)
                 i--
             }
@@ -480,11 +536,11 @@ class GameActivity : AppCompatActivity() {
         while (i < playerList.size){
             playerList[i].resetStatusEffects()
 
-            if (playerList[i].getIsKilled()!!){
-                if (playerList[i].getIsServed()!!){
+            if (playerList[i].isKilled){
+                if (playerList[i].isServed){
                     playerList[i].servant(this)
                 }
-                events.add(Event.died(this, playerList[i].getPlayer()!!))
+                events.add(Event.died(this, playerList[i].player!!))
                 deadList.add(playerList[i])
                 playerList.removeAt(i)
                 i--

@@ -8,19 +8,69 @@ import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
+import com.example.werewolfofthemillershollow.utility.*
 
 class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity) {
 
+    private var chooseNewCaptain : Ability
+
+    private var chooseTalker : Ability
+
     init {
         setRole(role)
+
+        val ability = object :Ability.Specification{
+
+            override fun use(self: Role, role: Role): Boolean {
+                self.isCaptain = false
+                role.isCaptain = true
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return targetRole != self
+            }
+
+        }
+        chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainChoose)
+
+        val talker = object :Ability.Specification{
+            override fun use(self: Role, role: Role): Boolean {
+                role.isTalking = true
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return true
+            }
+
+        }
+        chooseTalker = Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.talkFirst)
+
+    }
+
+    override fun getPrimaryAbility(): Ability {
+        return chooseTalker
+    }
+
+    override fun getSecondaryAbility(): Ability? {
+        return null
+    }
+
+    override fun getTertiaryAbility(): Ability? {
+        return null
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
-        if (getRole().getIsKilled()!!)
+        if (getRole().isKilled)
             return context.getString(R.string.captain_instruction_inherit)
 
         return context.getString(R.string.captain_instruction)
@@ -28,14 +78,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
         return true
-    }
-
-    override fun usePrimary(target: Role): Boolean {
-        return getRole().usePrimaryAbility(role = target)
-    }
-
-    override fun useSecondary(target: Role): Boolean {
-        return false
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -56,19 +98,11 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return Icons.captainChoose
     }
 
-    override fun getPrimaryTargets(): Int {
-        return Captain.getCaptainTargets()
-    }
-
-    override fun getHasPrimary(): Boolean {
-        return true
-    }
-
     override fun onStart(activity: GameActivity): Boolean {
 
-        if (getRole().getIsKilled()!!){
+        if (getRole().isKilled){
 
-            if (getRole().getIsServed()!!){
+            if (getRole().isServed){
 
                 val index = servant(activity)
                 if (index == -1)
@@ -78,9 +112,9 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 activity.captainRef = activity.playerList[index]
 
                 val onClick = object : AlertDialog.OnClick{
-                    override fun onClick(dialog: AlertDialog) {
+                    override fun onClick(alertDialog: AlertDialog) {
                         activity.displayNext()
-                        dialog.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 
@@ -110,40 +144,29 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         if (index == -1)
             return -1
 
-        val player = activity.servantRef!!.getPlayer() ?: return -1
+        val player = activity.servantRef!!.player ?: return -1
 
         val sub = getRole().new(activity, player, activity.servantRef)!!
-        sub.setIsCaptain(true)
+        sub.isCaptain = true
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.getName()!!))
+        activity.events.add(Event.servant(activity,sub.name))
 
         activity.servantRef = null
 
         return index
     }
 
-    override fun getTargetsPrimary(list: ArrayList<Role>): ArrayList<Role> {
-        return Captain.targets(list)
-    }
-
-    override fun getPrimaryIcon(): Int {
-        return Icons.captainChoose
-    }
-
     override fun getRoleToDisplay(context: Context?, list: ArrayList<Role>?): String {
         return context!!.getString(R.string.captain_name)
-    }
-
-    override fun getOnStartTargets(list: ArrayList<Role>): ArrayList<Role> {
-        return Captain.newCaptainTargets(list)
     }
 
     override fun getOnStartOnClickHandler(): UsePowerDialog.OnClickListener {
 
             return object : UsePowerDialog.OnClickListener{
                 override fun done(
+                    ability: Ability,
                     aliveList: ArrayList<Role>,
                     deadList: ArrayList<Role>,
                     adapter: TargetAdapter,
@@ -157,8 +180,6 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         return
                     }
 
-                    Log.d("Role","Turn Class : using secondary ability")
-
                     for(index : Int in adapter.getTargets()){
 
                         val target : Role = adapter.getList()[index]
@@ -166,9 +187,9 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         val i = activity.playerList.indexOf(target)
 
                         if (i != -1){
-                            Captain.newCaptain(activity.playerList[i])
+                            ability.use(getRole(),activity.playerList[i])
                             activity.playerList[i].debug()
-                            setRole(activity.playerList[i],)
+                            setRole(activity.playerList[i])
                         }
 
                         activity.displayNext()
@@ -188,37 +209,11 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
     }
 
-    override fun getOnStartOnTargetHandler(): TargetAdapter.OnClickListener {
-
-        return object : TargetAdapter.OnClickListener{
-
-            override fun onClick(position: Int, dialog: UsePowerDialog, adapter: TargetAdapter) {
-
-                if (position in adapter.getTargets()){
-                    Log.d("TargetAdapter","item $position removed from target list.")
-                    adapter.removeTarget(position)
-                    if (adapter.getTargets().size == 0){
-                        dialog.setCancelState()
-                    }
-                    Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-                    return
-                }
-
-                if (adapter.getTargets().size > 0){
-                    adapter.emptyTargets()
-                }
-
-                adapter.addTarget(position)
-                dialog.setResetState()
-                Log.d("TargetAdapter","item $position added to target list")
-                Log.d("TargetAdapter","targets = ${adapter.getTargets()}")
-
-            }
-
-        }
-    }
-
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
         return true
+    }
+
+    override fun getOnStartAbility(): Ability {
+        return chooseNewCaptain
     }
 }

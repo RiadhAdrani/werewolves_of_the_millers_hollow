@@ -31,7 +31,7 @@ class StatusEffectAdapter(private var list: ArrayList<StatusEffect>,
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
         val currentItem = list[position]
-        holder.icon.setImageResource(currentItem.getIcon())
+        holder.icon.setImageResource(currentItem.icon!!)
         holder.text.text = currentItem.getName(context = context)
 
         if (listener != null){
