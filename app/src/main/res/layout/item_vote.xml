@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/tiny"
+    android:layout_marginVertical="@dimen/tiny"
+    >
+
+    <ImageView
+        android:id="@+id/item_icon"
+        android:src="@drawable/ic_moon"
+        android:contentDescription="@string/role_icon"
+        android:layout_width="@dimen/giant"
+        android:layout_height="@dimen/giant"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/item_add"
+        android:src="@drawable/ic_add"
+        android:contentDescription="@string/role_icon"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintLeft_toRightOf="@id/item_player"
+        app:layout_constraintRight_toLeftOf="@id/item_vote"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:id="@+id/item_vote"
+        android:text="@string/players_number"
+        android:textSize="@dimen/text_giant"
+        android:gravity="center"
+        android:contentDescription="@string/role_icon"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/item_add"
+        app:layout_constraintRight_toLeftOf="@id/item_sub"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <ImageView
+        android:id="@+id/item_sub"
+        android:src="@drawable/ic_remove"
+        android:contentDescription="@string/role_icon"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        app:layout_constraintLeft_toRightOf="@id/item_vote"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:foreground="?android:attr/selectableItemBackground"
+        />
+
+    <TextView
+        android:id="@+id/item_player"
+        android:text="@string/player_name"
+        android:textSize="@dimen/text_medium"
+        android:textStyle="bold"
+        android:paddingHorizontal="@dimen/tiny"
+        android:singleLine="true"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/item_add"
+        app:layout_constraintLeft_toRightOf="@id/item_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

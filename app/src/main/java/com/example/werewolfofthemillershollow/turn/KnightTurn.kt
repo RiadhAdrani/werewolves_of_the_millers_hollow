@@ -50,7 +50,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
         if (getRole().isKilled){
 
-            if (getPrimaryAbility()!!.times != App.ABILITY_NONE){
+            if (getPrimaryAbility()!!.times == App.ABILITY_NONE){
                 val dialog = AlertDialog(
                     text = R.string.no_power,
                     icon = Icons.noAbility,
@@ -58,7 +58,6 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
                 dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
                 return false
             }
-
             return true
         }
 
@@ -70,7 +69,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return getRole().isKilled
+        return getRole().isKilled && getRole().primaryAbility!!.times == App.ABILITY_ONCE
     }
 
     override fun servant(activity: GameActivity): Int {

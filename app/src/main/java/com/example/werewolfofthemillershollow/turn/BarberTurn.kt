@@ -2,6 +2,7 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
@@ -82,6 +83,16 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         activity.barberRef = getRole()
 
         return index
+    }
+
+    override fun onCall(): GameActivity.OnCall {
+        return object : GameActivity.OnCall{
+            override fun onCall() {
+                // TODO : make proper call
+                Toast.makeText(activity,"Barber Call",Toast.LENGTH_LONG).show()
+            }
+
+        }
     }
 
 

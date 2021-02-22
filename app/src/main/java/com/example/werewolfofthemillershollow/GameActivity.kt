@@ -21,6 +21,10 @@ import com.example.werewolfofthemillershollow.utility.*
  */
 class GameActivity : AppCompatActivity() {
 
+    interface OnCall{
+        fun onCall()
+    }
+
     /**
      * Current player turn index
      */
@@ -131,6 +135,11 @@ class GameActivity : AppCompatActivity() {
      * reference to the barber player.
      */
     var barberRef : Barber? = null
+
+    /**
+     * Reference to the barber turn.
+     */
+    var barberTurnRef : BarberTurn? = null
 
     /**
      * List of events that occured last night (round).
@@ -294,6 +303,7 @@ class GameActivity : AppCompatActivity() {
                     break
                 }
             }
+            barberTurnRef = output[output.size - 1] as BarberTurn
             Log.d("Role","barberRef = ${barberRef!!.name} : ${this.barberRef!!.player}")
         }
 
@@ -584,7 +594,36 @@ class GameActivity : AppCompatActivity() {
 
                 val onVote = object : DiscussionDialog.OnVote{
                     override fun onVote(): Boolean {
-                        newRound()
+
+                        val onVoting = object : VotingAdapter.OnVote{
+                            override fun onIncrement(adapter: VotingAdapter, position: Int) {
+                                adapter.addVote(position)
+                            }
+
+                            override fun onDecrement(adapter: VotingAdapter, position: Int) {
+                                adapter.decrementVote(position)
+                            }
+
+                        }
+
+                        val onCast = object : VotingDialog.OnVoteCast {
+                            override fun onVoteCast(dialog: VotingDialog) {
+                                dialog.dismiss()
+                                newRound()
+                                //TODO : execution || discuss
+                            }
+
+                        }
+
+                        vote(
+                            playerList,
+                            "Vote Suspicious Players",
+                            "Vote Suspicious Players",
+                            onVoting,
+                            barberTurnRef!!.onCall(),
+                            onCast
+                        )
+
                         return true
                     }
 
@@ -607,6 +646,37 @@ class GameActivity : AppCompatActivity() {
 
         val dialog = DiscussionDialog( list, this, onVote = onVote)
         dialog.show(supportFragmentManager,App.TAG_ALERT)
+
+    }
+
+    /**
+     * Open a voting dialog.
+     * @param list list of players to be voted on.
+     * @param title title of the dialog.
+     * @param content description of the dialog.
+     * @param onVote on vote handler. See [VotingAdapter.OnVote]
+     * @param onBarberCall on barber call handler. See [OnCall]
+     * @param onCast on vote casting handler. See [VotingDialog.OnVoteCast]
+     */
+    private fun vote(
+        list : ArrayList<Role>,
+        title : String,
+        content : String,
+        onVote : VotingAdapter.OnVote,
+        onBarberCall : OnCall,
+        onCast : VotingDialog.OnVoteCast){
+
+        val dialog = VotingDialog(
+            gameActivity = this,
+            list = list,
+            title = title,
+            text = content,
+            onVote = onVote,
+            onBarberCall = onBarberCall,
+            onVoteCast = onCast
+        )
+
+        dialog.show(supportFragmentManager, App.TAG_ALERT)
 
     }
 

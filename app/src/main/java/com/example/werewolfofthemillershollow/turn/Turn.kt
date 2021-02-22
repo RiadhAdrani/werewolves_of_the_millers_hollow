@@ -294,6 +294,10 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
     }
 
+    open fun onCall(): GameActivity.OnCall?{
+        return null
+    }
+
 
     /**
      * getter for Turn.role
