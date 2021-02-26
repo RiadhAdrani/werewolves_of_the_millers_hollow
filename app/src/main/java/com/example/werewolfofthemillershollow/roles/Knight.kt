@@ -20,12 +20,12 @@ class Knight(context: Context) : Role() {
         icon = App.KNIGHT_ICON
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list : ArrayList<Role>): Boolean {
                 if (!self.isKilled)
                     return false
 
                 self.isKilled = false
-                role.isKilled = true
+                role.kill(list)
                 return true
             }
 

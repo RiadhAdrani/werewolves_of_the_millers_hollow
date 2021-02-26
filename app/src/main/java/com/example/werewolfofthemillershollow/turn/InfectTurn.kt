@@ -107,7 +107,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     if (i == -1)
                         return
 
-                    if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i]))
+                    if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i], activity.playerList))
                         done = true
 
                 }
@@ -167,7 +167,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         return false
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
         if (activity.servantRef == null)
             return -1
 
@@ -182,7 +182,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub.name))
         return index
     }
 }

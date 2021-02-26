@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.Role
@@ -21,7 +20,7 @@ import com.example.werewolfofthemillershollow.utility.RolesRollerDialog
  * in addition to distributing role to players in a random way.
  * @see Role
  */
-class NewGameActivity : AppCompatActivity() {
+class NewGameActivity : App() {
 
     /**
      * Return button : allow user to back-track to the previous activity
@@ -101,7 +100,7 @@ class NewGameActivity : AppCompatActivity() {
                         text = Role.errorMessage(error = error)
                     )
                     alert.isCancelable = true
-                    alert.show(supportFragmentManager,App.TAG_ALERT)
+                    alert.show(supportFragmentManager,TAG_ALERT)
 
                 }
             }
@@ -327,7 +326,7 @@ class NewGameActivity : AppCompatActivity() {
      */
     private fun pickRandomAliveRole(list : ArrayList<Role>) : Int {
 
-        val index = App.random(max = list.size)
+        val index = random(max = list.size)
 
         if (index < 0 && index >= list.size)
             return pickRandomAliveRole(list)
@@ -381,7 +380,7 @@ class NewGameActivity : AppCompatActivity() {
             val dialog = AlertDialog(
                 icon = R.drawable.ic_info,
                 text = R.string.empty_name_alert)
-            dialog.show(supportFragmentManager,App.TAG_ALERT)
+            dialog.show(supportFragmentManager,TAG_ALERT)
 
             return true
         }
@@ -393,7 +392,7 @@ class NewGameActivity : AppCompatActivity() {
                 val dialog = AlertDialog(
                     icon = R.drawable.ic_info,
                     text = R.string.existing_name_alert)
-                dialog.show(supportFragmentManager,App.TAG_ALERT)
+                dialog.show(supportFragmentManager,TAG_ALERT)
 
                 return true
             }

@@ -27,12 +27,10 @@ abstract class Role : Serializable {
      */
     var player : String? = null
 
-
     /**
      * description of the role
      */
     var description : String = "description"
-
 
     /**
      * team with which the player is sided.
@@ -123,6 +121,14 @@ abstract class Role : Serializable {
      * @return return true if the player can play this round
      */
     abstract fun canPlay(round : Int) : Boolean
+
+    /**
+     * set the current player isKilled to true.
+     * @param list the list of players.
+     */
+    open fun kill(list : ArrayList<Role>){
+        isKilled = true
+    }
 
     /**
      * indicates if the specified role could be targeted with the secondary ability or not.

@@ -2,19 +2,21 @@ package com.example.werewolfofthemillershollow.turn
 
 import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.Ability
-import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.utility.*
 
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 
     init {
         setRole(role)
+    }
+
+    override fun getOnCallAbility(): Ability? {
+        return getPrimaryAbility()
     }
 
     override fun getOnStartAbility(): Ability? {
@@ -57,7 +59,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
         return false
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
 
         if (activity.servantRef == null)
             return -1
@@ -78,7 +80,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub.name))
 
         activity.barberRef = getRole()
 
@@ -87,9 +89,19 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
     override fun onCall(): GameActivity.OnCall {
         return object : GameActivity.OnCall{
-            override fun onCall() {
-                // TODO : make proper call
-                Toast.makeText(activity,"Barber Call",Toast.LENGTH_LONG).show()
+
+            override fun onCall(dialog: VotingDialog) {
+
+                val d = UsePowerDialog(
+                    turn = activity.barberTurnRef!!,
+                    ability = getPrimaryAbility()!!,
+                    getOnClickHandler(),
+                    getOnTargetHandler(),
+                    cancelable = false,
+                    gameActivity = activity
+                )
+                d.show(activity.supportFragmentManager,App.TAG_ALERT)
+
             }
 
         }

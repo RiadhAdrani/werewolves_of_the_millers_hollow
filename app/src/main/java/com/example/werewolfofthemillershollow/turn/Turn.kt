@@ -5,12 +5,27 @@ import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.Ability
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.TargetAdapter
-import com.example.werewolfofthemillershollow.utility.UsePowerDialog
+import com.example.werewolfofthemillershollow.utility.*
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
+
+    companion object{
+
+        /**
+         * Find the turn with the given role and returns it.
+         * @param role given role.
+         * @param list list of turns to check in.
+         * @return Turn or null if not found.
+         */
+        fun getTurnByRole(role : Role, list : ArrayList<Turn<*>>): Turn<*>?{
+            for (r : Turn<*> in list){
+                if (r.getRole() == role)
+                    return r
+            }
+
+            return null
+        }
+    }
 
     private var role : R? = null
 
@@ -32,7 +47,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     /**
      * Make the needed changes to the servantRef.
      */
-    abstract fun servant(activity: GameActivity): Int
+    abstract fun servant(activity: GameActivity, events : ArrayList<Event>): Int
 
     /**
      * Returns whether the current role turn is playable or not.
@@ -119,6 +134,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     open fun getOnStartAbility() : Ability? = null
 
     /**
+     * Return the ability executed on call.
+     */
+    open fun getOnCallAbility(): Ability? = null
+
+    /**
      * Interface used to override the functionality of the fragment UsePowerDialog.
      * @see UsePowerDialog
      */
@@ -150,7 +170,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     if (i == -1)
                         return
 
-                    ability.use(self = getRole(), role = gameActivity.playerList[i])
+                    ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
                     gameActivity.playerList[i].debug()
 
                 }
@@ -294,10 +314,13 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
     }
 
+    /**
+     * Executed when the current role of this turn could use his ability in the morning.
+     * @return an overridden instance of the interface [GameActivity.OnCall] used in [VotingDialog].
+     */
     open fun onCall(): GameActivity.OnCall?{
         return null
     }
-
 
     /**
      * getter for Turn.role

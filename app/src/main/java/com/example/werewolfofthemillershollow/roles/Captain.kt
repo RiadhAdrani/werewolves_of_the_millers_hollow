@@ -23,59 +23,6 @@ class Captain(context: Context) : Role() {
             role.isTalking = true
         }
 
-        /**
-         * When the current captainRef dies,
-         * he should choose another role to
-         * be the new captainRef
-         * @param role player to be new captainRef
-         */
-        fun newCaptain(role : Role){
-            role.isCaptain = true
-        }
-
-        /**
-         * Return the number of targets that could be affected by the captainRef.
-         */
-        fun getCaptainTargets(): Int = App.TARGET_SINGLE
-
-        /**
-         * Return the targets that could be chosen by the current captainRef to be a the new captainRef.
-         * @param list list of alive players.
-         */
-        fun newCaptainTargets(list : ArrayList<Role>): ArrayList<Role>{
-
-            val output = ArrayList<Role>()
-
-            for (role : Role in list){
-                if (!role.isCaptain)
-                    output.add(role)
-            }
-
-            return output
-
-        }
-
-        /**
-         * return the list of player that could be targeted.
-         */
-        fun targets(list : ArrayList<Role>): ArrayList<Role>{
-            return list
-        }
-
-        /**
-         * Seek and find the current captainRef in the list of players
-         * @param list list of players
-         * @return return the current captainRef
-         */
-        fun findCaptain(list : ArrayList<Role>): Role?{
-
-            for (role : Role in list){
-                if (role.isCaptain)
-                    return role
-            }
-            return null
-        }
-
     }
 
     init {
@@ -87,7 +34,7 @@ class Captain(context: Context) : Role() {
 
         val primary = object : Ability.Specification{
 
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 chooseTalker(role)
                 return true
             }

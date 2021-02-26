@@ -2,6 +2,7 @@ package com.example.werewolfofthemillershollow.utility
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -17,11 +18,12 @@ import com.example.werewolfofthemillershollow.settings.App
 class VotingDialog(
     private var gameActivity:GameActivity,
     private var list : ArrayList<Role>,
+    private var voters : Int,
     private var title : String,
     private var text : String,
-    private var onVote : VotingAdapter.OnVote,
-    private var onBarberCall : GameActivity.OnCall,
-    private var onVoteCast: OnVoteCast
+    private var onBarberCall : GameActivity.OnCall?,
+    private var onVoteCast: OnVoteCast,
+    private var execution : Boolean = false
     ) : AppCompatDialogFragment() {
 
     interface OnVoteCast{
@@ -49,15 +51,22 @@ class VotingDialog(
 
         val barber : ImageView = dialog.findViewById(R.id.dialog_barber)
         if (gameActivity.barberRef != null){
-            barber.setOnClickListener {
-                onBarberCall.onCall()
+            if (!gameActivity.barberRef!!.isKilled && gameActivity.barberRef!!.primaryAbility!!.times != App.ABILITY_NONE){
+                App.blink(barber, Color.YELLOW, 1000)
+                barber.setOnClickListener {
+                    if (onBarberCall != null){
+                        // onBarberCall?.onCall(this)
+                    }
+                }
+            } else {
+                barber.visibility = View.GONE
             }
         } else {
             barber.visibility = View.GONE
         }
 
         val rv : RecyclerView = dialog.findViewById(R.id.dialog_content_rv)
-        adapter = VotingAdapter(list = list, onVote = onVote)
+        adapter = VotingAdapter(list = list, voters = voters, execution = execution)
         rv.layoutManager = LinearLayoutManager(context)
         rv.adapter = adapter
 

@@ -20,7 +20,7 @@ class Servant(context: Context) : Role() {
         icon = App.SERVANT_ICON
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.isServed = true
                 return true
             }

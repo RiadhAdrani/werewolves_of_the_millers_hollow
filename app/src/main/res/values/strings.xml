@@ -25,6 +25,8 @@
     <string name="done">Done</string>
     <string name="ok">OK</string>
     <string name="roles_not_distributed">Not all roles have been given a name !</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 
     <string name="no_captain">No Captain was found in the list!</string>
     <string name="no_villager">Not a single villager was found in the list!</string>
@@ -120,6 +122,7 @@
     <string name="captain_instruction_inherit_servant">The current captain is dead and the servant took his role!</string>
     <string name="captain_effect">Captain Armband</string>
     <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
+    <string name="captain_execute">Would you like to execute this player ?</string>
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
@@ -135,5 +138,6 @@
     <string name="discussion_description">Players are invited to discuss and formulate their opinions to help them in the voting phase. </string>
     <string name="discussion_description_group">are invited to defend themselves.</string>
     <string name="discussion_description_single">is invited to defend himself.</string>
+    <string name="execute">Execute</string>
 
 </resources>

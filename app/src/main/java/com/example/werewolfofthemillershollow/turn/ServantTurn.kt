@@ -42,7 +42,7 @@ class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(act
         return true
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
         if (activity.servantRef == null)
             return -1
 
@@ -56,7 +56,7 @@ class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(act
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub.name))
         return index
     }
 

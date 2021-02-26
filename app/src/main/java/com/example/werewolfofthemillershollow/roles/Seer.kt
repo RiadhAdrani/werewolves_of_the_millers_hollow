@@ -33,7 +33,7 @@ class Seer(context: Context) : Role() {
         icon = App.SEER_ICON
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 seenRole = role.name
                 return true
             }

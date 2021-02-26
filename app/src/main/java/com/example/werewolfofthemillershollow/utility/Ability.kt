@@ -33,7 +33,7 @@ class Ability(
          * @param role target player.
          * @return true if everything was alright, false if the operation failed for some reason.
          */
-        fun use(self : Role, role : Role): Boolean
+        fun use(self : Role, role : Role, list : ArrayList<Role>): Boolean
 
         /**
          * indicates if the current role could be used at the current state or not.
@@ -52,12 +52,12 @@ class Ability(
      * @param role target player.
      * @return true if everything was alright, false if the operation failed for some reason.
      */
-    fun use(self : Role, role : Role): Boolean{
+    fun use(self : Role, role : Role, list : ArrayList<Role>): Boolean{
         if (times == App.ABILITY_NONE)
             return false
 
         if (times == App.ABILITY_ONCE){
-            val value = specifications.use(self, role)
+            val value = specifications.use(self, role, list)
             return if (value){
                 times = App.ABILITY_NONE
                 true
@@ -67,7 +67,7 @@ class Ability(
         }
 
         if (times == App.ABILITY_INFINITE)
-            return specifications.use(self, role)
+            return specifications.use(self, role, list)
 
         return false
     }

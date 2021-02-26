@@ -21,7 +21,7 @@ class Guardian(context: Context) : Role() {
         icon = App.GUARDIAN_ICON
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list : ArrayList<Role>): Boolean {
                 role.isGuarded = true
                 return true
             }

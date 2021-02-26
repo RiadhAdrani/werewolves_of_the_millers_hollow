@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.*
@@ -19,10 +18,10 @@ import com.example.werewolfofthemillershollow.utility.*
  * Manage how game is played and progressed.
  * @see NewGameActivity
  */
-class GameActivity : AppCompatActivity() {
+class GameActivity : App() {
 
     interface OnCall{
-        fun onCall()
+        fun onCall(dialog : VotingDialog)
     }
 
     /**
@@ -367,7 +366,7 @@ class GameActivity : AppCompatActivity() {
                 this
             )
 
-            dialog.show(supportFragmentManager, App.TAG_ALERT)
+            dialog.show(supportFragmentManager, TAG_ALERT)
             return
         }
 
@@ -397,7 +396,7 @@ class GameActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getPrimaryAbility()!!.times != App.ABILITY_NONE){
+            if (currentPlayer.getPrimaryAbility()!!.times != ABILITY_NONE){
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getPrimaryAbility()!!,
@@ -408,7 +407,7 @@ class GameActivity : AppCompatActivity() {
                     this
                 )
 
-                dialog.show(supportFragmentManager, App.TAG_ALERT)
+                dialog.show(supportFragmentManager, TAG_ALERT)
             }
             else {
                 Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
@@ -431,7 +430,7 @@ class GameActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getSecondaryAbility()!!.times != App.ABILITY_NONE){
+            if (currentPlayer.getSecondaryAbility()!!.times != ABILITY_NONE){
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getSecondaryAbility()!!,
@@ -442,7 +441,7 @@ class GameActivity : AppCompatActivity() {
                     this
                 )
 
-                dialog.show(supportFragmentManager, App.TAG_ALERT)
+                dialog.show(supportFragmentManager, TAG_ALERT)
             }
             else {
                 Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
@@ -465,7 +464,7 @@ class GameActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (currentPlayer.getTertiaryAbility()!!.times != App.ABILITY_NONE){
+            if (currentPlayer.getTertiaryAbility()!!.times != ABILITY_NONE){
                 val dialog = UsePowerDialog(
                     currentPlayer,
                     currentPlayer.getTertiaryAbility()!!,
@@ -476,7 +475,7 @@ class GameActivity : AppCompatActivity() {
                     this
                 )
 
-                dialog.show(supportFragmentManager, App.TAG_ALERT)
+                dialog.show(supportFragmentManager, TAG_ALERT)
             }
             else {
                 Toast.makeText(baseContext,R.string.no_power,Toast.LENGTH_LONG).show()
@@ -506,6 +505,15 @@ class GameActivity : AppCompatActivity() {
 
     }
 
+    fun removeRole(role : Role): Boolean{
+        deadList.add(role)
+        return playerList.remove(role)
+    }
+
+    fun removeTurn(turn : Turn<*>): Boolean{
+        return turnList.remove(turn)
+    }
+
     /**
      * function used to initialize the discussion in the morning.
      */
@@ -527,7 +535,7 @@ class GameActivity : AppCompatActivity() {
 
             if (turn.getRole().isKilled){
                 if (turn.getRole().isServed)
-                    turn.servant(this)
+                    turn.servant(this, events)
             }
 
         }
@@ -566,9 +574,19 @@ class GameActivity : AppCompatActivity() {
      * * Should be used only after dismissing every dialog.
      */
     private fun newRound(){
-        events.clear()
-        index = -1
-        next()
+
+        val onClick = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                alertDialog.dismiss()
+                events.clear()
+                index = -1
+                next()
+            }
+        }
+
+        val dialog = AlertDialog(text = R.string.good_night, rightButton = onClick)
+        dialog.show(supportFragmentManager, TAG_ALERT)
+
     }
 
     /**
@@ -592,8 +610,8 @@ class GameActivity : AppCompatActivity() {
         val onClick = object : EventsDialog.OnClick{
             override fun onClick(): Boolean {
 
-                val onVote = object : DiscussionDialog.OnVote{
-                    override fun onVote(): Boolean {
+                val onVote = object : DiscussionDialog.OnNext{
+                    override fun onNext(): Boolean {
 
                         val onVoting = object : VotingAdapter.OnVote{
                             override fun onIncrement(adapter: VotingAdapter, position: Int) {
@@ -608,15 +626,31 @@ class GameActivity : AppCompatActivity() {
 
                         val onCast = object : VotingDialog.OnVoteCast {
                             override fun onVoteCast(dialog: VotingDialog) {
+
                                 dialog.dismiss()
-                                newRound()
-                                //TODO : execution || discuss
+                                val list = voteResult(dialog.adapter.list, dialog.adapter.votes)
+
+                                when {
+                                    list.isEmpty() -> {
+                                        newRound()
+                                    }
+                                    list.size == 1 -> {
+                                        defendSolo(list)
+                                    }
+                                    list.size in 2..3 -> {
+                                        threePlusVoted(list)
+                                    }
+                                    list.size >= 4 -> {
+
+                                    }
+                                }
                             }
 
                         }
 
                         vote(
                             playerList,
+                            playerList.size,
                             "Vote Suspicious Players",
                             "Vote Suspicious Players",
                             onVoting,
@@ -635,17 +669,17 @@ class GameActivity : AppCompatActivity() {
         }
 
         val eventDialog = EventsDialog(events = events,onClick = onClick,cancelable = false)
-        eventDialog.show(supportFragmentManager,App.TAG_ALERT)
+        eventDialog.show(supportFragmentManager,TAG_ALERT)
 
     }
 
     /**
      * Open a discussion dialog.
      */
-    private fun discussion(list : ArrayList<Role>, onVote: DiscussionDialog.OnVote){
+    private fun discussion(list : ArrayList<Role>, onNext: DiscussionDialog.OnNext){
 
-        val dialog = DiscussionDialog( list, this, onVote = onVote)
-        dialog.show(supportFragmentManager,App.TAG_ALERT)
+        val dialog = DiscussionDialog( list, this, onNext = onNext)
+        dialog.show(supportFragmentManager,TAG_ALERT)
 
     }
 
@@ -660,6 +694,7 @@ class GameActivity : AppCompatActivity() {
      */
     private fun vote(
         list : ArrayList<Role>,
+        voters : Int,
         title : String,
         content : String,
         onVote : VotingAdapter.OnVote,
@@ -669,15 +704,123 @@ class GameActivity : AppCompatActivity() {
         val dialog = VotingDialog(
             gameActivity = this,
             list = list,
+            voters = voters,
             title = title,
             text = content,
-            onVote = onVote,
             onBarberCall = onBarberCall,
-            onVoteCast = onCast
+            onVoteCast = onCast,
         )
 
-        dialog.show(supportFragmentManager, App.TAG_ALERT)
+        dialog.show(supportFragmentManager, TAG_ALERT)
 
+    }
+
+    /**
+     * Returns a list of the most voted players in a voting poll.
+     * @param list playerList
+     * @param votes vote count.
+     * @return return a list of the most voted players.
+     */
+    private fun voteResult(list : ArrayList<Role>, votes : ArrayList<Int>): ArrayList<Role>{
+
+        val output = ArrayList<Role>()
+
+        var max = 1
+        for (i : Int in votes){
+            if (i > max){
+                max = i
+            }
+        }
+
+        for (x in 0 until list.size){
+            if (votes[x] == max)
+                output.add(list[x])
+        }
+
+        return output
+    }
+
+    private fun defendSolo(list: ArrayList<Role>){
+
+        val onVoteCast = object  : VotingDialog.OnVoteCast{
+            override fun onVoteCast(dialog: VotingDialog) {
+
+                dialog.dismiss()
+
+                val done = object : OnAction.OnDone{
+                    override fun onDone(onAction: OnAction) {
+                        newRound()
+                    }
+                }
+                val action = OnAction(this@GameActivity, done)
+
+                if (dialog.adapter.votes[0] < 0){
+                    newRound()
+                }
+
+                if (dialog.adapter.votes[0] == 0){
+
+                    val yes = object : AlertDialog.OnClick{
+                        override fun onClick(alertDialog: AlertDialog) {
+                            alertDialog.dismiss()
+                            dialog.adapter.list[0].kill(playerList)
+                            action.onStart()
+                        }
+                    }
+
+                    val no = object : AlertDialog.OnClick{
+                        override fun onClick(alertDialog: AlertDialog) {
+                            alertDialog.dismiss()
+                            newRound()
+                        }
+                    }
+
+                    val captainChoice = AlertDialog(
+                        text = R.string.captain_execute,
+                        icon = Icons.info,
+                        rightButton = yes,
+                        rightButtonText = R.string.yes,
+                        leftButton = no,
+                        leftButtonText = R.string.no)
+                    captainChoice.show(supportFragmentManager, TAG_ALERT)
+                }
+
+                if (dialog.adapter.votes[0] > 0){
+                    dialog.adapter.list[0].kill(playerList)
+                    action.onStart()
+                }
+            }
+        }
+
+        val onNext = object : DiscussionDialog.OnNext{
+            override fun onNext(): Boolean {
+                val dialog = VotingDialog(
+                    gameActivity = this@GameActivity,
+                    list = list,
+                    voters = playerList.size - list.size,
+                    title = getString(R.string.execute),
+                    text = "${getString(R.string.execute)} ${list[0].player} ?",
+                    onVoteCast = onVoteCast,
+                    onBarberCall = barberTurnRef!!.onCall(),
+                    execution = true
+                )
+                dialog.show(supportFragmentManager, TAG_ALERT)
+                return true
+            }
+        }
+
+        val discuss = DiscussionDialog(
+            playerList = list,
+            gameActivity = this,
+            display = "${list[0].player} ${getString(R.string.discussion_description_single)}",
+            onNext = onNext,
+            cancelable = false
+        )
+        discuss.show(supportFragmentManager, TAG_ALERT)
+
+    }
+
+    private fun threePlusVoted(list : ArrayList<Role>){
     }
 
 }

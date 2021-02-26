@@ -21,16 +21,16 @@ class Barber(context: Context) : Role() {
 
         val primary = object : Ability.Specification{
 
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list : ArrayList<Role>): Boolean {
 
                 if (isKilled){
-                    role.isKilled = true
+                    role.kill(list)
                     return true
                 }
 
-                role.isKilled = true
+                role.kill(list)
                 if (role.isWolf())
-                    isKilled = true
+                    kill(list)
 
                 return true
 

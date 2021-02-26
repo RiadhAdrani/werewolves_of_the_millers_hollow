@@ -21,9 +21,10 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         val ability = object :Ability.Specification{
 
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 self.isCaptain = false
                 role.isCaptain = true
+                activity.captainRef = role
                 return true
             }
 
@@ -39,7 +40,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainChoose)
 
         val talker = object :Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.isTalking = true
                 return true
             }
@@ -104,7 +105,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
             if (getRole().isServed){
 
-                val index = servant(activity)
+                val index = servant(activity, activity.events)
                 if (index == -1)
                     return true
 
@@ -134,7 +135,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return false
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
 
         if (activity.servantRef == null)
             return -1
@@ -151,7 +152,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub.name))
 
         activity.servantRef = null
 
@@ -187,7 +188,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         val i = activity.playerList.indexOf(target)
 
                         if (i != -1){
-                            ability.use(getRole(),activity.playerList[i])
+                            ability.use(getRole(),activity.playerList[i], activity.playerList)
                             activity.playerList[i].debug()
                             setRole(activity.playerList[i])
                         }
@@ -214,6 +215,10 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     }
 
     override fun getOnStartAbility(): Ability {
+        return chooseNewCaptain
+    }
+
+    override fun getOnCallAbility(): Ability {
         return chooseNewCaptain
     }
 }

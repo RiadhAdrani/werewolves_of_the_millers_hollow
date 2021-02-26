@@ -8,10 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
+import kotlin.math.abs
 
 class VotingAdapter(
-    private var list : ArrayList<Role>,
-    private var onVote: OnVote
+    var list : ArrayList<Role>,
+    var voters : Int,
+    private var execution : Boolean = false,
     ) : RecyclerView.Adapter<VotingAdapter.MyViewHolder>() {
 
     var votes = ArrayList<Int>()
@@ -65,10 +67,10 @@ class VotingAdapter(
         holder.player.text = player.player
         holder.vote.text = "${votes[position]}"
         holder.add.setOnClickListener {
-            onVote.onIncrement(this,holder.adapterPosition)
+            addVote(holder.adapterPosition)
         }
         holder.sub.setOnClickListener {
-            onVote.onDecrement(this,holder.adapterPosition)
+            decrementVote(holder.adapterPosition)
         }
 
     }
@@ -85,10 +87,10 @@ class VotingAdapter(
 
         var currentVote = 0
         for (n : Int in votes){
-            currentVote += n
+            currentVote += abs(n)
         }
 
-        if (currentVote >= votes.size)
+        if (currentVote >= voters && votes[position] >= 0)
             return
 
         votes[position] ++
@@ -102,7 +104,15 @@ class VotingAdapter(
      */
     fun decrementVote(position : Int){
 
-        if (votes[position] <= 0)
+        if (votes[position] <= 0 && !execution)
+            return
+
+        var currentVote = 0
+        for (n : Int in votes){
+            currentVote += abs(n)
+        }
+
+        if (execution && currentVote >= voters && votes[position] <= 0)
             return
 
         votes[position] --
@@ -127,6 +137,15 @@ class VotingAdapter(
 
     fun removePlayer(position: Int){
 
+        list.removeAt(position)
+        votes.removeAt(position)
+        notifyItemRemoved(position)
+
+    }
+
+    fun removePlayer(role : Role){
+
+        val position = list.indexOf(role)
         list.removeAt(position)
         votes.removeAt(position)
         notifyItemRemoved(position)

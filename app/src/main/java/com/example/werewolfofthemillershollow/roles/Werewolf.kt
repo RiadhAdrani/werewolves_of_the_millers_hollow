@@ -18,9 +18,9 @@ open class Werewolf(context: Context) : Role() {
          * Power of the wolf pack : allow the pack to choose a player to kill, even one of them ...
          * @param role player to kill
          */
-        fun wolfPackPower(role : Role) : Boolean{
+        fun wolfPackPower(role : Role, list : ArrayList<Role>) : Boolean{
             if (!role.isGuarded) {
-                role.isKilled = true
+                role.kill(list)
                 return true
             }
 

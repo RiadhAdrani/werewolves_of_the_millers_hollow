@@ -72,7 +72,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
         return getRole().isKilled && getRole().primaryAbility!!.times == App.ABILITY_ONCE
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
         if (activity.servantRef == null)
             return -1
 
@@ -86,7 +86,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        activity.events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub.name))
         return index
     }
 }

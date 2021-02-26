@@ -9,6 +9,7 @@ import com.example.werewolfofthemillershollow.roles.Werewolf
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
+import com.example.werewolfofthemillershollow.utility.Event
 
 class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>(activity) {
 
@@ -18,8 +19,8 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
         setRole(role)
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
-                return Werewolf.wolfPackPower(role = role)
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
+                return Werewolf.wolfPackPower(role = role, list)
             }
 
             override fun isUsable(): Boolean {
@@ -87,7 +88,7 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
         return false
     }
 
-    override fun servant(activity: GameActivity): Int {
+    override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
         return -1
     }
 }

@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.Context
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 
@@ -12,7 +13,7 @@ import com.example.werewolfofthemillershollow.roles.Role
  * contains settings and constants for the app.
  * Could be accessed globally
  */
-abstract class App {
+abstract class App : AppCompatActivity(){
 
     companion object {
 
@@ -186,7 +187,7 @@ abstract class App {
          * Make an icon blink indefinitely.
          * @param icon target icon.
          * @param color blinking color.
-         * @param duration animation duration.
+         * @param duration animation duration in milliseconds.
          */
         fun blink(icon : ImageView, color : Int, duration : Long){
 

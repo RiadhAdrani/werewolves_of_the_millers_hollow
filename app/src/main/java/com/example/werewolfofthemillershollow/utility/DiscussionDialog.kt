@@ -22,11 +22,11 @@ class DiscussionDialog(
     private var playerList : ArrayList<Role>,
     private var gameActivity: GameActivity,
     private var display : String? = null,
-    var onVote: OnVote? = null,
+    var onNext: OnNext? = null,
     private var cancelable : Boolean? = false) : AppCompatDialogFragment() {
 
-    interface OnVote{
-        fun onVote():Boolean
+    interface OnNext{
+        fun onNext():Boolean
     }
 
     private lateinit var dialog : View
@@ -79,8 +79,8 @@ class DiscussionDialog(
 
         val vote : TextView = dialog.findViewById(R.id.dialog_button)
         vote.setOnClickListener {
-            if (onVote != null){
-                if (onVote!!.onVote()){
+            if (onNext != null){
+                if (onNext!!.onNext()){
                     dismiss()
                 }
             }

@@ -20,7 +20,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
         icon = App.INFECT_ICON
 
         val primary = object : Ability.Specification{
-            override fun use(self: Role, role: Role): Boolean {
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 if (!role.isKilled)
                     return false
 
