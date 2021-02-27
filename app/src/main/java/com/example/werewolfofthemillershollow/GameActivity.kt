@@ -505,15 +505,6 @@ class GameActivity : App() {
 
     }
 
-    fun removeRole(role : Role): Boolean{
-        deadList.add(role)
-        return playerList.remove(role)
-    }
-
-    fun removeTurn(turn : Turn<*>): Boolean{
-        return turnList.remove(turn)
-    }
-
     /**
      * function used to initialize the discussion in the morning.
      */

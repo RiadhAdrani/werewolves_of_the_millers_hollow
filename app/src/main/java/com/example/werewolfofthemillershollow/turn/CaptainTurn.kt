@@ -25,6 +25,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 self.isCaptain = false
                 role.isCaptain = true
                 activity.captainRef = role
+                setRole(role)
                 return true
             }
 

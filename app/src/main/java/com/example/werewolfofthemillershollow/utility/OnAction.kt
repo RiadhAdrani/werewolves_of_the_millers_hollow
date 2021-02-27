@@ -1,5 +1,6 @@
 package com.example.werewolfofthemillershollow.utility
 
+import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.*
@@ -35,20 +36,22 @@ class OnAction(
 
     fun onStart(){
 
-        if (list.isEmpty() || index < 0 || index == list.size){
+        if (list.isEmpty() || index >= list.size){
             onComplete()
             return
         }
 
-        val current = list[index]
+        Log.d("Action","${list.size}")
 
-        if (current.getOnCallAbility() != null){
-            if (current.getOnCallAbility()!!.times == App.ABILITY_NONE){
-                index ++
-                onStart()
-                return
-            }
+        val current = list[index]
+        current.getRole().debug(tag = "Action")
+
+        if (current.getOnCallAbility()!!.times == App.ABILITY_NONE){
+            index ++
+            onStart()
+            return
         }
+
 
         val onClick = object : UsePowerDialog.OnClickListener{
             override fun done(
@@ -75,7 +78,6 @@ class OnAction(
                         return
 
                     ability.use(self = current.getRole(), role = activity.playerList[i], activity.playerList)
-                    activity.playerList[i].debug()
 
                 }
 
@@ -108,7 +110,8 @@ class OnAction(
         val dialog = UsePowerDialog(
             turn = current,
             ability = current.getOnCallAbility()!!,
-            onClick = onClick, current.getOnTargetHandler(),
+            onClick = onClick,
+            onTargetClick = current.getOnTargetHandler(),
             onDismissed = null,
             cancelable = false,
             gameActivity = activity)
@@ -119,12 +122,13 @@ class OnAction(
     private fun onComplete(){
 
         setList()
-        if (list.isNotEmpty())
+
+        if (list.isNotEmpty()) {
             onStart()
+        }
         else{
 
             resolve()
-
             val onClick = object : EventsDialog.OnClick{
                 override fun onClick(): Boolean {
                     onDone.onDone(this@OnAction)
@@ -140,8 +144,13 @@ class OnAction(
 
     private fun setList(){
 
+        list.clear()
+
         for (turn : Turn<*> in activity.turnList){
             if (turn.getRole().isKilled && turn.getOnCallAbility() != null){
+                if (turn.getRoleToDisplay(activity.baseContext,activity.playerList)
+                    == activity.getString(R.string.captain_name) && turn.getRole().isServed)
+                    turn.servant(activity,events)
                 if (turn.getOnCallAbility()!!.times != App.ABILITY_NONE)
                     list.add(turn)
             }
@@ -156,6 +165,7 @@ class OnAction(
     private fun resolve(){
 
         for (turn : Turn<*> in activity.turnList){
+            turn.getRole().debug()
             if (turn.getRole().isKilled){
                 if (turn.getRole().isServed)
                     turn.servant(activity, this.events)
