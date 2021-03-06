@@ -204,6 +204,71 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
+     * Interface used to override the functionality of the fragment UsePowerDialog.
+     * Used in the case of a player call in the discussion or voting phase.
+     * @see UsePowerDialog
+     */
+    open fun getOnCallOnClickHandler() : UsePowerDialog.OnClickListener{
+
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                ability: Ability,
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ) {
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager,App.TAG_ALERT)
+                    return
+                }
+
+                Log.d("Role","Turn Class : using secondary ability")
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = gameActivity.playerList.indexOf(target)
+
+                    if (i == -1)
+                        return
+
+                    ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
+                    gameActivity.playerList[i].debug()
+
+                }
+
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
+                        dialog!!.dismiss()
+                    }
+                }
+
+                val goodNightDialog = AlertDialog(
+                    text = com.example.werewolfofthemillershollow.R.string.good_night,
+                    rightButton = onClick,
+                    cancelable = false)
+                goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+
+        }
+
+    }
+
+    /**
      * Interface used to handle clicking on targets in the fragment UsePowerDialog.
      * @see UsePowerDialog
      * @see TargetAdapter
@@ -312,14 +377,6 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
             Log.d(tag,"$name : no onStart ability")
         }
 
-    }
-
-    /**
-     * Executed when the current role of this turn could use his ability in the morning.
-     * @return an overridden instance of the interface [GameActivity.OnCall] used in [VotingDialog].
-     */
-    open fun onCall(): GameActivity.OnCall?{
-        return null
     }
 
     /**

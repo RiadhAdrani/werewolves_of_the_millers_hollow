@@ -20,14 +20,10 @@ import com.example.werewolfofthemillershollow.utility.*
  */
 class GameActivity : App() {
 
-    interface OnCall{
-        fun onCall(dialog : VotingDialog)
-    }
-
     /**
      * Current player turn index
      */
-    private var index : Int = 0
+    var index : Int = 0
 
     /**
      * Turn count
@@ -547,7 +543,7 @@ class GameActivity : App() {
 
             if (playerList[i].isKilled){
                 if (playerList[i].isServed){
-                    playerList[i].servant(this)
+                    playerList[i].servant(this, events)
                 }
                 events.add(Event.died(this, playerList[i].player!!))
                 deadList.add(playerList[i])
@@ -619,7 +615,7 @@ class GameActivity : App() {
                             override fun onVoteCast(dialog: VotingDialog) {
 
                                 dialog.dismiss()
-                                val list = voteResult(dialog.adapter.list, dialog.adapter.votes)
+                                val list = voteResult(dialog.adapter.list)
 
                                 when {
                                     list.isEmpty() -> {
@@ -632,7 +628,7 @@ class GameActivity : App() {
                                         threePlusVoted(list)
                                     }
                                     list.size >= 4 -> {
-
+                                        threePlusVoted(list)
                                     }
                                 }
                             }
@@ -645,7 +641,6 @@ class GameActivity : App() {
                             "Vote Suspicious Players",
                             "Vote Suspicious Players",
                             onVoting,
-                            barberTurnRef!!.onCall(),
                             onCast
                         )
 
@@ -689,7 +684,6 @@ class GameActivity : App() {
         title : String,
         content : String,
         onVote : VotingAdapter.OnVote,
-        onBarberCall : OnCall,
         onCast : VotingDialog.OnVoteCast){
 
         val dialog = VotingDialog(
@@ -698,7 +692,6 @@ class GameActivity : App() {
             voters = voters,
             title = title,
             text = content,
-            onBarberCall = onBarberCall,
             onVoteCast = onCast,
         )
 
@@ -709,23 +702,22 @@ class GameActivity : App() {
     /**
      * Returns a list of the most voted players in a voting poll.
      * @param list playerList
-     * @param votes vote count.
      * @return return a list of the most voted players.
      */
-    private fun voteResult(list : ArrayList<Role>, votes : ArrayList<Int>): ArrayList<Role>{
+    private fun voteResult(list : ArrayList<Role>): ArrayList<Role>{
 
         val output = ArrayList<Role>()
 
         var max = 1
-        for (i : Int in votes){
-            if (i > max){
-                max = i
+        for (role : Role in list){
+            if (role.vote > max){
+                max = role.vote
             }
         }
 
-        for (x in 0 until list.size){
-            if (votes[x] == max)
-                output.add(list[x])
+        for (role : Role in list){
+            if (role.vote == max)
+                output.add(role)
         }
 
         return output
@@ -743,13 +735,14 @@ class GameActivity : App() {
                         newRound()
                     }
                 }
-                val action = OnAction(this@GameActivity, done)
 
-                if (dialog.adapter.votes[0] < 0){
+                val action = OnAction(activity = this@GameActivity, onDone = done)
+
+                if (dialog.adapter.list[0].vote < 0){
                     newRound()
                 }
 
-                if (dialog.adapter.votes[0] == 0){
+                if (dialog.adapter.list[0].vote == 0){
 
                     val yes = object : AlertDialog.OnClick{
                         override fun onClick(alertDialog: AlertDialog) {
@@ -776,7 +769,7 @@ class GameActivity : App() {
                     captainChoice.show(supportFragmentManager, TAG_ALERT)
                 }
 
-                if (dialog.adapter.votes[0] > 0){
+                if (dialog.adapter.list[0].vote > 0){
                     dialog.adapter.list[0].kill(playerList)
                     action.onStart()
                 }
@@ -792,7 +785,6 @@ class GameActivity : App() {
                     title = getString(R.string.execute),
                     text = "${getString(R.string.execute)} ${list[0].player} ?",
                     onVoteCast = onVoteCast,
-                    onBarberCall = barberTurnRef!!.onCall(),
                     execution = true
                 )
                 dialog.show(supportFragmentManager, TAG_ALERT)
@@ -812,6 +804,7 @@ class GameActivity : App() {
     }
 
     private fun threePlusVoted(list : ArrayList<Role>){
+        Toast.makeText(this,"Not supported yet !",Toast.LENGTH_LONG).show()
     }
 
 }

@@ -14,10 +14,12 @@ import com.example.werewolfofthemillershollow.turn.Turn
  * and with that the need of a solid system that
  * handle all these deaths and role-swapping ... etc.
  * @param activity context of type [GameActivity].
- * @param onDone overridden
+ * @param adapter in case of an action in the voting phase, this could be used to update the adapter.
+ * @param onDone overridden [onDone] interface.
  */
 class OnAction(
     private var activity: GameActivity,
+    private var adapter: VotingAdapter? = null,
     private var onDone: OnDone) {
 
     interface OnDone{
@@ -132,6 +134,7 @@ class OnAction(
             val onClick = object : EventsDialog.OnClick{
                 override fun onClick(): Boolean {
                     onDone.onDone(this@OnAction)
+                    adapter?.notifyDataSetChanged()
                     return true
                 }
             }
@@ -188,16 +191,22 @@ class OnAction(
             activity.playerList[i].resetStatusEffects()
 
             if (activity.playerList[i].isKilled){
-                if (activity.playerList[i].isServed){
-                    activity.playerList[i].servant(activity)
-                }
+
                 events.add(Event.died(activity, activity.playerList[i].player!!))
+
+                if (activity.playerList[i].isServed){
+                    activity.playerList[i].servant(activity, events)
+                }
+
                 activity.deadList.add(activity.playerList[i])
+
                 activity.playerList.removeAt(i)
                 i--
             }
             i++
         }
+
+        adapter?.removeDead()
 
     }
 

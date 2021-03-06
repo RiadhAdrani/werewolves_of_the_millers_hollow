@@ -16,16 +16,6 @@ class VotingAdapter(
     private var execution : Boolean = false,
     ) : RecyclerView.Adapter<VotingAdapter.MyViewHolder>() {
 
-    var votes = ArrayList<Int>()
-
-    init {
-
-        for (role : Role in list){
-            votes.add(0)
-        }
-
-    }
-
     /**
      * Handle voting events.
      */
@@ -65,7 +55,7 @@ class VotingAdapter(
 
         holder.icon.setImageResource(player.icon)
         holder.player.text = player.player
-        holder.vote.text = "${votes[position]}"
+        holder.vote.text = "${player.vote}"
         holder.add.setOnClickListener {
             addVote(holder.adapterPosition)
         }
@@ -86,14 +76,14 @@ class VotingAdapter(
     fun addVote(position: Int){
 
         var currentVote = 0
-        for (n : Int in votes){
-            currentVote += abs(n)
+        for (r : Role in list){
+            currentVote += abs(r.vote)
         }
 
-        if (currentVote >= voters && votes[position] >= 0)
+        if (currentVote >= voters && list[position].vote >= 0)
             return
 
-        votes[position] ++
+        list[position].vote ++
         notifyItemChanged(position)
 
     }
@@ -104,18 +94,18 @@ class VotingAdapter(
      */
     fun decrementVote(position : Int){
 
-        if (votes[position] <= 0 && !execution)
+        if (list[position].vote <= 0 && !execution)
             return
 
         var currentVote = 0
-        for (n : Int in votes){
-            currentVote += abs(n)
+        for (r : Role in list){
+            currentVote += abs(r.vote)
         }
 
-        if (execution && currentVote >= voters && votes[position] <= 0)
+        if (execution && currentVote >= voters && list[position].vote <= 0)
             return
 
-        votes[position] --
+        list[position].vote --
         notifyItemChanged(position)
 
     }
@@ -125,30 +115,43 @@ class VotingAdapter(
      */
     fun resetVotes(){
 
-        votes.clear()
-
-        for (role : Role in list){
-            votes.add(0)
+        for (r : Role in list){
+            r.resetVotes()
         }
 
         notifyDataSetChanged()
 
     }
 
-    fun removePlayer(position: Int){
+    fun removePlayer(role : Role){
+
+        val position = list.indexOf(role)
+
+        if (position !in 0 until list.size)
+            return
 
         list.removeAt(position)
-        votes.removeAt(position)
         notifyItemRemoved(position)
 
     }
 
-    fun removePlayer(role : Role){
-
-        val position = list.indexOf(role)
+    private fun removePlayer(position : Int){
         list.removeAt(position)
-        votes.removeAt(position)
-        notifyItemRemoved(position)
+        notifyDataSetChanged()
+    }
+
+    fun removeDead(){
+
+        var index = 0
+
+        while (index > list.size){
+            if (list[index].isKilled){
+                removePlayer(index)
+            }
+            else {
+                index ++
+            }
+        }
 
     }
 }

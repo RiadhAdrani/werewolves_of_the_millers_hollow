@@ -23,14 +23,13 @@ class Barber(context: Context) : Role() {
 
             override fun use(self: Role, role: Role, list : ArrayList<Role>): Boolean {
 
-                if (isKilled){
-                    role.kill(list)
-                    return true
+                role.kill(list)
+
+                if (!role.isWolf() && !isKilled){
+                    this@Barber.kill(list)
+                    debug()
                 }
 
-                role.kill(list)
-                if (role.isWolf())
-                    kill(list)
 
                 return true
 

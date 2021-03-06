@@ -1,5 +1,6 @@
 package com.example.werewolfofthemillershollow.utility
 
+import android.util.Log
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
@@ -58,6 +59,7 @@ class Ability(
 
         if (times == App.ABILITY_ONCE){
             val value = specifications.use(self, role, list)
+            Log.d("GameLogs","Ability used on ${role.player}")
             return if (value){
                 times = App.ABILITY_NONE
                 true

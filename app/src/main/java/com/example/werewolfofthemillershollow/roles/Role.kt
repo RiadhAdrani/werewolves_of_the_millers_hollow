@@ -42,6 +42,11 @@ abstract class Role : Serializable {
     var team : Int? = null
 
     /**
+     * the number of votes against this player.
+     */
+    var vote : Int = 0
+
+    /**
      * Primary ability of the current role.
      * @see Ability
      */
@@ -127,7 +132,15 @@ abstract class Role : Serializable {
      * @param list the list of players.
      */
     open fun kill(list : ArrayList<Role>){
+        Log.d("GameLogs","$player is killed")
         isKilled = true
+    }
+
+    /**
+     * reset the current votes to its initial state.
+     */
+    open fun resetVotes(){
+        vote = 0
     }
 
     /**
@@ -180,6 +193,7 @@ abstract class Role : Serializable {
      */
     fun copyStatusEffects(role: Role){
 
+        vote = role.vote
         isServed = role.isServed
         isCaptain = role.isCaptain
         isKilled = role.isKilled
@@ -241,7 +255,7 @@ abstract class Role : Serializable {
      * @param gameActivity game activity class
      * @return true if the operation succeeded, false otherwise.
      */
-    open fun servant(gameActivity: GameActivity): Boolean{
+    open fun servant(gameActivity: GameActivity, events : ArrayList<Event>): Boolean{
 
         if (gameActivity.servantRef == null)
             return false
@@ -256,7 +270,7 @@ abstract class Role : Serializable {
 
         gameActivity.playerList.removeAt(index)
         gameActivity.playerList.add(index, sub)
-        gameActivity.events.add(Event.servant(context = gameActivity, targetRole = name))
+        events.add(Event.servant(context = gameActivity, targetRole = name))
 
         gameActivity.servantRef = null
         isServed = false

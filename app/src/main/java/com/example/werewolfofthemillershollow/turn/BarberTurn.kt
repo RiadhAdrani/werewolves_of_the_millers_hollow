@@ -86,26 +86,4 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         return index
     }
-
-    override fun onCall(): GameActivity.OnCall {
-        return object : GameActivity.OnCall{
-
-            override fun onCall(dialog: VotingDialog) {
-
-                val d = UsePowerDialog(
-                    turn = activity.barberTurnRef!!,
-                    ability = getPrimaryAbility()!!,
-                    getOnClickHandler(),
-                    getOnTargetHandler(),
-                    cancelable = false,
-                    gameActivity = activity
-                )
-                d.show(activity.supportFragmentManager,App.TAG_ALERT)
-
-            }
-
-        }
-    }
-
-
 }
