@@ -125,13 +125,13 @@ class VotingAdapter(
 
     fun removePlayer(role : Role){
 
-        val position = list.indexOf(role)
-
-        if (position !in 0 until list.size)
-            return
-
-        list.removeAt(position)
-        notifyItemRemoved(position)
+        for (r : Role in list){
+            if (r.player == role.player){
+                list.remove(r)
+                notifyDataSetChanged()
+                return
+            }
+        }
 
     }
 

@@ -186,6 +186,8 @@ class OnAction(
             i++
         }
 
+        adapter?.removeDead()
+
         i=0
         while (i < activity.playerList.size){
             activity.playerList[i].resetStatusEffects()
@@ -206,7 +208,6 @@ class OnAction(
             i++
         }
 
-        adapter?.removeDead()
 
     }
 
