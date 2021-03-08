@@ -190,7 +190,6 @@ class OnAction(
 
         i=0
         while (i < activity.playerList.size){
-            activity.playerList[i].resetStatusEffects()
 
             if (activity.playerList[i].isKilled){
 

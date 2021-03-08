@@ -170,6 +170,8 @@ abstract class Role : Serializable {
      */
     open fun resetStatusEffects(){
 
+        debug()
+
         wasGuarded = false
 
         if (isGuarded) wasGuarded = true
@@ -177,12 +179,6 @@ abstract class Role : Serializable {
         isGuarded = false
 
         isTalking = false
-
-        if (isInfected){
-            if (team == App.TEAM_VILLAGE){
-                team = App.TEAM_WOLVES
-            }
-        }
 
     }
 

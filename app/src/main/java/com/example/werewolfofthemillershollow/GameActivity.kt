@@ -539,7 +539,6 @@ class GameActivity : App() {
 
         i=0
         while (i < playerList.size){
-            playerList[i].resetStatusEffects()
 
             if (playerList[i].isKilled){
                 if (playerList[i].isServed){
@@ -565,6 +564,9 @@ class GameActivity : App() {
         val onClick = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
                 alertDialog.dismiss()
+                for (role : Role in playerList){
+                    role.resetStatusEffects()
+                }
                 events.clear()
                 index = -1
                 next()
