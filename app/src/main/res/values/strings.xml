@@ -140,4 +140,7 @@
     <string name="discussion_description_single">is invited to defend himself.</string>
     <string name="execute">Execute</string>
 
+    <string name="game_wolves_won">GAME OVER! The werewolves has taken over the village !</string>
+    <string name="game_villager_won">GAME OVER! The villagers has liberated their land from the oppression of wolves !</string>
+
 </resources>

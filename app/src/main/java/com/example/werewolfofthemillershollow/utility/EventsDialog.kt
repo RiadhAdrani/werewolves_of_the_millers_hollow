@@ -2,6 +2,7 @@ package com.example.werewolfofthemillershollow.utility
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -9,7 +10,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.werewolfofthemillershollow.GameActivity
+import com.example.werewolfofthemillershollow.MainActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
@@ -19,6 +23,7 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * @param cancelable set if the dialog is cancelable or not. true by default.
  */
 class EventsDialog(
+    private var gamectivity : GameActivity,
     private var events : ArrayList<Event>,
     private var onClick: OnClick,
     private var cancelable : Boolean? = true): AppCompatDialogFragment() {
@@ -43,8 +48,11 @@ class EventsDialog(
         val icon : ImageView = dialog.findViewById(R.id.dialog_icon)
         icon.setImageResource(Icons.moon)
 
+        val isOver = Role.isGameOver(gamectivity.playerList, gamectivity)
+
         val text : TextView = dialog.findViewById(R.id.dialog_text)
-        text.setText(R.string.today_event)
+        val temp = if (isOver != 0) Role.isGameOverMessage(isOver) else R.string.today_event
+        text.setText(temp)
 
         val events : RecyclerView = dialog.findViewById(R.id.dialog_event_list)
         events.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
@@ -52,6 +60,13 @@ class EventsDialog(
 
         val button : TextView = dialog.findViewById(R.id.dialog_button)
         button.setOnClickListener {
+
+            if (isOver != 0){
+                val i = Intent(gamectivity, MainActivity::class.java)
+                startActivity(i)
+                gamectivity.finish()
+                return@setOnClickListener
+            }
 
             if (onClick.onClick()){
                 dismiss()

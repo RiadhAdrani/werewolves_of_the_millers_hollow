@@ -1,5 +1,6 @@
 package com.example.werewolfofthemillershollow
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -656,7 +657,12 @@ class GameActivity : App() {
             }
         }
 
-        val eventDialog = EventsDialog(events = events,onClick = onClick,cancelable = false)
+        val eventDialog = EventsDialog(
+            gamectivity = this,
+            events = events,
+            onClick = onClick,
+            cancelable = false
+        )
         eventDialog.show(supportFragmentManager,TAG_ALERT)
 
     }

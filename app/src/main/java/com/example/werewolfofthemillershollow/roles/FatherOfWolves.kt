@@ -26,6 +26,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
 
                 role.isKilled = false
                 role.isInfected = true
+                role.team = if (role.team == App.VILLAGER_TEAM) App.WOLF_TEAM else role.team
                 return true
             }
 

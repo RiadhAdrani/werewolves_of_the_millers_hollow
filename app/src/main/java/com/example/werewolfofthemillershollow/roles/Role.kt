@@ -336,6 +336,21 @@ abstract class Role : Serializable {
         const val FEW_PLAYERS : Int = 4
 
         /**
+         * value = 0
+         */
+        const val GAME_UNRESOLVED : Int = 0
+
+        /**
+         * value = 1
+         */
+        const val GAME_VILLAGER_WON : Int = 1
+
+        /**
+         * value = 2
+         */
+        const val GAME_WOLVES_WON : Int = 2
+
+        /**
          * Returns the error message depending on its id.
          * @see NO_WOLVES
          * @see NO_VILLAGER
@@ -447,7 +462,7 @@ abstract class Role : Serializable {
         fun captainExists(list : ArrayList<Role>) : Boolean{
 
             for (role : Role in list){
-                if (role.isCaptain!!){
+                if (role.isCaptain){
                     return true
                 }
             }
@@ -489,6 +504,20 @@ abstract class Role : Serializable {
 
             return number
 
+        }
+
+        /**
+         * Indicate if the guardian is with the villagers or not.
+         * @return return true if a guardian exists and not infected, return false otherwise.
+         */
+        fun isGuardianWithVillage(list: ArrayList<Role>, context: Context): Boolean{
+            for (role : Role in list){
+                if (role.name == context.getString(App.GUARDIAN_NAME)){
+                    return !role.isInfected
+                }
+            }
+
+            return false
         }
 
         /**
@@ -535,6 +564,47 @@ abstract class Role : Serializable {
 
             return list
 
+        }
+
+        /**
+         * Check if the game is over or not.
+         * @return [GAME_UNRESOLVED] for unfinished game, [GAME_VILLAGER_WON] if the villagers won and [GAME_WOLVES_WON] if the wolves won.
+         */
+        fun isGameOver(list : ArrayList<Role>, context : Context): Int{
+
+            // number of wolves is superior to the number of villager = wolves win
+            if (wolvesNumber(list) > villagerNumber(list))
+                return GAME_WOLVES_WON
+
+            // number of wolves is 0 = villagers win
+            if (wolvesNumber((list)) == 0)
+                return GAME_VILLAGER_WON
+
+            // number of wolves is equal to the number of villagers = ...
+            if (villagerNumber(list) == wolvesNumber(list)){
+
+                // if the guardian is alive and sided with the villager = ...
+                return if (isGuardianWithVillage(list, context))
+                    GAME_UNRESOLVED
+                // if the guardian is dead or sided with the wolves = wolves win
+                else
+                    GAME_WOLVES_WON
+            }
+
+            return GAME_UNRESOLVED
+
+        }
+
+        /**
+         * Return the best message string id from res depending on the current game status.
+         */
+        fun isGameOverMessage(isGameOverStatus : Int): Int{
+            when {
+                (isGameOverStatus == GAME_WOLVES_WON) -> return R.string.game_wolves_won
+                (isGameOverStatus == GAME_VILLAGER_WON) -> return  R.string.game_villager_won
+            }
+
+            return -1
         }
 
     }
