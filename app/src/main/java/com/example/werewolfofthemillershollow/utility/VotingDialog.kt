@@ -72,6 +72,11 @@ class VotingDialog(
                             if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE)
                                 barber.visibility = View.GONE
 
+                            if (execution){
+                                dismiss()
+                                gameActivity.newRound()
+                            }
+
                         }
                     }
 

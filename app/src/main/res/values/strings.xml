@@ -50,6 +50,7 @@
 
     <string name="should_use_power">Unable to proceed, This player should use his power on a target !</string>
     <string name="good_night">Good Night!</string>
+    <string name="good_night_end_of_round">The night has come! Good night!</string>
 
     <string name="as">as</string>
     <string name="and">and</string>

@@ -560,7 +560,7 @@ class GameActivity : App() {
      * Start a new round.
      * * Should be used only after dismissing every dialog.
      */
-    private fun newRound(){
+    fun newRound(){
 
         val onClick = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
@@ -574,7 +574,7 @@ class GameActivity : App() {
             }
         }
 
-        val dialog = AlertDialog(text = R.string.good_night, rightButton = onClick)
+        val dialog = AlertDialog(text = R.string.good_night_end_of_round, rightButton = onClick)
         dialog.show(supportFragmentManager, TAG_ALERT)
 
     }
