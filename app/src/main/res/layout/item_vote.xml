@@ -11,9 +11,10 @@
         android:id="@+id/item_icon"
         android:src="@drawable/ic_moon"
         android:contentDescription="@string/role_icon"
-        android:layout_width="@dimen/giant"
-        android:layout_height="@dimen/giant"
+        android:layout_width="@dimen/large"
+        android:layout_height="@dimen/large"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
@@ -64,7 +65,7 @@
     <TextView
         android:id="@+id/item_player"
         android:text="@string/player_name"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_tiny"
         android:textStyle="bold"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"

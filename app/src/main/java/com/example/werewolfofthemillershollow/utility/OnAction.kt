@@ -54,7 +54,6 @@ class OnAction(
             return
         }
 
-
         val onClick = object : UsePowerDialog.OnClickListener{
             override fun done(
                 ability: Ability,
@@ -109,15 +108,31 @@ class OnAction(
             }
         }
 
-        val dialog = UsePowerDialog(
-            turn = current,
-            ability = current.getOnCallAbility()!!,
-            onClick = onClick,
-            onTargetClick = current.getOnTargetHandler(),
-            onDismissed = null,
-            cancelable = false,
-            gameActivity = activity)
-        dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+
+
+        val proceed = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                alertDialog.dismiss()
+                val dialog = UsePowerDialog(
+                    turn = current,
+                    ability = current.getOnCallAbility()!!,
+                    onClick = onClick,
+                    onTargetClick = current.getOnTargetHandler(),
+                    onDismissed = null,
+                    cancelable = false,
+                    gameActivity = activity)
+                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+            }
+
+        }
+
+        val wakeDialog = AlertDialog(
+            icon = current.getIcon(),
+            text = -1,
+            string = "${activity.getString(R.string.wake_up)} ${current.getRole().player}",
+            rightButton = proceed
+            )
+        wakeDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
 
     }
 

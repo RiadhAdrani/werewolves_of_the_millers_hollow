@@ -11,10 +11,13 @@
         android:id="@+id/item_icon"
         android:src="@drawable/ic_moon"
         android:contentDescription="@string/role_icon"
-        android:layout_width="@dimen/giant"
-        android:layout_height="@dimen/giant"
+        android:layout_marginEnd="@dimen/tiny"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/item_player"
         />
 
     <ImageView
@@ -32,7 +35,7 @@
     <TextView
         android:id="@+id/item_player"
         android:text="@string/player_name"
-        android:textSize="@dimen/text_large"
+        android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"
@@ -53,8 +56,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/item_player"
-        app:layout_constraintRight_toLeftOf="@id/item_use"
-        app:layout_constraintLeft_toRightOf="@id/item_icon"
+        app:layout_constraintRight_toRightOf="@id/item_player"
+        app:layout_constraintLeft_toLeftOf="@id/item_player"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 

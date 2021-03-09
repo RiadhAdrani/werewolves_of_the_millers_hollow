@@ -16,7 +16,8 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * Could be customized to have up to three (3) button could be displayed within the dialog, one to the left, the other to the right
  * and one in the middle, the minimum is one (1) which is the right button (cancel/ok function).
  * @param icon custom icon, could be set to (-1) to hide the icon instead.
- * @param text custom text
+ * @param text custom text id from res.
+ * @param string custom text as string. If this parameter has a non-null value, [text] will be ignored.
  * @param checkText custom check box text, could be set to null to hide the check box and its text.
  * @param leftButton custom left button.
  * @param midButton custom mid button.
@@ -29,6 +30,7 @@ import com.example.werewolfofthemillershollow.settings.Icons
  */
 class AlertDialog(private var icon : Int = R.drawable.ic_info,
                   private var text : Int,
+                  private var string : String? = null,
                   private var checkText : Int? = null,
                   private val leftButton : OnClick? = null,
                   private val leftButtonText : Int = R.string.ok,
@@ -81,8 +83,12 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
         }
 
         val textView : TextView = dialog.findViewById(R.id.dialog_text)
-        textView.text = getString(text)
-
+        if (string != null){
+            textView.text = string
+        } else {
+            textView.text = getString(text)
+        }
+        
         val checkBox : CheckBox = dialog.findViewById(R.id.dialog_check)
         val checkLabel : TextView = dialog.findViewById(R.id.dialog_check_info)
         if (checkText != null){
