@@ -13,6 +13,8 @@ import com.example.werewolfofthemillershollow.utility.Ability
  */
 class Barber(context: Context) : Role() {
 
+    var givenSign : Boolean = false
+
     init {
         name = context.getString(App.BARBER_NAME)
         description = context.getString(App.BARBER_DESCRIPTION)
@@ -50,7 +52,7 @@ class Barber(context: Context) : Role() {
     }
 
     override fun canPlay(round: Int): Boolean {
-        return (isKilled || round == 1)
+        return (isKilled || !givenSign)
     }
 
     override fun new(context: Context, name: String, role: Role?): Barber {

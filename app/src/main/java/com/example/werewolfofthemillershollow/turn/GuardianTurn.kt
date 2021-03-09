@@ -54,7 +54,7 @@ class GuardianTurn(role : Guardian, var activity: GameActivity) : Turn<Guardian>
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub))
         return index
     }
 

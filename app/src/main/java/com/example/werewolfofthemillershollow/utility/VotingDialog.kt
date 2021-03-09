@@ -69,7 +69,8 @@ class VotingDialog(
                     val done = object : OnAction.OnDone{
                         override fun onDone(onAction: OnAction) {
 
-                            if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE)
+                            if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE ||
+                                    !gameActivity.barberTurnRef!!.getRole().givenSign)
                                 barber.visibility = View.GONE
 
                             if (execution){

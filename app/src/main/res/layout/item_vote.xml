@@ -67,6 +67,7 @@
         android:text="@string/player_name"
         android:textSize="@dimen/text_tiny"
         android:textStyle="bold"
+        android:textAlignment="center"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"
         android:layout_width="0dp"

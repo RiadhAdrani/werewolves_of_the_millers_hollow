@@ -183,7 +183,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub))
         return index
     }
 }

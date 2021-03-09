@@ -24,6 +24,9 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
+        if (!getRole().givenSign)
+            getRole().givenSign = true
+
         if (getRole().isKilled)
             return context.getString(R.string.barber_instruction_killed)
 
@@ -80,7 +83,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub))
 
         activity.barberRef = getRole()
 

@@ -266,7 +266,7 @@ abstract class Role : Serializable {
 
         gameActivity.playerList.removeAt(index)
         gameActivity.playerList.add(index, sub)
-        events.add(Event.servant(context = gameActivity, targetRole = name))
+        events.add(Event.servant(context = gameActivity, targetRole = this))
 
         gameActivity.servantRef = null
         isServed = false

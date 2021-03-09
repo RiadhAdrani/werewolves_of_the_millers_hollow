@@ -11,8 +11,11 @@ import com.example.werewolfofthemillershollow.R
 
 class EventAdapter(var context: Context, var list : ArrayList<Event>): RecyclerView.Adapter<EventAdapter.MyViewHolder>() {
 
+    init {
+        list.sortBy { it.importance }
+        list.reverse()
+    }
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val text : TextView = itemView.findViewById(R.id.item_text)
 

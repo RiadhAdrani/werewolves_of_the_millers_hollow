@@ -55,7 +55,7 @@
     <ImageView
         android:id="@+id/dialog_barber"
         android:contentDescription="@string/barber_name"
-        android:src="@drawable/ic_info"
+        android:src="@drawable/ic_clean"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
         android:padding="@dimen/tiny"

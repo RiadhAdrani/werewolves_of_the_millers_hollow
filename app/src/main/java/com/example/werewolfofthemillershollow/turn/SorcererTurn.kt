@@ -86,7 +86,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub))
         return index
     }
 }

@@ -1,6 +1,5 @@
 package com.example.werewolfofthemillershollow
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -545,7 +544,7 @@ class GameActivity : App() {
                 if (playerList[i].isServed){
                     playerList[i].servant(this, events)
                 }
-                events.add(Event.died(this, playerList[i].player!!))
+                events.add(Event.died(this, playerList[i]))
                 deadList.add(playerList[i])
                 playerList.removeAt(i)
                 i--
@@ -643,9 +642,7 @@ class GameActivity : App() {
                             playerList.size,
                             "Vote Suspicious Players",
                             "Vote Suspicious Players",
-                            onVoting,
-                            onCast
-                        )
+                            onCast)
 
                         return true
                     }
@@ -691,7 +688,6 @@ class GameActivity : App() {
         voters : Int,
         title : String,
         content : String,
-        onVote : VotingAdapter.OnVote,
         onCast : VotingDialog.OnVoteCast){
 
         val dialog = VotingDialog(

@@ -129,7 +129,7 @@ class OnAction(
         val wakeDialog = AlertDialog(
             icon = current.getIcon(),
             text = -1,
-            string = "${activity.getString(R.string.wake_up)} ${current.getRole().player}",
+            string = "${activity.getString(R.string.wake_up)} ${current.getRole().name}",
             rightButton = proceed
             )
         wakeDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
@@ -208,7 +208,7 @@ class OnAction(
 
             if (activity.playerList[i].isKilled){
 
-                events.add(Event.died(activity, activity.playerList[i].player!!))
+                events.add(Event.died(activity, activity.playerList[i]))
 
                 if (activity.playerList[i].isServed){
                     activity.playerList[i].servant(activity, events)

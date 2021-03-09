@@ -86,7 +86,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
 
         activity.playerList.removeAt(index)
         activity.playerList.add(index, sub)
-        events.add(Event.servant(activity,sub.name))
+        events.add(Event.servant(activity,sub))
         return index
     }
 }
