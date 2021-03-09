@@ -18,12 +18,13 @@ import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Display Events that happened during the last night (round).
+ * @param gameActivity activity.
  * @param events list of events.
  * @param onClick override action with a new interface implementation.
  * @param cancelable set if the dialog is cancelable or not. true by default.
  */
 class EventsDialog(
-    private var gamectivity : GameActivity,
+    private var gameActivity : GameActivity,
     private var events : ArrayList<Event>,
     private var onClick: OnClick,
     private var cancelable : Boolean? = true): AppCompatDialogFragment() {
@@ -48,7 +49,7 @@ class EventsDialog(
         val icon : ImageView = dialog.findViewById(R.id.dialog_icon)
         icon.setImageResource(Icons.moon)
 
-        val isOver = Role.isGameOver(gamectivity.playerList, gamectivity)
+        val isOver = Role.isGameOver(gameActivity.playerList, gameActivity)
 
         val text : TextView = dialog.findViewById(R.id.dialog_text)
         val temp = if (isOver != 0) Role.isGameOverMessage(isOver) else R.string.today_event
@@ -62,9 +63,9 @@ class EventsDialog(
         button.setOnClickListener {
 
             if (isOver != 0){
-                val i = Intent(gamectivity, MainActivity::class.java)
+                val i = Intent(gameActivity, MainActivity::class.java)
                 startActivity(i)
-                gamectivity.finish()
+                gameActivity.finish()
                 return@setOnClickListener
             }
 

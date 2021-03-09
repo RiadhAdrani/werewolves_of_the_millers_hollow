@@ -658,7 +658,7 @@ class GameActivity : App() {
         }
 
         val eventDialog = EventsDialog(
-            gamectivity = this,
+            gameActivity = this,
             events = events,
             onClick = onClick,
             cancelable = false

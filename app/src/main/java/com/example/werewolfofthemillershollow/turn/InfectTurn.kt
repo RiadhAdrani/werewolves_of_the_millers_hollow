@@ -177,6 +177,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
         val player = activity.servantRef!!.player ?: return -1
         val sub = getRole().new(activity, player, activity.servantRef)
+        sub.primaryAbility!!.times = getRole().primaryAbility!!.times
         setRole(sub as FatherOfWolves)
         
 

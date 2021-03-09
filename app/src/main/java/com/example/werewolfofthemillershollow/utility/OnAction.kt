@@ -139,7 +139,7 @@ class OnAction(
                 }
             }
 
-            val dialog = EventsDialog(gamectivity = activity, this.events, onClick = onClick, cancelable = false)
+            val dialog = EventsDialog(gameActivity = activity, this.events, onClick = onClick, cancelable = false)
             dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
 
         }
