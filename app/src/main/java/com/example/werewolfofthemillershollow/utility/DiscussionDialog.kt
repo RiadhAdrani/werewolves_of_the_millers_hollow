@@ -56,8 +56,33 @@ class DiscussionDialog(
                 App.blink(barber, Color.YELLOW, 1500L)
                 barber.setOnClickListener {
 
+                    val done = object : OnAction.OnDone{
+                        override fun onDone(onAction: OnAction) {
+                            if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE ||
+                                !gameActivity.barberTurnRef!!.getRole().givenSign ||
+                                gameActivity.barberTurnRef!!.getRole().isKilled)
+                                barber.visibility = View.GONE
+                        }
+                    }
+
+                    val onDismissed = object : UsePowerDialog.OnDismissed {
+                        override fun onDismissed() {
+                            val onAction = OnAction(activity = gameActivity, onDone = done)
+                            onAction.onStart()
+                        }
+                    }
+
+                    val power = UsePowerDialog(
+                        turn = gameActivity.barberTurnRef!!,
+                        ability = gameActivity.barberTurnRef!!.getPrimaryAbility()!!,
+                        onClick = gameActivity.barberTurnRef!!.getOnCallOnClickHandler(),
+                        onTargetClick = gameActivity.barberTurnRef!!.getOnTargetHandler(),
+                        cancelable = true,
+                        onDismissed = onDismissed ,
+                        gameActivity = gameActivity
+                    )
+                    power.show(activity!!.supportFragmentManager, App.TAG_ALERT)
                 }
-                Log.d("Role","Barber exists")
             }
         }
 

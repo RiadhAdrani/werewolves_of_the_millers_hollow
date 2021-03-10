@@ -129,8 +129,9 @@ class OnAction(
         val wakeDialog = AlertDialog(
             icon = current.getIcon(),
             text = -1,
-            string = "${activity.getString(R.string.wake_up)} ${current.getRole().name}",
-            rightButton = proceed
+            string = "${activity.getString(R.string.wake_up)} ${current.getRoleToDisplay(activity, activity.playerList)}",
+            rightButton = proceed,
+            cancelable = false
             )
         wakeDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
 
