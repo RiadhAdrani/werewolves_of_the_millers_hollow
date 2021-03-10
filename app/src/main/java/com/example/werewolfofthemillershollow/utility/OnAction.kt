@@ -84,11 +84,10 @@ class OnAction(
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-
-                        alertDialog.dismiss()
-                        dialog!!.dismiss()
                         index ++
                         onStart()
+                        alertDialog.dismiss()
+                        dialog!!.dismiss()
                     }
                 }
 

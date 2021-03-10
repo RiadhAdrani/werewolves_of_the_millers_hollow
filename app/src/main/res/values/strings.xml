@@ -131,7 +131,7 @@
     <string name="today_event">What happened last night ?</string>
     <string name="servant_event">Servant transformed into</string>
     <string name="dead_event">died.</string>
-    <string name="talk_first_event">talk first.</string>
+    <string name="talk_first_event">talks first.</string>
     <string name="seen_event">The seer saw a</string>
     <string name="discussion">Discussion</string>
     <string name="vote">Vote</string>
@@ -139,6 +139,8 @@
     <string name="discussion_description">Players are invited to discuss and formulate their opinions to help them in the voting phase. </string>
     <string name="discussion_description_group">are invited to defend themselves.</string>
     <string name="discussion_description_single">is invited to defend himself.</string>
+    <string name="voting_title">Vote Suspected Players</string>
+    <string name="voting_description">Players are invited to vote for suspected players, for their fate to be decided later …</string>
     <string name="execute">Execute</string>
 
     <string name="wake_up">Wake up</string>

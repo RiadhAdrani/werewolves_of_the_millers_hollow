@@ -196,7 +196,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
                         activity.displayNext()
                         dialog!!.dismiss()
-
+                        return
                     }
 
                 }

@@ -609,17 +609,6 @@ class GameActivity : App() {
                 val onVote = object : DiscussionDialog.OnNext{
                     override fun onNext(): Boolean {
 
-                        val onVoting = object : VotingAdapter.OnVote{
-                            override fun onIncrement(adapter: VotingAdapter, position: Int) {
-                                adapter.addVote(position)
-                            }
-
-                            override fun onDecrement(adapter: VotingAdapter, position: Int) {
-                                adapter.decrementVote(position)
-                            }
-
-                        }
-
                         val onCast = object : VotingDialog.OnVoteCast {
                             override fun onVoteCast(dialog: VotingDialog) {
 
@@ -647,8 +636,8 @@ class GameActivity : App() {
                         vote(
                             playerList,
                             playerList.size,
-                            "Vote Suspicious Players",
-                            "Vote Suspicious Players",
+                            getString(R.string.voting_title),
+                            getString(R.string.voting_description),
                             onCast)
 
                         return true
@@ -686,8 +675,6 @@ class GameActivity : App() {
      * @param list list of players to be voted on.
      * @param title title of the dialog.
      * @param content description of the dialog.
-     * @param onVote on vote handler. See [VotingAdapter.OnVote]
-     * @param onBarberCall on barber call handler. See [OnCall]
      * @param onCast on vote casting handler. See [VotingDialog.OnVoteCast]
      */
     private fun vote(
@@ -695,7 +682,9 @@ class GameActivity : App() {
         voters : Int,
         title : String,
         content : String,
-        onCast : VotingDialog.OnVoteCast){
+        onCast : VotingDialog.OnVoteCast,
+        execution : Boolean = false,
+    ){
 
         val dialog = VotingDialog(
             gameActivity = this,
@@ -704,6 +693,7 @@ class GameActivity : App() {
             title = title,
             text = content,
             onVoteCast = onCast,
+            execution = execution
         )
 
         dialog.show(supportFragmentManager, TAG_ALERT)
@@ -789,16 +779,14 @@ class GameActivity : App() {
 
         val onNext = object : DiscussionDialog.OnNext{
             override fun onNext(): Boolean {
-                val dialog = VotingDialog(
-                    gameActivity = this@GameActivity,
+                vote(
                     list = list,
                     voters = playerList.size - list.size,
                     title = getString(R.string.execute),
-                    text = "${getString(R.string.execute)} ${list[0].player} ?",
-                    onVoteCast = onVoteCast,
+                    content ="${getString(R.string.execute)} ${list[0].player} ?",
+                    onCast = onVoteCast,
                     execution = true
                 )
-                dialog.show(supportFragmentManager, TAG_ALERT)
                 return true
             }
         }
