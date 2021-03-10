@@ -350,6 +350,13 @@ class GameActivity : App() {
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
         statusEffectAdapter.setList(currentPlayer.getRole().getStatusEffects())
 
+        if (currentPlayer.getRole().name == getString(R.string.barber_name)){
+                if (!(currentPlayer.getRole() as Barber).givenSign){
+                    (currentPlayer.getRole() as Barber).givenSign = true
+                    Log.d("GameLogs","Barber has given his sign ! value = ${(currentPlayer.getRole() as Barber).givenSign}")
+                }
+        }
+
         if (currentPlayer.onStart(this)!!){
 
             val dialog = UsePowerDialog(
