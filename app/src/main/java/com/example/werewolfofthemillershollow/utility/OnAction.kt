@@ -128,7 +128,7 @@ class OnAction(
         val wakeDialog = AlertDialog(
             icon = current.getIcon(),
             text = -1,
-            string = "${activity.getString(R.string.wake_up)} ${current.getRoleToDisplay(activity, activity.playerList)}",
+            string = "${activity.getString(R.string.good_night_all)} \n ${activity.getString(R.string.wake_up)} ${current.getRoleToDisplay(activity, activity.playerList)}",
             rightButton = proceed,
             cancelable = false
             )

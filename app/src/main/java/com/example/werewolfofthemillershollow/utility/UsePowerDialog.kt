@@ -30,7 +30,7 @@ class UsePowerDialog(
     var ability: Ability,
     private var onClick : OnClickListener? = null,
     private var onTargetClick : TargetAdapter.OnClickListener? = null,
-    private var onDismissed : OnDismissed? = null,
+    var onDismissed : OnDismissed? = null,
     private var cancelable : Boolean? = true,
     private var gameActivity : GameActivity) : AppCompatDialogFragment() {
 

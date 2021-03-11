@@ -59,6 +59,93 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     }
 
+    fun getWhoTalksInMorningOnClickHandler() : UsePowerDialog.OnClickListener{
+
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                ability: Ability,
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ) {
+
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager,App.TAG_ALERT)
+                    return
+                }
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = activity.playerList.indexOf(target)
+
+                    if (i != -1){
+                        ability.use(getRole(),activity.playerList[i], activity.playerList)
+                        activity.playerList[i].debug()
+                        dialog!!.dismiss()
+                        return
+                    }
+                }
+
+                dialog!!.dismiss()
+                return
+
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+        }
+    }
+
+    fun getWhoTalksInMorningAbility(list : ArrayList<Role>): Ability{
+        val talker = object :Ability.Specification{
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
+                role.isTalking = true
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return targetRole in list
+            }
+
+        }
+
+        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.talkFirst)
+    }
+
+    fun getWhoDiesInMorningAbility(list : ArrayList<Role>): Ability{
+        val talker = object :Ability.Specification{
+            override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
+                role.kill(list)
+                return true
+            }
+
+            override fun isUsable(): Boolean {
+                return true
+            }
+
+            override fun isTarget(self: Role, targetRole: Role): Boolean {
+                return targetRole in list
+            }
+
+        }
+
+        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.dead)
+    }
+
     override fun getPrimaryAbility(): Ability {
         return chooseTalker
     }
@@ -222,4 +309,5 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     override fun getOnCallAbility(): Ability {
         return chooseNewCaptain
     }
+
 }

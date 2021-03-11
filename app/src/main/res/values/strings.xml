@@ -142,8 +142,11 @@
     <string name="voting_title">Vote Suspected Players</string>
     <string name="voting_description">Players are invited to vote for suspected players, for their fate to be decided later …</string>
     <string name="execute">Execute</string>
+    <string name="execute_multiple">Which player will taste death today?</string>
 
     <string name="wake_up">Wake up</string>
+    <string name="wake_all">Everybody wake up: </string>
+    <string name="good_night_all">Good night everybody: </string>
     <string name="game_wolves_won">GAME OVER! The werewolves has taken over the village !</string>
     <string name="game_villager_won">GAME OVER! The villagers has liberated their land from the oppression of wolves !</string>
 

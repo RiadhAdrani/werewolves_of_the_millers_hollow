@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
@@ -57,8 +58,54 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
             override fun onClick(alertDialog: AlertDialog) {
                 alertDialog.dismiss()
             }
-
         }
+
+        /**
+         * Display a dialog.
+         * @param activity : calling activity.
+         * @param icon : drawable res id.
+         * @param text : string res id. This parameter will be ignored in case [contentText] is not null.
+         * @param contentText : custom text to display.
+         * @param checkText : checkBox text to display.
+         * @param leftButton : left button on click action. by default it is null which means that the button won't render.
+         * @param leftButtonText : left button text. Useless in case of a null value for [leftButton]. By default, it is set to [R.string.ok].
+         * @param midButton : mid button on click action. by default it is null which means that the button won't render.
+         * @param midButtonText : mid button text. Useless in case of a null value for [midButton]. By default, it is set to [R.string.ok].
+         * @param rightButton : right button on click action. by default it is set to dismiss dialog.
+         * @param rightButtonText : mid button text. By default, it is set to [R.string.ok].
+         * @param cancelable set if the dialog is cancelable or not. By default it is true (cancelable).
+         */
+        fun displayDialog(
+            activity: App,
+            icon : Int = R.drawable.ic_info,
+            text: Int,
+            contentText: String? = null,
+            checkText: Int? = null,
+            leftButton: OnClick? = null,
+            leftButtonText: Int = R.string.ok,
+            midButton: OnClick? = null,
+            midButtonText: Int = R.string.ok,
+            rightButton : OnClick = okButton,
+            rightButtonText : Int = R.string.ok,
+            cancelable : Boolean = true,
+        ){
+
+            val display = AlertDialog(
+                icon= icon,
+                text = text,
+                string = contentText,
+                checkText= checkText,
+                leftButton= leftButton,
+                leftButtonText=leftButtonText,
+                midButton = midButton,
+                midButtonText = midButtonText,
+                rightButton = rightButton,
+                rightButtonText = rightButtonText,
+                cancelable = cancelable
+            )
+            display.show(activity.supportFragmentManager, App.TAG_ALERT )
+        }
+
 
     }
 

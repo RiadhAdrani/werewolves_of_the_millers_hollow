@@ -122,6 +122,11 @@ class GameActivity : App() {
     lateinit var captainRef: Role
 
     /**
+     * Reference to the captain turn.
+     */
+    lateinit var captainTurnRef : CaptainTurn
+
+    /**
      * targets killed by the wolf pack this night.
      */
     var wolfTargets : ArrayList<Role> = ArrayList()
@@ -192,6 +197,14 @@ class GameActivity : App() {
         }
 
         turnList = createTurns(playerList)
+
+        for (turn : Turn<*> in turnList){
+            if (turn.getRole().isCaptain){
+                captainRef = turn.getRole()
+                captainTurnRef = turn as CaptainTurn
+                break
+            }
+        }
 
         displayNext()
     }
@@ -304,15 +317,8 @@ class GameActivity : App() {
 
         val captain = CaptainTurn(Captain(baseContext), this)
         if (captain.addTurn(output = output, list = list, baseContext)) {
-            for (role : Role in playerList){
-                if (role.isCaptain){
-                    captainRef = role
-                    break
-                }
-            }
-            Log.d("Role","captainRef = ${this.captainRef.name} : ${this.captainRef.player}")
+            Log.d("Role","captainRef = wait bro !")
         }
-
 
         return output
     }
@@ -620,13 +626,13 @@ class GameActivity : App() {
                                         newRound()
                                     }
                                     list.size == 1 -> {
-                                        defendSolo(list)
+                                        oneVoted(list)
                                     }
                                     list.size in 2..3 -> {
-                                        threePlusVoted(list)
+                                        threeMaxVoted(list)
                                     }
                                     list.size >= 4 -> {
-                                        threePlusVoted(list)
+                                        muchMoreVoted(list)
                                     }
                                 }
                             }
@@ -724,7 +730,7 @@ class GameActivity : App() {
         return output
     }
 
-    private fun defendSolo(list: ArrayList<Role>){
+    private fun oneVoted(list: ArrayList<Role>){
 
         val onVoteCast = object  : VotingDialog.OnVoteCast{
             override fun onVoteCast(dialog: VotingDialog) {
@@ -744,35 +750,11 @@ class GameActivity : App() {
                 }
 
                 if (dialog.adapter.list[0].vote == 0){
-
-                    val yes = object : AlertDialog.OnClick{
-                        override fun onClick(alertDialog: AlertDialog) {
-                            alertDialog.dismiss()
-                            dialog.adapter.list[0].kill(playerList)
-                            action.onStart()
-                        }
-                    }
-
-                    val no = object : AlertDialog.OnClick{
-                        override fun onClick(alertDialog: AlertDialog) {
-                            alertDialog.dismiss()
-                            newRound()
-                        }
-                    }
-
-                    val captainChoice = AlertDialog(
-                        text = R.string.captain_execute,
-                        icon = Icons.info,
-                        rightButton = yes,
-                        rightButtonText = R.string.yes,
-                        leftButton = no,
-                        leftButtonText = R.string.no)
-                    captainChoice.show(supportFragmentManager, TAG_ALERT)
+                    captainExecuteChoiceSingle(dialog.adapter.list[0], action)
                 }
 
                 if (dialog.adapter.list[0].vote > 0){
-                    dialog.adapter.list[0].kill(playerList)
-                    action.onStart()
+                    executeSingle(dialog.adapter.list[0], action)
                 }
             }
         }
@@ -802,8 +784,190 @@ class GameActivity : App() {
 
     }
 
-    private fun threePlusVoted(list : ArrayList<Role>){
-        Toast.makeText(this,"Not supported yet !",Toast.LENGTH_LONG).show()
+    private fun threeMaxVoted(list : ArrayList<Role>){
+
+        for(role : Role in list){
+            role.isTalking = false
+        }
+
+        val onClick = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                threeMaxVotedChooseTalker(list)
+                alertDialog.dismiss()
+            }
+        }
+
+        AlertDialog.displayDialog(
+            activity = this,
+            icon = Icons.talkFirst,
+            text = -1,
+            contentText = "${getString(R.string.good_night)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
+            rightButton = onClick,
+        )
+    }
+
+    private fun threeMaxVotedChooseTalker(list: ArrayList<Role>){
+
+        val onDismiss = object : UsePowerDialog.OnDismissed{
+            override fun onDismissed() {
+
+                var role : Role = Villager(this@GameActivity)
+                for (r : Role in list){
+                    if (r.isTalking){
+                        role = r
+                        break
+                    }
+                }
+
+                val info = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        threeMaxVotedDiscussion(list)
+                        alertDialog.dismiss()
+                    }
+
+                }
+
+                AlertDialog.displayDialog(
+                    this@GameActivity,
+                    Icons.talkFirst,
+                    text = -1,
+                    contentText = "${getString(R.string.wake_all)} \n ${role.player} ${getString(R.string.talk_first_event)}",
+                    rightButton = info
+                )
+            }
+
+        }
+
+        val chooseWhoTalksFirst = UsePowerDialog(
+            captainTurnRef,
+            captainTurnRef.getWhoTalksInMorningAbility(list),
+            captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            captainTurnRef.getOnTargetHandler(),
+            onDismiss,
+            false,
+            this@GameActivity
+        )
+
+        chooseWhoTalksFirst.show(supportFragmentManager, TAG_ALERT)
+    }
+
+    private fun threeMaxVotedDiscussion(list: ArrayList<Role>){
+
+        val next = object :DiscussionDialog.OnNext{
+            override fun onNext(): Boolean {
+                threeMaxVotedExecutionVote(list)
+                return true
+            }
+        }
+
+        val discussionDialog = DiscussionDialog(
+            playerList = list,
+            gameActivity = this@GameActivity,
+            display = null,
+            onNext = next,
+            cancelable = false
+        )
+        discussionDialog.show(supportFragmentManager, TAG_ALERT)
+    }
+
+    private fun threeMaxVotedExecutionVote(list: ArrayList<Role>){
+
+        val onCast = object : VotingDialog.OnVoteCast{
+            override fun onVoteCast(dialog: VotingDialog) {
+
+                val done = object : OnAction.OnDone{
+                    override fun onDone(onAction: OnAction) {
+                        newRound()
+                    }
+                }
+
+                val action = OnAction(activity = this@GameActivity, onDone = done)
+
+                val votedList = voteResult(dialog.adapter.list)
+
+                when {
+                    votedList.isEmpty() -> {
+                        newRound()
+                    }
+                    votedList.size == 1 -> {
+                        executeSingle(votedList[0],action)
+                    }
+                    votedList.size > 1 -> {
+                        captainExecuteChoiceMultiple(votedList, action)
+                    }
+                }
+
+                dialog.dismiss()
+            }
+        }
+
+        vote(
+            list = list,
+            voters =playerList.size-list.size,
+            title = getString(R.string.execute),
+            content = getString(R.string.execute_multiple),
+            onCast = onCast,
+            execution = true
+        )
+
+    }
+
+    private fun captainExecuteChoiceMultiple(list: ArrayList<Role>, action : OnAction){
+
+        val onDismissed = object : UsePowerDialog.OnDismissed{
+            override fun onDismissed() {
+                action.onStart()
+            }
+        }
+
+        val choose = UsePowerDialog(
+            turn = captainTurnRef,
+            ability = captainTurnRef.getWhoDiesInMorningAbility(list),
+            onClick = captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            onDismissed = onDismissed,
+            onTargetClick = captainTurnRef.getOnTargetHandler(),
+            cancelable = false,
+            gameActivity = this
+        )
+
+        choose.show(supportFragmentManager, TAG_ALERT)
+
+    }
+
+    private fun captainExecuteChoiceSingle(role : Role, action : OnAction){
+
+        val yes = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                alertDialog.dismiss()
+                role.kill(playerList)
+                action.onStart()
+            }
+        }
+
+        val no = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                action.onStart()
+                alertDialog.dismiss()
+            }
+        }
+
+        val captainChoice = AlertDialog(
+            text = R.string.captain_execute,
+            icon = Icons.info,
+            rightButton = yes,
+            rightButtonText = R.string.yes,
+            leftButton = no,
+            leftButtonText = R.string.no)
+        captainChoice.show(supportFragmentManager, TAG_ALERT)
+    }
+
+    private fun executeSingle(role : Role, action : OnAction){
+        role.kill(playerList)
+        action.onStart()
+    }
+
+    private fun muchMoreVoted(list : ArrayList<Role>){
+
     }
 
 }
