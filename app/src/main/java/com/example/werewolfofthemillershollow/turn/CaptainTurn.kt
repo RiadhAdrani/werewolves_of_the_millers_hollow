@@ -159,8 +159,15 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
+
         if (getRole().isKilled)
             return context.getString(R.string.captain_instruction_inherit)
+
+        if (activity.phase == GameActivity.Phase.DISCUSSION)
+            return context.getString(R.string.captain_instruction_equal)
+
+        if (activity.phase == GameActivity.Phase.EXECUTION)
+            return context.getString(R.string.captain_instruction_execute)
 
         return context.getString(R.string.captain_instruction)
     }

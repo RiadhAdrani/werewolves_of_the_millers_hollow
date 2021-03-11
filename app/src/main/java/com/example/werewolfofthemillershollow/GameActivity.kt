@@ -20,6 +20,12 @@ import com.example.werewolfofthemillershollow.utility.*
  */
 class GameActivity : App() {
 
+    enum class Phase {
+        NIGHT, POST_NIGHT, DISCUSSION, VOTING, EXECUTION
+    }
+
+    lateinit var phase : Phase
+
     /**
      * Current player turn index
      */
@@ -206,6 +212,7 @@ class GameActivity : App() {
             }
         }
 
+        phase = Phase.NIGHT
         displayNext()
     }
 
@@ -574,6 +581,8 @@ class GameActivity : App() {
      */
     fun newRound(){
 
+        phase = Phase.NIGHT
+
         val onClick = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
                 alertDialog.dismiss()
@@ -604,6 +613,8 @@ class GameActivity : App() {
      */
     private fun morning(){
 
+        phase = Phase.POST_NIGHT
+
         resolve()
         round ++
         setTurn()
@@ -611,6 +622,8 @@ class GameActivity : App() {
 
         val onClick = object : EventsDialog.OnClick{
             override fun onClick(): Boolean {
+
+                phase = Phase.VOTING
 
                 val onVote = object : DiscussionDialog.OnNext{
                     override fun onNext(): Boolean {
@@ -703,7 +716,6 @@ class GameActivity : App() {
         )
 
         dialog.show(supportFragmentManager, TAG_ALERT)
-
     }
 
     /**
@@ -731,6 +743,8 @@ class GameActivity : App() {
     }
 
     private fun oneVoted(list: ArrayList<Role>){
+
+        phase = Phase.DISCUSSION
 
         val onVoteCast = object  : VotingDialog.OnVoteCast{
             override fun onVoteCast(dialog: VotingDialog) {
@@ -761,6 +775,9 @@ class GameActivity : App() {
 
         val onNext = object : DiscussionDialog.OnNext{
             override fun onNext(): Boolean {
+
+                phase = Phase.EXECUTION
+
                 vote(
                     list = list,
                     voters = playerList.size - list.size,
@@ -808,6 +825,8 @@ class GameActivity : App() {
 
     private fun threeMaxVotedChooseTalker(list: ArrayList<Role>){
 
+        phase = Phase.DISCUSSION
+
         val onDismiss = object : UsePowerDialog.OnDismissed{
             override fun onDismissed() {
 
@@ -853,8 +872,11 @@ class GameActivity : App() {
 
     private fun threeMaxVotedDiscussion(list: ArrayList<Role>){
 
+        phase = Phase.DISCUSSION
+
         val next = object :DiscussionDialog.OnNext{
             override fun onNext(): Boolean {
+
                 threeMaxVotedExecutionVote(list)
                 return true
             }
@@ -871,6 +893,8 @@ class GameActivity : App() {
     }
 
     private fun threeMaxVotedExecutionVote(list: ArrayList<Role>){
+
+        phase = Phase.EXECUTION
 
         val onCast = object : VotingDialog.OnVoteCast{
             override fun onVoteCast(dialog: VotingDialog) {
@@ -914,6 +938,8 @@ class GameActivity : App() {
 
     private fun captainExecuteChoiceMultiple(list: ArrayList<Role>, action : OnAction){
 
+        phase = Phase.EXECUTION
+
         val onDismissed = object : UsePowerDialog.OnDismissed{
             override fun onDismissed() {
                 action.onStart()
@@ -930,11 +956,26 @@ class GameActivity : App() {
             gameActivity = this
         )
 
-        choose.show(supportFragmentManager, TAG_ALERT)
+        val onClick = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                choose.show(supportFragmentManager, TAG_ALERT)
+                alertDialog.dismiss()
+            }
+        }
+
+        AlertDialog.displayDialog(
+            activity = this,
+            icon = Icons.dead,
+            text = -1,
+            contentText = "${getString(R.string.good_night_all)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
+            rightButton = onClick,
+            cancelable = false)
 
     }
 
     private fun captainExecuteChoiceSingle(role : Role, action : OnAction){
+
+        phase = Phase.EXECUTION
 
         val yes = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
@@ -962,6 +1003,9 @@ class GameActivity : App() {
     }
 
     private fun executeSingle(role : Role, action : OnAction){
+
+        phase = Phase.EXECUTION
+
         role.kill(playerList)
         action.onStart()
     }
