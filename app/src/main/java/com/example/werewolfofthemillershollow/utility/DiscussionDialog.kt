@@ -16,7 +16,11 @@ import com.example.werewolfofthemillershollow.settings.App
 
 /**
  * Display a discussion dialog.
+ * @param playerList list of players to talk.
  * @param gameActivity a reference to the game activity.
+ * @param display an optional text message that could be displayed instead of the automated one.
+ * @param onNext actions to be executed after the discussion finishes.
+ * @param cancelable is the discussion cancelable or not.
  */
 class DiscussionDialog(
     private var playerList : ArrayList<Role>,

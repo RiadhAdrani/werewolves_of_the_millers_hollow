@@ -136,8 +136,10 @@
     <string name="discussion">Discussion</string>
     <string name="vote">Vote</string>
     <string name="vote_phase">Voting Phase</string>
-    <string name="discussion_description">Players are invited to discuss and formulate their opinions to help them in the voting phase. </string>
+    <string name="discussion_description">Players are invited to discuss, ONE BY ONE, and formulate their opinions to help them in the voting phase. </string>
+    <string name="discussion_description_free">All Players are invited to discuss, FREELY, and formulate their opinions to help them in the voting phase. </string>
     <string name="discussion_description_group">are invited to defend themselves.</string>
+    <string name="discussion_description_group_free">are invited to defend themselves in an OPEN DISCUSSION.</string>
     <string name="discussion_description_single">is invited to defend himself.</string>
     <string name="voting_title">Vote Suspected Players</string>
     <string name="voting_description">Players are invited to vote for suspected players, for their fate to be decided later …</string>

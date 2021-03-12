@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -34,6 +35,7 @@ class VotingDialog(
         for (role : Role in list){
             role.resetVotes()
             voters += role.vote
+            Log.d("votes","${role.player} has initially ${role.vote}")
         }
 
     }

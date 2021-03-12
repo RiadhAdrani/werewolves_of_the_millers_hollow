@@ -600,6 +600,17 @@ class GameActivity : App() {
 
     }
 
+
+    /**
+     * Open a discussion dialog.
+     */
+    private fun discussion(list : ArrayList<Role>, onNext: DiscussionDialog.OnNext){
+
+        val dialog = DiscussionDialog( list, this, onNext = onNext)
+        dialog.show(supportFragmentManager,TAG_ALERT)
+
+    }
+
     /**
      * Start the after round process.
      * * Display event dialog.
@@ -622,49 +633,7 @@ class GameActivity : App() {
 
         val onClick = object : EventsDialog.OnClick{
             override fun onClick(): Boolean {
-
-                phase = Phase.VOTING
-
-                val onVote = object : DiscussionDialog.OnNext{
-                    override fun onNext(): Boolean {
-
-                        val onCast = object : VotingDialog.OnVoteCast {
-                            override fun onVoteCast(dialog: VotingDialog) {
-
-                                dialog.dismiss()
-                                val list = voteResult(dialog.adapter.list)
-
-                                when {
-                                    list.isEmpty() -> {
-                                        newRound()
-                                    }
-                                    list.size == 1 -> {
-                                        oneVoted(list)
-                                    }
-                                    list.size in 2..3 -> {
-                                        threeMaxVoted(list)
-                                    }
-                                    list.size >= 4 -> {
-                                        muchMoreVoted(list)
-                                    }
-                                }
-                            }
-
-                        }
-
-                        vote(
-                            playerList,
-                            playerList.size,
-                            getString(R.string.voting_title),
-                            getString(R.string.voting_description),
-                            onCast)
-
-                        return true
-                    }
-
-                }
-
-                discussion(playerList,onVote)
+                firstDiscussion()
                 return true
             }
         }
@@ -679,14 +648,51 @@ class GameActivity : App() {
 
     }
 
-    /**
-     * Open a discussion dialog.
-     */
-    private fun discussion(list : ArrayList<Role>, onNext: DiscussionDialog.OnNext){
+    private fun firstDiscussion(){
+        val onVote = object : DiscussionDialog.OnNext{
+            override fun onNext(): Boolean {
+                firstVote()
+                return true
+            }
+        }
 
-        val dialog = DiscussionDialog( list, this, onNext = onNext)
-        dialog.show(supportFragmentManager,TAG_ALERT)
+        discussion(playerList,onVote)
+    }
 
+
+    private fun firstVote(){
+        phase = Phase.VOTING
+
+        val onCast = object : VotingDialog.OnVoteCast {
+            override fun onVoteCast(dialog: VotingDialog) {
+
+                dialog.dismiss()
+                val list = voteResult(dialog.adapter.list)
+
+                when {
+                    list.isEmpty() -> {
+                        newRound()
+                    }
+                    list.size == 1 -> {
+                        oneVoted(list)
+                    }
+                    list.size <= playerList.size/2-> {
+                        lessThanHalfVoted(list)
+                    }
+                    list.size > playerList.size/2 -> {
+                        firstDiscussion()
+                    }
+                }
+            }
+
+        }
+
+        vote(
+            playerList,
+            playerList.size,
+            getString(R.string.voting_title),
+            getString(R.string.voting_description),
+            onCast)
     }
 
     /**
@@ -729,6 +735,7 @@ class GameActivity : App() {
 
         var max = 1
         for (role : Role in list){
+            Log.d("votes","after voting : ${role.player} has ${role.vote}")
             if (role.vote > max){
                 max = role.vote
             }
@@ -801,7 +808,7 @@ class GameActivity : App() {
 
     }
 
-    private fun threeMaxVoted(list : ArrayList<Role>){
+    private fun lessThanHalfVoted(list : ArrayList<Role>){
 
         for(role : Role in list){
             role.isTalking = false
@@ -809,7 +816,7 @@ class GameActivity : App() {
 
         val onClick = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
-                threeMaxVotedChooseTalker(list)
+                lessThanHalfChooseTalker(list)
                 alertDialog.dismiss()
             }
         }
@@ -823,7 +830,7 @@ class GameActivity : App() {
         )
     }
 
-    private fun threeMaxVotedChooseTalker(list: ArrayList<Role>){
+    private fun lessThanHalfChooseTalker(list: ArrayList<Role>){
 
         phase = Phase.DISCUSSION
 
@@ -840,7 +847,7 @@ class GameActivity : App() {
 
                 val info = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        threeMaxVotedDiscussion(list)
+                        lessThanHalfDiscussion(list)
                         alertDialog.dismiss()
                     }
 
@@ -870,14 +877,14 @@ class GameActivity : App() {
         chooseWhoTalksFirst.show(supportFragmentManager, TAG_ALERT)
     }
 
-    private fun threeMaxVotedDiscussion(list: ArrayList<Role>){
+    private fun lessThanHalfDiscussion(list: ArrayList<Role>){
 
         phase = Phase.DISCUSSION
 
         val next = object :DiscussionDialog.OnNext{
             override fun onNext(): Boolean {
 
-                threeMaxVotedExecutionVote(list)
+                lessThanHalfExecutionVote(list)
                 return true
             }
         }
@@ -892,7 +899,7 @@ class GameActivity : App() {
         discussionDialog.show(supportFragmentManager, TAG_ALERT)
     }
 
-    private fun threeMaxVotedExecutionVote(list: ArrayList<Role>){
+    private fun lessThanHalfExecutionVote(list: ArrayList<Role>){
 
         phase = Phase.EXECUTION
 
@@ -1008,10 +1015,6 @@ class GameActivity : App() {
 
         role.kill(playerList)
         action.onStart()
-    }
-
-    private fun muchMoreVoted(list : ArrayList<Role>){
-
     }
 
 }

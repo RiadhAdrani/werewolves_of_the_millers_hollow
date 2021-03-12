@@ -72,8 +72,10 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             ) {
 
                 if (adapter.getTargets().isEmpty()){
+
                     val alert = AlertDialog(text = R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
+                    Log.d("game logs","empty list")
                     return
                 }
 
@@ -86,13 +88,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     if (i != -1){
                         ability.use(getRole(),activity.playerList[i], activity.playerList)
                         activity.playerList[i].debug()
-                        dialog!!.dismiss()
+                        dialog!!.onDismissed?.onDismissed()
+                        dialog.dismiss()
                         return
                     }
                 }
 
-                dialog!!.dismiss()
-                return
 
             }
 
