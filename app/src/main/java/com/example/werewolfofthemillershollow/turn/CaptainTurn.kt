@@ -69,14 +69,14 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
 
                 if (adapter.getTargets().isEmpty()){
 
                     val alert = AlertDialog(text = R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
                     Log.d("game logs","empty list")
-                    return
+                    return false
                 }
 
                 for(index : Int in adapter.getTargets()){
@@ -88,12 +88,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     if (i != -1){
                         ability.use(getRole(),activity.playerList[i], activity.playerList)
                         activity.playerList[i].debug()
-                        dialog!!.onDismissed?.onDismissed()
-                        dialog.dismiss()
-                        return
+                        dialog!!.dismiss()
+                        return true
                     }
                 }
 
+                return false
 
             }
 
@@ -269,12 +269,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     adapter: TargetAdapter,
                     activity: GameActivity,
                     dialog: UsePowerDialog?
-                ) {
+                ): Boolean {
 
                     if (adapter.getTargets().isEmpty()){
                         val alert = AlertDialog(text = R.string.should_use_power)
                         alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                        return
+                        return false
                     }
 
                     for(index : Int in adapter.getTargets()){
@@ -291,8 +291,10 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
                         activity.displayNext()
                         dialog!!.dismiss()
-                        return
+                        return false
                     }
+
+                    return false
 
                 }
 

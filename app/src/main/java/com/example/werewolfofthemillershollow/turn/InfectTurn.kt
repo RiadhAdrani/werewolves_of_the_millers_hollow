@@ -57,7 +57,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
 
                 var done = false
 
@@ -92,7 +92,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     )
 
                     alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-                    return
+                    return false
                 }
 
 
@@ -105,7 +105,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     val i = activity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i], activity.playerList))
                         done = true
@@ -122,6 +122,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     cancelable = false
                 )
                 alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                return false
             }
 
             override fun reset(

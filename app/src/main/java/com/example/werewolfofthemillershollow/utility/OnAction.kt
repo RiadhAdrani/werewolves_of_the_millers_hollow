@@ -62,11 +62,11 @@ class OnAction(
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
                 if (adapter.getTargets().isEmpty()){
                     val alert = AlertDialog(text = R.string.should_use_power)
                     alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-                    return
+                    return false
                 }
 
                 for(index : Int in adapter.getTargets()){
@@ -76,7 +76,7 @@ class OnAction(
                     val i = activity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     ability.use(self = current.getRole(), role = activity.playerList[i], activity.playerList)
 
@@ -96,6 +96,7 @@ class OnAction(
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+                return false
             }
 
             override fun reset(

@@ -827,6 +827,7 @@ class GameActivity : App() {
             text = -1,
             contentText = "${getString(R.string.good_night)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
             rightButton = onClick,
+            cancelable = false
         )
     }
 
@@ -858,7 +859,8 @@ class GameActivity : App() {
                     Icons.talkFirst,
                     text = -1,
                     contentText = "${getString(R.string.wake_all)} \n ${role.player} ${getString(R.string.talk_first_event)}",
-                    rightButton = info
+                    rightButton = info,
+                    cancelable = false
                 )
             }
 

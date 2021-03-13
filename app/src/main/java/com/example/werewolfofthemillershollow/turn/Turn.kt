@@ -152,11 +152,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
                 if (adapter.getTargets().isEmpty()){
                     val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                    return
+                    return false
                 }
 
                 Log.d("Role","Turn Class : using secondary ability")
@@ -168,7 +168,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     val i = gameActivity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
                     gameActivity.playerList[i].debug()
@@ -188,6 +188,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+                return false
 
             }
 
@@ -218,11 +219,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
                 if (adapter.getTargets().isEmpty()){
                     val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                    return
+                    return false
                 }
 
                 Log.d("Role","Turn Class : using secondary ability")
@@ -234,7 +235,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     val i = gameActivity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
                     gameActivity.playerList[i].debug()
@@ -253,6 +254,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
+                return false
 
             }
 
