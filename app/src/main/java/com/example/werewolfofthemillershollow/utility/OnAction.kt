@@ -167,9 +167,10 @@ class OnAction(
 
         for (turn : Turn<*> in activity.turnList){
             if (turn.getRole().isKilled && turn.getOnCallAbility() != null){
-                if (turn.getRoleToDisplay(activity.baseContext,activity.playerList)
-                    == activity.getString(R.string.captain_name) && turn.getRole().isServed)
+                if (turn.getRole().isCaptain && turn.getRole().isServed){
                     turn.servant(activity,events)
+                    continue
+                }
                 if (turn.getOnCallAbility()!!.times != App.ABILITY_NONE)
                     list.add(turn)
             }
