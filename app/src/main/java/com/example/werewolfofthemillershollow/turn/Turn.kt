@@ -9,23 +9,6 @@ import com.example.werewolfofthemillershollow.utility.*
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
-    companion object{
-
-        /**
-         * Find the turn with the given role and returns it.
-         * @param role given role.
-         * @param list list of turns to check in.
-         * @return Turn or null if not found.
-         */
-        fun getTurnByRole(role : Role, list : ArrayList<Turn<*>>): Turn<*>?{
-            for (r : Turn<*> in list){
-                if (r.getRole() == role)
-                    return r
-            }
-
-            return null
-        }
-    }
 
     private var role : R? = null
 
@@ -255,7 +238,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
 
-                return false
+                return true
 
             }
 

@@ -810,6 +810,8 @@ class GameActivity : App() {
 
     private fun lessThanHalfVoted(list : ArrayList<Role>){
 
+        phase = Phase.DISCUSSION
+
         for(role : Role in list){
             role.isTalking = false
         }
