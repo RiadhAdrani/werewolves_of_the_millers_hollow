@@ -60,8 +60,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
         } else {
             val onClick = object : AlertDialog.OnClick{
                 override fun onClick(alertDialog: AlertDialog) {
-                    alertDialog.dismiss()
                     activity.next()
+                    alertDialog.dismiss()
                 }
 
             }
@@ -160,9 +160,9 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        alertDialog.dismiss()
-                        dialog!!.dismiss()
                         activity.next()
+                        dialog!!.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 
@@ -227,8 +227,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        alertDialog.dismiss()
                         dialog!!.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 

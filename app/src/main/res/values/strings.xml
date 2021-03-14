@@ -56,6 +56,7 @@
     <string name="and">and</string>
 
     <string name="role">Role</string>
+    <string name="none">Nobody</string>
 
     <string name="status_effect">Status Effect</string>
 
@@ -87,13 +88,14 @@
 
     <string name="infect_name">Infect The Father</string>
     <string name="infect_description">Infect The Father Description</string>
-    <string name="infect_instruction">Father of wolves, would you like to infect the player killed by the wolves so he can join you?</string>
-    <string name="infect_instruction_nobody">Nobody was harmed this night …</string>
+    <string name="infect_instruction_nobody">Would you like to infect the targeted player?</string>
     <string name="infect_action_success">The target was successfully infected! Make the wolves know each other.</string>
     <string name="infect_action_fail">The target was not infected! Wake up wolves and know each other.</string>
     <string name="infect_wake_pack">Wake up wolves and know each other!</string>
     <string name="infection_effect">Infected</string>
     <string name="infection_effect_description">This player is infected by the power of the father of wolves, he can participate in the wolf pack.</string>
+    <string name="infection_effect_touch">The one that I will touch will side with the wolves:</string>
+    <string name="infection_touch">Touch</string>
 
     <string name="sorcerer_name">Sorcerer</string>
     <string name="sorcerer_description">Sorcerer Description</string>

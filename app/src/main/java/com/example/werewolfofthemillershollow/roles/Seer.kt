@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -12,16 +13,17 @@ import com.example.werewolfofthemillershollow.utility.Ability
  */
 class Seer(context: Context) : Role() {
 
+    private var none : String = context.getString(R.string.none)
     /**
      * The currently seen role name by the seer
      */
-    private var seenRole : String? = "None"
+    private var seenRole : String = none
 
     /**
      * getter for seen role
      * @return seenRole
      */
-    fun getSeenRole() : String? {
+    fun getSeenRole() : String {
         return seenRole
     }
 
@@ -68,5 +70,10 @@ class Seer(context: Context) : Role() {
 
     override fun isUnique(): Boolean {
         return true
+    }
+
+    override fun resetStatusEffects() {
+        seenRole = none
+        super.resetStatusEffects()
     }
 }
