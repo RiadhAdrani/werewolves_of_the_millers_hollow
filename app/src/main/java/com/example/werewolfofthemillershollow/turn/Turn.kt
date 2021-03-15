@@ -255,6 +255,15 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
     }
 
     /**
+     * Used to handle onClick event to use ability after the death of this role's player. *Used only in the morning phase*.
+     * @param onAction on action context.
+     * @return null or a valid [UsePowerDialog.OnClickListener].
+     */
+    open fun getOnActionOnClickHandler(onAction: OnAction)  : UsePowerDialog.OnClickListener? {
+        return null
+    }
+
+    /**
      * Interface used to handle clicking on targets in the fragment UsePowerDialog.
      * @see UsePowerDialog
      * @see TargetAdapter

@@ -6,7 +6,6 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.*
 

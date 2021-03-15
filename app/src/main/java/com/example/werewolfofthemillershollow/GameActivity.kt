@@ -871,7 +871,7 @@ class GameActivity : App() {
         val chooseWhoTalksFirst = UsePowerDialog(
             captainTurnRef,
             captainTurnRef.getWhoTalksInMorningAbility(list),
-            captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            captainTurnRef.getMorningOnClickHandler(),
             captainTurnRef.getOnTargetHandler(),
             onDismiss,
             false,
@@ -960,7 +960,7 @@ class GameActivity : App() {
         val choose = UsePowerDialog(
             turn = captainTurnRef,
             ability = captainTurnRef.getWhoDiesInMorningAbility(list),
-            onClick = captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            onClick = captainTurnRef.getMorningOnClickHandler(),
             onDismissed = onDismissed,
             onTargetClick = captainTurnRef.getOnTargetHandler(),
             cancelable = false,

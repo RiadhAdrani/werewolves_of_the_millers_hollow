@@ -42,6 +42,7 @@
     <string name="more_options">More options</string>
     <string name="role_icon">Role Icon</string>
     <string name="use_ability">Use Ability</string>
+    <string name="touch">Touch</string>
 
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
 
@@ -126,6 +127,7 @@
     <string name="captain_effect">Captain Armband</string>
     <string name="captain_effect_description">This player is the current captain of the village, He organize the discussion and make important decision when needed.</string>
     <string name="captain_execute">Would you like to execute this player ?</string>
+    <string name="captain_touch">The one that I will touch will be the new captain.</string>
 
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">Simple Villager Description</string>
