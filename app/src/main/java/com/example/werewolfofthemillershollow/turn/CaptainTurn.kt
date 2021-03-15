@@ -290,7 +290,33 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                             setRole(activity.playerList[i])
                         }
 
-                        activity.displayNext()
+                        val onClick = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                activity.displayNext()
+                                dialog!!.dismiss()
+                                alertDialog.dismiss()
+                            }
+                        }
+
+                        val onTouch = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                AlertDialog.displayDialog(
+                                    activity = activity,
+                                    text = R.string.good_night,
+                                    rightButton = onClick,
+                                    cancelable = false)
+                                alertDialog.dismiss()
+                            }
+                        }
+
+                        AlertDialog.displayDialog(
+                            activity = activity,
+                            text = -1,
+                            contentText = "${activity.getString(R.string.captain_touch)} (${activity.getString(R.string.touch)} ${getRole().player})",
+                            rightButton = onTouch,
+                            cancelable = false)
+
+
                         dialog!!.dismiss()
                         return false
                     }

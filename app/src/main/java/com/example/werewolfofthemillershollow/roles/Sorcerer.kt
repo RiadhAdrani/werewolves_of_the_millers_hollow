@@ -22,6 +22,7 @@ class Sorcerer(context: Context) : Role() {
         val primary = object : Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.kill(list)
+                role.isKilledBySorcerer = true
                 return true
             }
 
@@ -47,7 +48,7 @@ class Sorcerer(context: Context) : Role() {
             }
 
             override fun isTarget(self: Role, targetRole: Role): Boolean {
-                return targetRole.isKilled
+                return targetRole.isKilled && !targetRole.isKilledBySorcerer
             }
         }
         secondaryAbility = Ability(secondary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererHeal)
