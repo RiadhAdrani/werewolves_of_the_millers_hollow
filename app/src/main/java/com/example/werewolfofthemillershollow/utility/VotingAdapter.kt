@@ -16,25 +16,6 @@ class VotingAdapter(
     private var execution : Boolean = false,
     ) : RecyclerView.Adapter<VotingAdapter.MyViewHolder>() {
 
-    /**
-     * Handle voting events.
-     */
-    interface OnVote{
-
-        /**
-         * Handle adding a vote to the player with the index equals to [position]
-         * @param position position of the player.
-         */
-        fun onIncrement(adapter: VotingAdapter,position: Int)
-
-        /**
-         * Handle removing a vote to the player with the index equals to [position]
-         * @param position position of the player.
-         */
-        fun onDecrement(adapter: VotingAdapter,position: Int)
-
-    }
-
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
@@ -73,7 +54,7 @@ class VotingAdapter(
      * Add one vote to the player with the index equals to [position]
      * @param position position of the player.
      */
-    fun addVote(position: Int){
+    private fun addVote(position: Int){
 
         var currentVote = 0
         for (r : Role in list){
@@ -92,7 +73,7 @@ class VotingAdapter(
      * Remove one votes to the player with the index equals to [position]
      * @param position position of the player.
      */
-    fun decrementVote(position : Int){
+    private fun decrementVote(position : Int){
 
         if (list[position].vote <= 0 && !execution)
             return
@@ -103,6 +84,9 @@ class VotingAdapter(
         }
 
         if (execution && currentVote >= voters && list[position].vote <= 0)
+            return
+
+        if (list[position].vote == 0 && list.size > 1)
             return
 
         list[position].vote --
@@ -120,18 +104,6 @@ class VotingAdapter(
         }
 
         notifyDataSetChanged()
-
-    }
-
-    fun removePlayer(role : Role){
-
-        for (r : Role in list){
-            if (r.player == role.player){
-                list.remove(r)
-                notifyDataSetChanged()
-                return
-            }
-        }
 
     }
 

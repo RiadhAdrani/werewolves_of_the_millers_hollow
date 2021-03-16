@@ -97,6 +97,12 @@ abstract class Role : Serializable {
     var isKilled : Boolean = false
 
     /**
+     * Indicates if the role has been killed by the sorcerer or not. *Used to prevent the sorcerer from reviving a player killed by her.*
+     * @see Sorcerer
+     */
+    var isKilledBySorcerer : Boolean = false
+
+    /**
      * indicates if the role is infected by the father of wolves or not
      * @see FatherOfWolves
      */
@@ -179,6 +185,8 @@ abstract class Role : Serializable {
         isGuarded = false
 
         isTalking = false
+
+        isKilledBySorcerer = false
 
     }
 

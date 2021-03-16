@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="100dp"
-    android:elevation="8dp"
+    android:layout_width="@dimen/giant_extra_extra"
+    android:layout_height="@dimen/giant_extra_extra"
+    android:elevation="2dp"
     android:padding="4dp"
+    android:layout_margin="@dimen/epsilon"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey_lightest"
     android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
@@ -24,6 +26,8 @@
 
     <TextView
         android:text="@string/role"
+        android:textSize="@dimen/text_tiny_xx"
+        android:textColor="@color/grey_darker"
         android:gravity="top|center"
         android:id="@+id/item_text"
         android:layout_width="match_parent"

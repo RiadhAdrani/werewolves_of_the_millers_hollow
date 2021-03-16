@@ -54,68 +54,13 @@ class OnAction(
             return
         }
 
-        val onClick = object : UsePowerDialog.OnClickListener{
-            override fun done(
-                ability: Ability,
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
-                adapter: TargetAdapter,
-                activity: GameActivity,
-                dialog: UsePowerDialog?
-            ) {
-                if (adapter.getTargets().isEmpty()){
-                    val alert = AlertDialog(text = R.string.should_use_power)
-                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-                    return
-                }
-
-                for(index : Int in adapter.getTargets()){
-
-                    val target : Role = adapter.getList()[index]
-
-                    val i = activity.playerList.indexOf(target)
-
-                    if (i == -1)
-                        return
-
-                    ability.use(self = current.getRole(), role = activity.playerList[i], activity.playerList)
-
-                }
-
-                val onClick = object : AlertDialog.OnClick{
-                    override fun onClick(alertDialog: AlertDialog) {
-                        index ++
-                        onStart()
-                        alertDialog.dismiss()
-                        dialog!!.dismiss()
-                    }
-                }
-
-                val goodNightDialog = AlertDialog(
-                    text = R.string.good_night,
-                    rightButton = onClick,
-                    cancelable = false)
-                goodNightDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
-            }
-
-            override fun reset(
-                aliveList: ArrayList<Role>,
-                deadList: ArrayList<Role>,
-                adapter: TargetAdapter
-            ) {
-                adapter.emptyTargets()
-            }
-        }
-
-
-
         val proceed = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
                 alertDialog.dismiss()
                 val dialog = UsePowerDialog(
                     turn = current,
                     ability = current.getOnCallAbility()!!,
-                    onClick = onClick,
+                    onClick = current.getOnActionOnClickHandler(this@OnAction),
                     onTargetClick = current.getOnTargetHandler(),
                     onDismissed = null,
                     cancelable = false,
@@ -166,9 +111,10 @@ class OnAction(
 
         for (turn : Turn<*> in activity.turnList){
             if (turn.getRole().isKilled && turn.getOnCallAbility() != null){
-                if (turn.getRoleToDisplay(activity.baseContext,activity.playerList)
-                    == activity.getString(R.string.captain_name) && turn.getRole().isServed)
+                if (turn.getRole().isCaptain && turn.getRole().isServed){
                     turn.servant(activity,events)
+                    continue
+                }
                 if (turn.getOnCallAbility()!!.times != App.ABILITY_NONE)
                     list.add(turn)
             }

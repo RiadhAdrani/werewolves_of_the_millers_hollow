@@ -810,6 +810,8 @@ class GameActivity : App() {
 
     private fun lessThanHalfVoted(list : ArrayList<Role>){
 
+        phase = Phase.DISCUSSION
+
         for(role : Role in list){
             role.isTalking = false
         }
@@ -827,6 +829,7 @@ class GameActivity : App() {
             text = -1,
             contentText = "${getString(R.string.good_night)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
             rightButton = onClick,
+            cancelable = false
         )
     }
 
@@ -858,7 +861,8 @@ class GameActivity : App() {
                     Icons.talkFirst,
                     text = -1,
                     contentText = "${getString(R.string.wake_all)} \n ${role.player} ${getString(R.string.talk_first_event)}",
-                    rightButton = info
+                    rightButton = info,
+                    cancelable = false
                 )
             }
 
@@ -867,7 +871,7 @@ class GameActivity : App() {
         val chooseWhoTalksFirst = UsePowerDialog(
             captainTurnRef,
             captainTurnRef.getWhoTalksInMorningAbility(list),
-            captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            captainTurnRef.getMorningOnClickHandler(),
             captainTurnRef.getOnTargetHandler(),
             onDismiss,
             false,
@@ -956,7 +960,7 @@ class GameActivity : App() {
         val choose = UsePowerDialog(
             turn = captainTurnRef,
             ability = captainTurnRef.getWhoDiesInMorningAbility(list),
-            onClick = captainTurnRef.getWhoTalksInMorningOnClickHandler(),
+            onClick = captainTurnRef.getMorningOnClickHandler(),
             onDismissed = onDismissed,
             onTargetClick = captainTurnRef.getOnTargetHandler(),
             cancelable = false,

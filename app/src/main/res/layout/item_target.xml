@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/giant_extra"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/tiny"
-    android:layout_marginVertical="@dimen/tiny"
+    android:padding="@dimen/epsilon"
+    android:layout_margin="@dimen/epsilon"
+    android:background="@color/grey_lighter"
     >
 
     <ImageView
@@ -17,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/item_player"
+        app:tint="@color/grey_darker"
         />
 
     <ImageView
@@ -25,9 +26,12 @@
         android:src="@drawable/ic_done"
         android:contentDescription="@string/role_icon"
         android:layout_width="@dimen/giant"
-        android:layout_height="@dimen/giant"
-        android:padding="@dimen/tiny"
+        android:layout_height="match_parent"
+        android:layout_marginVertical="@dimen/epsilon_extra"
+        android:padding="@dimen/tiny_extra"
+        app:tint="@color/grey_darker"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:foreground="?android:attr/selectableItemBackground"
         />
@@ -35,13 +39,14 @@
     <TextView
         android:id="@+id/item_player"
         android:text="@string/player_name"
-        android:textSize="@dimen/text_medium"
+        android:textSize="@dimen/text_tiny_x"
         android:textStyle="bold"
+        android:textColor="@color/grey_darker"
         android:textAlignment="center"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toLeftOf="@id/item_use"
         app:layout_constraintLeft_toRightOf="@id/item_icon"
@@ -51,12 +56,14 @@
     <TextView
         android:id="@+id/item_role"
         android:text="@string/role"
-        android:textSize="@dimen/text_tiny"
-        android:textAlignment="center"
+        android:textSize="@dimen/text_tiny_xx"
+        android:textAlignment="gravity"
+        android:gravity="bottom|center"
+        android:textColor="@color/grey_darker"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/item_player"
         app:layout_constraintRight_toRightOf="@id/item_player"
         app:layout_constraintLeft_toLeftOf="@id/item_player"

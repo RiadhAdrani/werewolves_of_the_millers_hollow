@@ -6,6 +6,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.roles.Villager
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.*
@@ -59,7 +60,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
     }
 
-    fun getWhoTalksInMorningOnClickHandler() : UsePowerDialog.OnClickListener{
+    fun getMorningOnClickHandler() : UsePowerDialog.OnClickListener{
 
         return object : UsePowerDialog.OnClickListener{
             override fun done(
@@ -69,14 +70,14 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
 
                 if (adapter.getTargets().isEmpty()){
 
                     val alert = AlertDialog(text = R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
                     Log.d("game logs","empty list")
-                    return
+                    return false
                 }
 
                 for(index : Int in adapter.getTargets()){
@@ -88,12 +89,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     if (i != -1){
                         ability.use(getRole(),activity.playerList[i], activity.playerList)
                         activity.playerList[i].debug()
-                        dialog!!.onDismissed?.onDismissed()
-                        dialog.dismiss()
-                        return
+                        dialog!!.dismiss()
+                        return true
                     }
                 }
 
+                return false
 
             }
 
@@ -269,12 +270,12 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     adapter: TargetAdapter,
                     activity: GameActivity,
                     dialog: UsePowerDialog?
-                ) {
+                ): Boolean {
 
                     if (adapter.getTargets().isEmpty()){
                         val alert = AlertDialog(text = R.string.should_use_power)
                         alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                        return
+                        return false
                     }
 
                     for(index : Int in adapter.getTargets()){
@@ -289,10 +290,38 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                             setRole(activity.playerList[i])
                         }
 
-                        activity.displayNext()
+                        val onClick = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                activity.displayNext()
+                                dialog!!.dismiss()
+                                alertDialog.dismiss()
+                            }
+                        }
+
+                        val onTouch = object : AlertDialog.OnClick{
+                            override fun onClick(alertDialog: AlertDialog) {
+                                AlertDialog.displayDialog(
+                                    activity = activity,
+                                    text = R.string.good_night,
+                                    rightButton = onClick,
+                                    cancelable = false)
+                                alertDialog.dismiss()
+                            }
+                        }
+
+                        AlertDialog.displayDialog(
+                            activity = activity,
+                            text = -1,
+                            contentText = "${activity.getString(R.string.captain_touch)} (${activity.getString(R.string.touch)} ${getRole().player})",
+                            rightButton = onTouch,
+                            cancelable = false)
+
+
                         dialog!!.dismiss()
-                        return
+                        return false
                     }
+
+                    return false
 
                 }
 
@@ -304,6 +333,78 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     adapter.emptyTargets()
                 }
             }
+    }
+
+    override fun getOnActionOnClickHandler(onAction: OnAction): UsePowerDialog.OnClickListener {
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                ability: Ability,
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ): Boolean {
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                    return false
+                }
+
+                var touched : Role = Villager(activity)
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = activity.playerList.indexOf(target)
+
+                    if (i == -1)
+                        return false
+
+                    ability.use(self = getRole(), role = activity.playerList[i], activity.playerList)
+                    touched = activity.playerList[i]
+                    break
+
+                }
+
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        onAction.index ++
+                        onAction.onStart()
+                        dialog!!.dismiss()
+                        alertDialog.dismiss()
+                    }
+                }
+
+                val onTouch = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        AlertDialog.displayDialog(
+                            activity = activity,
+                            text = R.string.good_night,
+                            rightButton = onClick,
+                            cancelable = false)
+                        alertDialog.dismiss()
+                    }
+                }
+
+                AlertDialog.displayDialog(
+                    activity = activity,
+                    text = -1,
+                    contentText = "${activity.getString(R.string.captain_touch)} (${activity.getString(R.string.touch)} ${touched.player})",
+                    rightButton = onTouch,
+                    cancelable = false)
+                return false
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+        }
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {

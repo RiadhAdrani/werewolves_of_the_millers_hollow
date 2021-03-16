@@ -6,7 +6,8 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Sorcerer
-import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.utility.*
 
 class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>(activity) {
 
@@ -20,34 +21,20 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         val dead = ArrayList<Role>()
 
         for (role : Role in list!!){
-            if (role.isKilled){
+            if (role.isKilled && !role.isKilledBySorcerer){
                 dead.add(role)
             }
         }
 
-        var deadString = ""
-        if (dead.isNotEmpty()){
-            for (role : Role in dead){
-                if (dead.indexOf(role) == 0){
-                    deadString += role.player
-                    continue
-                }
-                if (dead.indexOf(role) == dead.size-1){
-                    deadString += " " + context.getString(R.string.and) +" "+ role.player
-                    continue
-                }
-                else
-                    deadString += ", "+role.player
+        return if (dead.isEmpty()){
+            "(${activity.getString(R.string.none)}) ${context.getString(R.string.was_killed)}. $output "
+        } else {
+            if (dead.size == 1){
+                "(${dead[0].player}) ${context.getString(R.string.was_killed)}. $output "
+            } else {
+                "(${App.listToString(dead, activity)}) ${context.getString(R.string.was_killed)}. $output "
             }
-
-            return if (dead.size == 1)
-                deadString +" " + context.getString(R.string.was_killed) + "... " + output
-            else
-                deadString +" " + context.getString(R.string.were_killed) + "... " + output
-
         }
-
-        return context.getString(R.string.nobody_was_killed) + "..." + output
     }
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
@@ -88,5 +75,69 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
         activity.playerList.add(index, sub)
         events.add(Event.servant(activity,sub))
         return index
+    }
+
+    override fun getOnClickHandler(): UsePowerDialog.OnClickListener {
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                ability: Ability,
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ): Boolean {
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                    return false
+                }
+
+                Log.d("Role","Turn Class : using secondary ability")
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = activity.playerList.indexOf(target)
+
+                    if (i == -1)
+                        return false
+
+                    ability.use(self = getRole(), role = activity.playerList[i], activity.playerList)
+                    activity.playerList[i].debug()
+
+                }
+
+                dialog!!.dismiss()
+
+                if (getPrimaryAbility()!!.times == getSecondaryAbility()!!.times && getPrimaryAbility()!!.times == App.ABILITY_NONE){
+                    val onClick = object : AlertDialog.OnClick{
+                        override fun onClick(alertDialog: AlertDialog) {
+                            activity.next()
+                            alertDialog.dismiss()
+                        }
+                    }
+
+                    AlertDialog.displayDialog(
+                        activity = activity,
+                        text = R.string.good_night,
+                        rightButton = onClick,
+                        cancelable = false)
+                }
+
+                return false
+
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+
+        }
     }
 }

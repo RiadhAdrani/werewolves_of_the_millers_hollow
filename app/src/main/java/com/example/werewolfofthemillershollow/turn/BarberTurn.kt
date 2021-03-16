@@ -86,4 +86,60 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
         return index
     }
+
+    override fun getOnActionOnClickHandler(onAction: OnAction): UsePowerDialog.OnClickListener {
+        return object : UsePowerDialog.OnClickListener{
+            override fun done(
+                ability: Ability,
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter,
+                activity: GameActivity,
+                dialog: UsePowerDialog?
+            ): Boolean {
+                if (adapter.getTargets().isEmpty()){
+                    val alert = AlertDialog(text = R.string.should_use_power)
+                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                    return false
+                }
+
+                for(index : Int in adapter.getTargets()){
+
+                    val target : Role = adapter.getList()[index]
+
+                    val i = activity.playerList.indexOf(target)
+
+                    if (i == -1)
+                        return false
+
+                    ability.use(self = getRole(), role = activity.playerList[i], activity.playerList)
+
+                }
+
+                val onClick = object : AlertDialog.OnClick{
+                    override fun onClick(alertDialog: AlertDialog) {
+                        onAction.index ++
+                        onAction.onStart()
+                        dialog!!.dismiss()
+                        alertDialog.dismiss()
+                    }
+                }
+
+                val goodNightDialog = AlertDialog(
+                    text = R.string.good_night,
+                    rightButton = onClick,
+                    cancelable = false)
+                goodNightDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+                return false
+            }
+
+            override fun reset(
+                aliveList: ArrayList<Role>,
+                deadList: ArrayList<Role>,
+                adapter: TargetAdapter
+            ) {
+                adapter.emptyTargets()
+            }
+        }
+    }
 }

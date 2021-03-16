@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/tiny"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/dialog_icon"
@@ -34,10 +34,10 @@
     <TextView
         android:id="@+id/dialog_instruction"
         android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny_x"
+        android:textSize="@dimen/text_tiny_xx"
         android:textAlignment="gravity"
         android:gravity="center"
-        android:padding="@dimen/tiny_extra"
+        android:padding="@dimen/epsilon"
         android:maxLines="5"
         android:minLines="5"
         android:layout_width="match_parent"
@@ -52,7 +52,7 @@
         android:background="@color/grey_lightest"
         android:padding="@dimen/tiny_extra"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/yo_mama_extra_extra"
+        android:layout_height="@dimen/yo_mama"
         android:layout_marginVertical="@dimen/small"
         app:layout_constraintTop_toBottomOf="@id/dialog_instruction"
         app:layout_constraintBottom_toTopOf="@id/dialog_cancel"

@@ -4,9 +4,9 @@
     android:background="@color/grey_light"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/giant"
     android:padding="@dimen/epsilon"
-    android:layout_marginVertical="@dimen/tiny_extra"
+    android:layout_margin="@dimen/epsilon"
     >
 
     <ImageView
@@ -15,8 +15,8 @@
         android:contentDescription="@string/role_icon"
         android:layout_marginHorizontal="@dimen/tiny"
         app:tint = "@color/grey_darker"
-        android:layout_width="@dimen/large"
-        android:layout_height="@dimen/large"
+        android:layout_width="@dimen/medium_large"
+        android:layout_height="@dimen/medium_large"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
         android:id="@+id/item_text"
         android:text="@string/lorem"
         android:textColor="@color/grey_darker"
-        android:textSize="@dimen/text_tiny_x"
+        android:textSize="@dimen/text_tiny_xx"
         android:padding="@dimen/tiny_extra"
         android:gravity="center"
         android:textAlignment="gravity"

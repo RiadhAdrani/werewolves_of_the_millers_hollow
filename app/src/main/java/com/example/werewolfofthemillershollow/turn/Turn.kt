@@ -9,23 +9,6 @@ import com.example.werewolfofthemillershollow.utility.*
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
-    companion object{
-
-        /**
-         * Find the turn with the given role and returns it.
-         * @param role given role.
-         * @param list list of turns to check in.
-         * @return Turn or null if not found.
-         */
-        fun getTurnByRole(role : Role, list : ArrayList<Turn<*>>): Turn<*>?{
-            for (r : Turn<*> in list){
-                if (r.getRole() == role)
-                    return r
-            }
-
-            return null
-        }
-    }
 
     private var role : R? = null
 
@@ -77,8 +60,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
         } else {
             val onClick = object : AlertDialog.OnClick{
                 override fun onClick(alertDialog: AlertDialog) {
-                    alertDialog.dismiss()
                     activity.next()
+                    alertDialog.dismiss()
                 }
 
             }
@@ -152,11 +135,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
                 if (adapter.getTargets().isEmpty()){
                     val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                    return
+                    return false
                 }
 
                 Log.d("Role","Turn Class : using secondary ability")
@@ -168,7 +151,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     val i = gameActivity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
                     gameActivity.playerList[i].debug()
@@ -177,9 +160,9 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        alertDialog.dismiss()
-                        dialog!!.dismiss()
                         activity.next()
+                        dialog!!.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 
@@ -188,6 +171,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+                return false
 
             }
 
@@ -218,11 +202,11 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
                 if (adapter.getTargets().isEmpty()){
                     val alert = AlertDialog(text = com.example.werewolfofthemillershollow.R.string.should_use_power)
                     alert.show(activity.supportFragmentManager,App.TAG_ALERT)
-                    return
+                    return false
                 }
 
                 Log.d("Role","Turn Class : using secondary ability")
@@ -234,7 +218,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     val i = gameActivity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
 
                     ability.use(self = getRole(), role = gameActivity.playerList[i], activity.playerList)
                     gameActivity.playerList[i].debug()
@@ -243,8 +227,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        alertDialog.dismiss()
                         dialog!!.dismiss()
+                        alertDialog.dismiss()
                     }
                 }
 
@@ -253,6 +237,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
+                return true
 
             }
 
@@ -266,6 +252,15 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
         }
 
+    }
+
+    /**
+     * Used to handle onClick event to use ability after the death of this role's player. *Used only in the morning phase*.
+     * @param onAction on action context.
+     * @return null or a valid [UsePowerDialog.OnClickListener].
+     */
+    open fun getOnActionOnClickHandler(onAction: OnAction)  : UsePowerDialog.OnClickListener? {
+        return null
     }
 
     /**

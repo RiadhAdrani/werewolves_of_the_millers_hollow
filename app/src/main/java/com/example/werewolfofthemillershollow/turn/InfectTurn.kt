@@ -6,7 +6,6 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.*
 
@@ -16,7 +15,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
         setRole(role)
     }
 
-    override fun onSkip(activity: GameActivity): Boolean {
+    private fun infectionRoutine(infected : String = activity.getString(R.string.none)): Boolean{
 
         val onClick = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
@@ -25,26 +24,48 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
                 val skip = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        alertDialog.dismiss()
                         activity.next()
+                        alertDialog.dismiss()
                     }
                 }
 
-                val dialog = AlertDialog(
+                AlertDialog.displayDialog(
+                    activity = activity,
                     text = R.string.good_night,
                     rightButton = skip,
                     cancelable = false)
-                dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
             }
         }
 
-        val dialog = AlertDialog(
-            text = R.string.infect_wake_pack,
-            cancelable = false,
-            rightButton = onClick)
-        dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
+
+        val onTouch = object : AlertDialog.OnClick{
+            override fun onClick(alertDialog: AlertDialog) {
+                AlertDialog.displayDialog(
+                    activity = activity,
+                    icon = Icons.fatherInfect,
+                    text = R.string.infect_wake_pack,
+                    rightButton = onClick,
+                    cancelable = false
+                )
+                alertDialog.dismiss()
+            }
+        }
+
+        AlertDialog.displayDialog(
+            activity = activity,
+            icon = Icons.fatherInfect,
+            text = -1,
+            contentText = " ${activity.getString(R.string.good_night)}\n" +
+                    "${activity.getString(R.string.infection_effect_touch)} " +
+                    "(${activity.getString(R.string.infection_touch )} ${infected}).",
+            rightButton = onTouch,
+            cancelable = false)
 
         return true
+    }
+
+    override fun onSkip(activity: GameActivity): Boolean {
+        return infectionRoutine()
     }
 
     override fun getOnClickHandler(): UsePowerDialog.OnClickListener {
@@ -57,46 +78,13 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                 adapter: TargetAdapter,
                 activity: GameActivity,
                 dialog: UsePowerDialog?
-            ) {
+            ): Boolean {
 
-                var done = false
-
-                val onClick = object : AlertDialog.OnClick{
-                    override fun onClick(alertDialog: AlertDialog) {
-
-                        alertDialog.dismiss()
-
-                        val gn = object : AlertDialog.OnClick{
-                            override fun onClick(alertDialog: AlertDialog) {
-                                alertDialog.dismiss()
-                                dialog!!.dismiss()
-                                activity.next()
-                            }
-                        }
-
-                        val goodNightDialog = AlertDialog(
-                            text = R.string.good_night,
-                            rightButton = gn,
-                            cancelable = false)
-                        goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
-                        return
-                    }
+                if (adapter.getList().isEmpty()){
+                    infectionRoutine()
+                    dialog!!.dismiss()
+                    return false
                 }
-
-                if (adapter.getTargets().isEmpty()){
-                    val alert = AlertDialog(
-                        icon = Icons.fatherInfect,
-                        text = R.string.infect_action_fail,
-                        rightButton = onClick,
-                        cancelable = false
-                    )
-
-                    alert.show(activity.supportFragmentManager, App.TAG_ALERT)
-                    return
-                }
-
-
-                Log.d("Role","Turn Class : using secondary ability")
 
                 for(index : Int in adapter.getTargets()){
 
@@ -105,23 +93,19 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                     val i = activity.playerList.indexOf(target)
 
                     if (i == -1)
-                        return
+                        return false
+                    else {
+                        val success = getPrimaryAbility()!!.use(getRole(),activity.playerList[i], activity.playerList)
+                        if (success){
+                            infectionRoutine(if (success) activity.playerList[i].player!! else activity.getString(R.string.none))
+                        }
 
-                    if (getPrimaryAbility()!!.use(getRole(),activity.playerList[i], activity.playerList))
-                        done = true
+                        dialog!!.dismiss()
+                    }
 
                 }
 
-                val text = if (done) R.string.infect_action_success
-                           else      R.string.infect_action_fail
-
-                val alert = AlertDialog(
-                    icon = Icons.fatherInfect,
-                    text = text,
-                    rightButton = onClick,
-                    cancelable = false
-                )
-                alert.show(activity.supportFragmentManager, App.TAG_ALERT)
+                return false
             }
 
             override fun reset(
@@ -136,11 +120,6 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
     }
 
     override fun getInstructions(context: Context, list: ArrayList<Role>?): String {
-
-        for (role : Role in list!!){
-            if (role.isKilled)
-                return context.getString(R.string.infect_instruction)
-        }
 
         return context.getString(R.string.infect_instruction_nobody)
     }

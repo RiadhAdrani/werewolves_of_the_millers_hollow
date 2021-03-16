@@ -262,6 +262,7 @@ class NewGameActivity : App() {
                     dialog.setState(true)
                     dialog.setRoleText(getString(R.string.role))
                     dialog.setRollButtonIcon(Icons.roll)
+                    dialog.setIcon(Icons.unknown)
 
                     if (areAllRolesPicked(list)){
                         dialog.setCancelButton(R.string.done)

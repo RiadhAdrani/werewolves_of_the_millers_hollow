@@ -54,8 +54,30 @@ class UsePowerDialog(
 
     interface OnClickListener{
 
-        fun done(ability: Ability, aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter, activity: GameActivity, dialog : UsePowerDialog? = null)
+        /**
+         * Executes when done button is pressed.
+         * @param ability ability used.
+         * @param aliveList list of alive players.
+         * @param deadList list of dead players.
+         * @param adapter target adapter.
+         * @param activity game activity.
+         * @param dialog current use power dialog.
+         * @return true to execute [onDismissed].
+         */
+        fun done(
+            ability: Ability,
+            aliveList : ArrayList<Role>,
+            deadList: ArrayList<Role>,
+            adapter: TargetAdapter,
+            activity: GameActivity,
+            dialog : UsePowerDialog? = null): Boolean
 
+        /**
+         * Reset the target adapter.
+         * @param aliveList list of alive players.
+         * @param deadList list of dead players.
+         * @param adapter target adapter.
+         */
         fun reset(aliveList : ArrayList<Role>, deadList: ArrayList<Role>, adapter: TargetAdapter)
 
     }
@@ -92,7 +114,8 @@ class UsePowerDialog(
 
         doneButton = dialog.findViewById(R.id.dialog_done)
         doneButton.setOnClickListener {
-            onClick?.done(
+
+            val dismiss = onClick?.done(
                 ability = ability,
                 aliveList = gameActivity.playerList,
                 deadList = gameActivity.deadList,
@@ -100,7 +123,8 @@ class UsePowerDialog(
                 activity = gameActivity,
                 dialog = this
             )
-            onDismissed?.onDismissed()
+            if (dismiss!! && onDismissed != null )
+                onDismissed?.onDismissed()
         }
 
         cancelButton = dialog.findViewById(R.id.dialog_cancel)

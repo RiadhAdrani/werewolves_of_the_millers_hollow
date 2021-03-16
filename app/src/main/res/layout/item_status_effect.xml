@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="70dp"
-    android:layout_height="@dimen/giant_extra"
-    android:elevation="8dp"
+    android:layout_width="@dimen/giant_extra"
+    android:layout_height="wrap_content"
+    android:elevation="2dp"
     android:padding="4dp"
-    android:layout_margin="@dimen/tiny"
+    android:layout_margin="@dimen/epsilon"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey_lightest"
     android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
         android:src="@drawable/ic_info"
         android:id="@+id/item_icon"
         android:layout_width="@dimen/medium_large"
-        android:contentDescription="@string/role"
         android:layout_height="@dimen/medium_large"
+        android:contentDescription="@string/role"
+        android:layout_marginBottom="@dimen/tiny_extra"
+        app:tint="@color/grey_darker"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,7 +26,8 @@
 
     <TextView
         android:text="@string/status_effect"
-        android:textSize="@dimen/text_tiny_xx"
+        android:textSize="@dimen/text_tiny_xxx"
+        android:textColor="@color/grey_darker"
         android:gravity="top|center"
         android:id="@+id/item_text"
         android:layout_width="match_parent"
