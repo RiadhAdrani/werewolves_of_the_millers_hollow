@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="text_tiny_xxx">10sp</dimen>
+    <dimen name="text_tiny_xx">12sp</dimen>
+    <dimen name="text_tiny_x">14sp</dimen>
+    <dimen name="text_tiny">18sp</dimen>
+    <dimen name="text_small">22sp</dimen>
+    <dimen name="text_medium">24sp</dimen>
+    <dimen name="text_large">28sp</dimen>
+    <dimen name="text_larger">32sp</dimen>
+    <dimen name="text_giant">38sp</dimen>
+    <dimen name="text_giant_x">46sp</dimen>
+    <dimen name="text_giant_xx">52sp</dimen>
+    <dimen name="text_giant_xxx">76sp</dimen>
+    <dimen name="text_enormous">88sp</dimen>
+    <dimen name="text_enormous_x">104sp</dimen>
+    <dimen name="text_enormous_xx">120sp</dimen>
+    <dimen name="text_enormous_xxx">144sp</dimen>
+
+    <dimen name="epsilon_extra">1dp</dimen>
+    <dimen name="epsilon">2dp</dimen>
+    <dimen name="tiny_extra">6dp</dimen>
+    <dimen name="tiny">10dp</dimen>
+    <dimen name="small">14dp</dimen>
+    <dimen name="medium_small">18dp</dimen>
+    <dimen name="medium">24dp</dimen>
+    <dimen name="medium_large">28dp</dimen>
+    <dimen name="large">32dp</dimen>
+    <dimen name="large_extra">38dp</dimen>
+    <dimen name="giant">48dp</dimen>
+    <dimen name="giant_extra">64dp</dimen>
+    <dimen name="giant_extra_extra">76dp</dimen>
+    <dimen name="enormous">88dp</dimen>
+    <dimen name="enormous_extra">108dp</dimen>
+    <dimen name="enormous_extra_extra">164dp</dimen>
+    <dimen name="yo_mama">220dp</dimen>
+    <dimen name="yo_mama_extra">280dp</dimen>
+    <dimen name="yo_mama_extra_extra">320dp</dimen>
+    <dimen name="yo_mama_so_fat">420dp</dimen>
+
+</resources>

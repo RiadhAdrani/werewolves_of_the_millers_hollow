@@ -112,7 +112,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/new_game"
-                    android:textSize="@dimen/text_giant_x"/>
+                    android:textSize="@dimen/text_giant"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,7 +159,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/settings"
-                    android:textSize="@dimen/text_giant_x"/>
+                    android:textSize="@dimen/text_giant"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -206,7 +206,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/load_game"
-                    android:textSize="@dimen/text_giant_x"/>
+                    android:textSize="@dimen/text_giant"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -253,7 +253,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/documentation"
-                    android:textSize="@dimen/text_giant_x"/>
+                    android:textSize="@dimen/text_giant"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
