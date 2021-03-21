@@ -53,7 +53,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
             if (getPrimaryAbility()!!.times == App.ABILITY_NONE){
                 val dialog = AlertDialog(
                     text = R.string.no_power,
-                    icon = Icons.noAbility,
+                    icon = Icons.knight,
                     cancelable = false)
                 dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
                 return false

@@ -29,7 +29,7 @@ import com.example.werewolfofthemillershollow.settings.Icons
  * @param cancelable set if the dialog is cancelable or not.
  * @see OnClick
  */
-class AlertDialog(private var icon : Int = R.drawable.ic_info,
+class AlertDialog(private var icon : Int = R.drawable.ic_ww_wolf,
                   private var text : Int,
                   private var string : String? = null,
                   private var checkText : Int? = null,
@@ -77,7 +77,7 @@ class AlertDialog(private var icon : Int = R.drawable.ic_info,
          */
         fun displayDialog(
             activity: App,
-            icon : Int = R.drawable.ic_info,
+            icon : Int = R.drawable.ic_wolves,
             text: Int,
             contentText: String? = null,
             checkText: Int? = null,

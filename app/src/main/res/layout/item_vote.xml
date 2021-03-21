@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/giant"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="@dimen/tiny"
-    android:layout_margin="@dimen/epsilon"
-    android:background="@color/grey_light"
+    android:padding="@dimen/epsilon"
+    android:layout_margin="@dimen/epsilon_extra"
+    android:background="@color/grey_darkest"
     >
 
     <ImageView
@@ -17,7 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:tint="@color/grey_darker"
         />
 
     <ImageView
@@ -26,8 +25,8 @@
         android:contentDescription="@string/role_icon"
         android:padding="@dimen/tiny_extra"
         android:layout_width="@dimen/large"
-        android:layout_height="@dimen/large"
-        app:tint="@color/grey_darker"
+        android:layout_height="match_parent"
+        app:tint="@color/brown_beige_barely_white"
         app:layout_constraintLeft_toRightOf="@id/item_player"
         app:layout_constraintRight_toLeftOf="@id/item_vote"
         app:layout_constraintTop_toTopOf="parent"
@@ -39,7 +38,7 @@
         android:id="@+id/item_vote"
         android:text="@string/players_number"
         android:textSize="@dimen/text_tiny"
-        android:textColor="@color/grey_darker"
+        android:textColor="@color/brown_beige_barely_white"
         android:gravity="center"
         android:contentDescription="@string/role_icon"
         android:layout_width="@dimen/large_extra"
@@ -59,9 +58,9 @@
         android:src="@drawable/ic_remove"
         android:contentDescription="@string/role_icon"
         android:layout_width="@dimen/large"
-        android:layout_height="@dimen/large"
+        android:layout_height="match_parent"
         android:padding="@dimen/tiny_extra"
-        app:tint="@color/grey_darker"
+        app:tint="@color/brown_beige_barely_white"
         app:layout_constraintLeft_toRightOf="@id/item_vote"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -72,9 +71,9 @@
     <TextView
         android:id="@+id/item_player"
         android:text="@string/player_name"
-        android:textSize="@dimen/text_tiny_xx"
+        android:textSize="@dimen/text_tiny"
         android:textStyle="bold"
-        android:textColor="@color/grey_darker"
+        android:textColor="@color/brown_beige_barely_white"
         android:gravity="center"
         android:paddingHorizontal="@dimen/tiny"
         android:singleLine="true"

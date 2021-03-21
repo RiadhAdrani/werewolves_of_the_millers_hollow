@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/grey_darkest"
     android:padding="16dp">
 
     <ImageView
@@ -15,12 +16,14 @@
         android:src="@drawable/ic_return"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        android:foreground="?android:attr/selectableItemBackground"
+        app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/new_game_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/new_game"
         android:textSize="@dimen/text_larger"
         app:layout_constraintLeft_toRightOf="@id/return_button"
@@ -31,6 +34,7 @@
         android:id="@+id/current_players_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_marginTop="32dp"
         android:text="@string/current_players"
         android:textSize="@dimen/text_medium"
@@ -43,6 +47,7 @@
         android:id="@+id/current_players_count"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="8dp"
         android:autofillHints="@string/players_number"
@@ -64,6 +69,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="8dp"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/generate"
         app:layout_constraintBottom_toTopOf="@id/current_players_rv"
         app:layout_constraintLeft_toRightOf="@id/current_players_count"
@@ -90,6 +96,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/roll"
         app:layout_constraintBottom_toTopOf="@id/roles_rv"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -102,6 +109,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="8dp"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/start"
         app:layout_constraintBottom_toTopOf="@id/roles_rv"
         app:layout_constraintLeft_toRightOf="@id/roll_button"

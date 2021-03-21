@@ -32,7 +32,7 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
             }
         }
 
-        primaryAbility = Ability(primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.packAttack)
+        primaryAbility = Ability(primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.wolves)
 
     }
 
@@ -47,7 +47,7 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
     }
 
     override fun getIcon(): Int {
-        return Werewolf.getPackIcon()
+        return App.WOLF_ICON
     }
 
     override fun getPlayer(list: ArrayList<Role>?): String {

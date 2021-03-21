@@ -72,13 +72,14 @@ class TargetAdapter(
         holder.icon.setImageResource(currentTarget.icon)
 
         if (position !in targets){
-            holder.use.setImageResource(Icons.done)
+            holder.use.visibility = View.INVISIBLE
         }
         else {
-            holder.use.setImageResource(Icons.goal)
+            holder.use.visibility = View.VISIBLE
+            holder.use.setImageResource(Icons.done)
         }
 
-        holder.use.setOnClickListener {
+        holder.itemView.setOnClickListener {
             handler?.onClick(
                 dialog.ability,
                 holder.adapterPosition,

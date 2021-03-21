@@ -39,7 +39,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
         }
-        chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainChoose)
+        chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainNew)
 
         val talker = object :Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
@@ -56,7 +56,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
         }
-        chooseTalker = Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.talkFirst)
+        chooseTalker = Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
 
     }
 
@@ -125,7 +125,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         }
 
-        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.talkFirst)
+        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
     }
 
     fun getWhoDiesInMorningAbility(list : ArrayList<Role>): Ability{
@@ -145,7 +145,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         }
 
-        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.dead)
+        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.execute)
     }
 
     override fun getPrimaryAbility(): Ability {
@@ -193,7 +193,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     }
 
     override fun getIcon(): Int {
-        return Icons.captainChoose
+        return R.drawable.ic_ww_captain
     }
 
     override fun onStart(activity: GameActivity): Boolean {
@@ -217,7 +217,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                 }
 
                 val dialog = AlertDialog(
-                    icon = Icons.servantTake,
+                    icon = Icons.servantServe,
                     text = R.string.captain_instruction_inherit_servant,
                     rightButton = onClick,
                     cancelable = false)
@@ -310,6 +310,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                         }
 
                         AlertDialog.displayDialog(
+                            icon = Icons.captainNew,
                             activity = activity,
                             text = -1,
                             contentText = "${activity.getString(R.string.captain_touch)} (${activity.getString(R.string.touch)} ${getRole().player})",
@@ -365,26 +366,25 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     ability.use(self = getRole(), role = activity.playerList[i], activity.playerList)
                     touched = activity.playerList[i]
                     break
-
                 }
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
                         onAction.index ++
                         onAction.onStart()
-                        dialog!!.dismiss()
-                        alertDialog.dismiss()
                     }
                 }
 
                 val onTouch = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
                         AlertDialog.displayDialog(
                             activity = activity,
                             text = R.string.good_night,
                             rightButton = onClick,
                             cancelable = false)
-                        alertDialog.dismiss()
+
                     }
                 }
 
@@ -394,6 +394,8 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
                     contentText = "${activity.getString(R.string.captain_touch)} (${activity.getString(R.string.touch)} ${touched.player})",
                     rightButton = onTouch,
                     cancelable = false)
+
+                dialog!!.dismiss()
                 return false
             }
 

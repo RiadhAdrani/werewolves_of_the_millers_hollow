@@ -1,38 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/giant_extra_extra"
     android:layout_height="@dimen/giant_extra_extra"
-    android:elevation="2dp"
-    android:padding="4dp"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/red_bordeaux"
     android:layout_margin="@dimen/epsilon"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_lightest"
     android:foreground="?android:attr/selectableItemBackground">
 
-    <ImageView
-        android:src="@drawable/ic_info"
-        android:id="@+id/item_icon"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        app:tint="@color/grey_darker"
-        android:padding="8dp"
-        android:contentDescription="@string/role"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/item_text"
-        />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="@string/role"
-        android:textSize="@dimen/text_tiny_xx"
-        android:textColor="@color/grey_darker"
-        android:gravity="top|center"
-        android:id="@+id/item_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:minLines="2"/>
+        <ImageView
+            android:src="@drawable/ic_info"
+            android:id="@+id/item_icon"
+            android:layout_width="match_parent"
+            android:padding="8dp"
+            android:contentDescription="@string/role"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/item_text"
+            />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:text="@string/role"
+            android:textSize="@dimen/text_tiny_xx"
+            android:textColor="@color/brown_beige_barely_white"
+            android:gravity="top|center"
+            android:id="@+id/item_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:minLines="2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

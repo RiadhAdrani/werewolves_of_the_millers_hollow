@@ -33,7 +33,7 @@ class Servant(context: Context) : Role() {
                 return targetRole != self
             }
         }
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.servantTake)
+        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.servantServe)
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {

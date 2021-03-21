@@ -47,7 +47,7 @@ class Barber(context: Context) : Role() {
 
         }
 
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.barberKill)
+        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.hunterKill)
 
     }
 

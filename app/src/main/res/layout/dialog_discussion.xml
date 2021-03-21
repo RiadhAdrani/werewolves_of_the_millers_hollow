@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey_darkest"
     android:padding="@dimen/small">
 
     <ImageView
         android:id="@+id/dialog_icon"
-        android:src="@drawable/ic_talk"
+        android:src="@drawable/ic_ww_discussion"
         android:contentDescription="@string/discussion"
         android:layout_width="@dimen/large"
         android:layout_height="@dimen/large"
@@ -21,6 +22,7 @@
 
     <TextView
         android:id="@+id/dialog_title"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/discussion"
         android:textSize="@dimen/text_larger"
         android:textStyle="bold"
@@ -33,10 +35,10 @@
 
     <ImageView
         android:id="@+id/dialog_barber"
-        android:src="@drawable/ic_clean"
+        android:src="@drawable/ic_ww_hunter"
         android:contentDescription="@string/barber_name"
         android:layout_marginTop="@dimen/small"
-        android:padding="@dimen/small"
+        android:padding="@dimen/epsilon_extra"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
         app:layout_constraintTop_toBottomOf="@id/dialog_title"
@@ -44,12 +46,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:foreground="?android:attr/selectableItemBackground"
-        app:tint="@color/grey_darker" />
+        />
 
     <TextView
         android:id="@+id/dialog_text"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny_x"
+        android:textSize="@dimen/text_tiny"
         android:textStyle="italic"
         android:gravity="center"
         android:layout_width="match_parent"
@@ -63,6 +66,7 @@
 
     <TextView
         android:id="@+id/dialog_button"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/vote"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"

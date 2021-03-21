@@ -38,7 +38,7 @@ class Knight(context: Context) : Role() {
             }
 
         }
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.knightShield)
+        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.knightKill)
     }
 
     override fun canPlay(round: Int): Boolean {

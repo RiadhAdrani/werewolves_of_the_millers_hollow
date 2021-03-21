@@ -30,6 +30,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
                 }
 
                 AlertDialog.displayDialog(
+                    icon = Icons.wolves,
                     activity = activity,
                     text = R.string.good_night,
                     rightButton = skip,
@@ -42,7 +43,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
             override fun onClick(alertDialog: AlertDialog) {
                 AlertDialog.displayDialog(
                     activity = activity,
-                    icon = Icons.fatherInfect,
+                    icon = Icons.wolves,
                     text = R.string.infect_wake_pack,
                     rightButton = onClick,
                     cancelable = false
@@ -53,7 +54,7 @@ class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<Fathe
 
         AlertDialog.displayDialog(
             activity = activity,
-            icon = Icons.fatherInfect,
+            icon = Icons.infectInfect,
             text = -1,
             contentText = " ${activity.getString(R.string.good_night)}\n" +
                     "${activity.getString(R.string.infection_effect_touch)} " +

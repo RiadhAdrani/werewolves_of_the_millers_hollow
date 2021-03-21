@@ -2,7 +2,6 @@ package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
 import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Werewolf : Sided with the wolf pack.
@@ -42,13 +41,6 @@ open class Werewolf(context: Context) : Role() {
 
             return output
 
-        }
-
-        /**
-         * Returns the icon of the pack.
-         */
-        fun getPackIcon(): Int{
-            return Icons.pack
         }
 
     }

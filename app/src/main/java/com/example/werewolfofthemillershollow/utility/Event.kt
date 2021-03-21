@@ -37,7 +37,7 @@ class Event(
          */
         fun died(context: Context, deadPlayer : Role): Event{
             val msg = " ${deadPlayer.player} (${deadPlayer.name}) " + context.getString(R.string.dead_event)
-            return Event(icon = Icons.dead, message = msg, importance = 100)
+            return Event(icon = Icons.execute, message = msg, importance = 100)
         }
 
         /**
@@ -49,7 +49,7 @@ class Event(
          */
         fun servant(context: Context, targetRole : Role): Event{
             val msg = context.getString(R.string.servant_event) + " ${targetRole.name}."
-            return Event(icon = Icons.servantTake, message = msg, importance = 75)
+            return Event(icon = Icons.servantServe, message = msg, importance = 75)
         }
 
 
@@ -74,7 +74,7 @@ class Event(
          */
         fun talkFirst(context: Context, player : String): Event{
             val msg = player + " " + context.getString(R.string.talk_first_event)
-            return Event(icon = Icons.talkFirst, message = msg, importance = 25)
+            return Event(icon = Icons.captainDiscuss, message = msg, importance = 25)
         }
 
     }

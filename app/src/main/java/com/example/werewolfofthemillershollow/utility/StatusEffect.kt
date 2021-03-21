@@ -55,7 +55,7 @@ class StatusEffect(
          */
         fun servant(): StatusEffect{
             return StatusEffect(
-                icon = Icons.roll,
+                icon = Icons.servant,
                 name = R.string.servant_effect,
                 description = R.string.servant_effect_description
             )
@@ -68,7 +68,7 @@ class StatusEffect(
          */
         fun shield(): StatusEffect{
             return StatusEffect(
-                icon = Icons.info,
+                icon = Icons.guardianProtect,
                 name = R.string.guardian_effect,
                 description = R.string.guardian_effect_description
             )
@@ -81,7 +81,7 @@ class StatusEffect(
          */
         fun infection(): StatusEffect{
             return StatusEffect(
-                icon = Icons.moon,
+                icon = Icons.infectInfect,
                 name = R.string.infection_effect,
                 description = R.string.infection_effect_description
             )
@@ -94,7 +94,7 @@ class StatusEffect(
          */
         fun captain(): StatusEffect{
             return StatusEffect(
-                icon = Icons.settings,
+                icon = Icons.captain,
                 name = R.string.captain_effect,
                 description = R.string.captain_effect_description
             )

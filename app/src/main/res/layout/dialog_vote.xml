@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/grey_darkest"
     android:padding="@dimen/tiny">
 
     <ImageView
         android:id="@+id/dialog_icon"
-        android:src="@drawable/ic_vote"
+        android:src="@drawable/ic_ww_discussion"
         android:layout_width="@dimen/large_extra"
         android:layout_height="@dimen/large_extra"
         android:layout_marginBottom="@dimen/tiny_extra"
@@ -20,6 +21,7 @@
 
     <TextView
         android:id="@+id/dialog_header"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/vote_phase"
         android:textStyle="bold"
         android:textSize="@dimen/text_medium"
@@ -38,7 +40,8 @@
     <TextView
         android:id="@+id/dialog_text"
         android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny_xx"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny_x"
         android:gravity="center"
         android:textAlignment="gravity"
         android:layout_width="match_parent"
@@ -55,10 +58,10 @@
     <ImageView
         android:id="@+id/dialog_barber"
         android:contentDescription="@string/barber_name"
-        android:src="@drawable/ic_clean"
-        android:layout_width="@dimen/large_extra"
-        android:layout_height="@dimen/large_extra"
-        android:padding="@dimen/epsilon"
+        android:src="@drawable/ic_ww_hunter"
+        android:layout_width="@dimen/giant"
+        android:layout_height="@dimen/giant"
+        android:padding="@dimen/epsilon_extra"
         app:layout_constraintTop_toBottomOf="@id/dialog_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -67,17 +70,20 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/grey"
         android:id="@+id/dialog_content_rv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/yo_mama"
         android:layout_marginVertical="@dimen/tiny_extra"
         app:layout_constraintTop_toBottomOf="@id/dialog_barber"
+        app:layout_constraintBottom_toTopOf="@id/dialog_reset"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         />
 
     <TextView
         android:id="@+id/dialog_reset"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/reset"
         android:textStyle="bold"
         android:textSize="@dimen/text_small"
@@ -97,6 +103,7 @@
 
     <TextView
         android:id="@+id/dialog_next"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/vote"
         android:textStyle="bold"
         android:textSize="@dimen/text_small"

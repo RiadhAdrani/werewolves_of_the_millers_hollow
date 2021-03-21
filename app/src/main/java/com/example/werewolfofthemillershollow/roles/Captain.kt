@@ -48,7 +48,7 @@ class Captain(context: Context) : Role() {
             }
         }
 
-        primaryAbility = Ability(primary,App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainChoose)
+        primaryAbility = Ability(primary,App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
 
     }
 

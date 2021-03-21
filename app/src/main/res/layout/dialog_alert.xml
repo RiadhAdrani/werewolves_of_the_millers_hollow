@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/small"
+    android:background="@color/grey_darkest"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -15,11 +16,12 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="@dimen/tiny_extra"
-        />
+         />
 
     <TextView
         android:id="@+id/dialog_text"
         android:text="@string/lorem"
+        android:textColor="@color/brown_beige_barely_white"
         android:textSize="@dimen/text_tiny"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -28,8 +30,7 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="@dimen/medium"
-        />
+        android:layout_marginTop="@dimen/medium" />
 
     <CheckBox
         android:id="@+id/dialog_check"
@@ -38,20 +39,19 @@
         app:layout_constraintTop_toBottomOf="@id/dialog_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/dialog_check_info"
-        android:layout_marginTop="@dimen/medium"
-        />
+        android:layout_marginTop="@dimen/medium" />
 
     <TextView
         android:id="@+id/dialog_check_info"
         android:text="@string/lorem"
         android:textSize="@dimen/text_tiny_x"
         android:textStyle="italic"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/dialog_check"
         app:layout_constraintLeft_toRightOf="@id/dialog_check"
-        app:layout_constraintRight_toRightOf="parent"
-        />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <TextView
         android:id="@+id/dialog_button_left"
@@ -59,6 +59,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_large"
         android:layout_width="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/dialog_check_info"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -66,8 +67,7 @@
         android:paddingHorizontal="@dimen/medium"
         android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginTop="@dimen/medium"
-        />
+        android:layout_marginTop="@dimen/medium" />
 
     <TextView
         android:id="@+id/dialog_button_mid"
@@ -75,6 +75,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_large"
         android:layout_width="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/dialog_button_left"
         app:layout_constraintLeft_toRightOf="@id/dialog_button_left"
@@ -82,8 +83,7 @@
         app:layout_constraintRight_toLeftOf="@id/dialog_button_right"
         android:paddingHorizontal="@dimen/medium"
         android:paddingVertical="@dimen/tiny"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
+        android:foreground="?android:attr/selectableItemBackground" />
 
     <TextView
         android:id="@+id/dialog_button_right"
@@ -91,6 +91,7 @@
         android:textStyle="bold"
         android:textSize="@dimen/text_large"
         android:layout_width="wrap_content"
+        android:textColor="@color/brown_beige_barely_white"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="@id/dialog_button_left"
         app:layout_constraintLeft_toRightOf="@id/dialog_button_mid"
@@ -98,9 +99,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:paddingHorizontal="@dimen/medium"
         android:paddingVertical="@dimen/tiny"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
-
+        android:foreground="?android:attr/selectableItemBackground" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

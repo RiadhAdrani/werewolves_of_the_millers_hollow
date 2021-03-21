@@ -3,6 +3,7 @@ package com.example.werewolfofthemillershollow.utility
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 
 class VotingDialog(
     private var gameActivity:GameActivity,
@@ -55,6 +57,9 @@ class VotingDialog(
 
         val header : TextView = dialog.findViewById(R.id.dialog_header)
         header.text = title
+
+        val icon : ImageView = dialog.findViewById(R.id.dialog_icon)
+        icon.setImageResource(if (execution) Icons.execute else Icons.discussion)
 
         val description : TextView = dialog.findViewById(R.id.dialog_text)
         description.text = text

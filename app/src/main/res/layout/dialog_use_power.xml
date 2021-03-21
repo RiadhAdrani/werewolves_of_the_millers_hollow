@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="@dimen/tiny"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey_darkest">
 
     <ImageView
         android:id="@+id/dialog_icon"
@@ -22,6 +23,7 @@
         android:id="@+id/dialog_header"
         android:text="@string/role"
         android:textSize="@dimen/text_giant"
+        android:textColor="@color/brown_beige_barely_white"
         android:textStyle="bold"
         android:singleLine="true"
         android:layout_width="wrap_content"
@@ -34,8 +36,9 @@
     <TextView
         android:id="@+id/dialog_instruction"
         android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny_xx"
+        android:textSize="@dimen/text_tiny_x"
         android:textAlignment="gravity"
+        android:textColor="@color/brown_beige_barely_white"
         android:gravity="center"
         android:padding="@dimen/epsilon"
         android:maxLines="5"
@@ -49,7 +52,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_targets_rv"
-        android:background="@color/grey_lightest"
+        android:background="@color/grey"
         android:padding="@dimen/tiny_extra"
         android:layout_width="match_parent"
         android:layout_height="@dimen/yo_mama"
@@ -60,6 +63,7 @@
 
     <TextView
         android:id="@+id/dialog_cancel"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/cancel"
         android:textStyle="bold"
         android:textSize="@dimen/text_small"
@@ -77,6 +81,7 @@
 
     <TextView
         android:id="@+id/dialog_done"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/done"
         android:textStyle="bold"
         android:textSize="@dimen/text_small"

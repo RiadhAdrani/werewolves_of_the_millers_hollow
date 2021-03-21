@@ -4,10 +4,11 @@
     android:layout_width="@dimen/giant_extra"
     android:layout_height="wrap_content"
     android:elevation="2dp"
-    android:padding="4dp"
-    android:layout_margin="@dimen/epsilon"
+    android:padding="@dimen/epsilon"
+    android:layout_marginVertical="@dimen/epsilon"
+    android:layout_marginHorizontal="@dimen/epsilon_extra"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/grey_lightest"
+    android:background="@color/grey_darker"
     android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
@@ -17,7 +18,6 @@
         android:layout_height="@dimen/medium_large"
         android:contentDescription="@string/role"
         android:layout_marginBottom="@dimen/tiny_extra"
-        app:tint="@color/grey_darker"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -26,8 +26,8 @@
 
     <TextView
         android:text="@string/status_effect"
-        android:textSize="@dimen/text_tiny_xxx"
-        android:textColor="@color/grey_darker"
+        android:textSize="@dimen/text_tiny_xx"
+        android:textColor="@color/brown_beige_barely_white"
         android:gravity="top|center"
         android:id="@+id/item_text"
         android:layout_width="match_parent"

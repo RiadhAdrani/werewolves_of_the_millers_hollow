@@ -118,10 +118,9 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
+                        alertDialog.dismiss()
                         onAction.index ++
                         onAction.onStart()
-                        dialog!!.dismiss()
-                        alertDialog.dismiss()
                     }
                 }
 
@@ -130,6 +129,7 @@ class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barbe
                     rightButton = onClick,
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+                dialog!!.dismiss()
                 return false
             }
 

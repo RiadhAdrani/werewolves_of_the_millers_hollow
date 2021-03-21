@@ -22,41 +22,41 @@ abstract class Icons {
             return ContextCompat.getDrawable(context,icon)
         }
 
-        const val continueGame : Int = R.drawable.ic_continue_game
-        const val documentation : Int = R.drawable.ic_docs
         const val info : Int = R.drawable.ic_info
-        const val back : Int = R.drawable.ic_return
         const val settings : Int = R.drawable.ic_settings
         const val start : Int = R.drawable.ic_start
         const val done : Int = R.drawable.ic_done
         const val roll : Int = R.drawable.ic_flip
-        const val bloc : Int = R.drawable.ic_bloc
-        const val more : Int = R.drawable.ic_more_options
-        const val moon : Int = R.drawable.ic_moon
-        const val alert : Int = R.drawable.ic_alert
-        const val admin : Int = R.drawable.ic_shield
-        const val animal : Int = R.drawable.ic_animal
-        const val elixir : Int = R.drawable.ic_elixir
-        const val clean : Int = R.drawable.ic_clean
-        const val vip : Int = R.drawable.ic_vip
         const val person : Int = R.drawable.ic_person
-        const val pack : Int = R.drawable.ic_animal
         const val goal : Int = R.drawable.ic_goal
         const val dead : Int = R.drawable.ic_no_person
         const val talkFirst : Int = R.drawable.ic_talk
         const val unknown : Int = R.drawable.ic_unknown
 
+        const val discussion = R.drawable.ic_ww_discussion
+        const val execute = R.drawable.ic_ww_execute
+        const val moon = R.drawable.ic_ww_moon
+        const val servant = R.drawable.ic_ww_servant
+        const val servantServe = R.drawable.ic_ww_servant_serve
+        const val guardian = R.drawable.ic_ww_guardian
+        const val guardianProtect = R.drawable.ic_ww_guardian_protect
+        const val wolves = R.drawable.ic_ww_wolf
+        const val infect = R.drawable.ic_ww_infect
+        const val infectInfect = R.drawable.ic_ww_infect_infect
+        const val sorcerer = R.drawable.ic_ww_sorcerer
+        const val sorcererKill = R.drawable.ic_ww_sorcerer_kill
+        const val sorcererRevive = R.drawable.ic_ww_sorcerer_revive
+        const val seer = R.drawable.ic_ww_seer
+        const val seerSee = R.drawable.ic_ww_seer_see
+        const val hunter = R.drawable.ic_ww_hunter
+        const val hunterKill = R.drawable.ic_ww_hunter_kill
+        const val knight = R.drawable.ic_ww_knight
+        const val knightKill = R.drawable.ic_ww_knight_kill
+        const val captain = R.drawable.ic_ww_captain
+        const val captainDiscuss = R.drawable.ic_ww_captain_discuss
+        const val captainKill = R.drawable.ic_ww_captain_kill
+        const val captainNew = R.drawable.ic_ww_captain_new
         const val noAbility : Int = R.drawable.ic_bloc
-        const val servantTake : Int = R.drawable.ic_flip
-        const val guardianProtect : Int = R.drawable.ic_shield
-        const val packAttack : Int = R.drawable.ic_no_person
-        const val fatherInfect : Int = R.drawable.ic_infection
-        const val sorcererHeal : Int = R.drawable.ic_health
-        const val sorcererKill : Int = R.drawable.ic_no_person
-        const val seerSee : Int = R.drawable.ic_eye
-        const val knightShield : Int = R.drawable.ic_shield_2
-        const val barberKill : Int = R.drawable.ic_no_person
-        const val captainChoose : Int = R.drawable.ic_talk
 
     }
 

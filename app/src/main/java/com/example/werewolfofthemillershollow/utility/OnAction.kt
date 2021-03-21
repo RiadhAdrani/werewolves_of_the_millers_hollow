@@ -1,6 +1,5 @@
 package com.example.werewolfofthemillershollow.utility
 
-import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.*
@@ -43,10 +42,7 @@ class OnAction(
             return
         }
 
-        Log.d("Action","${list.size}")
-
         val current = list[index]
-        current.getRole().debug(tag = "Action")
 
         if (current.getOnCallAbility()!!.times == App.ABILITY_NONE){
             index ++
@@ -56,6 +52,7 @@ class OnAction(
 
         val proceed = object : AlertDialog.OnClick{
             override fun onClick(alertDialog: AlertDialog) {
+
                 alertDialog.dismiss()
                 val dialog = UsePowerDialog(
                     turn = current,
@@ -65,19 +62,20 @@ class OnAction(
                     onDismissed = null,
                     cancelable = false,
                     gameActivity = activity)
-                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
-            }
 
+                dialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+
+            }
         }
 
-        val wakeDialog = AlertDialog(
+        AlertDialog.displayDialog(
+            activity = activity,
             icon = current.getIcon(),
             text = -1,
-            string = "${activity.getString(R.string.good_night_all)} \n ${activity.getString(R.string.wake_up)} ${current.getRoleToDisplay(activity, activity.playerList)}",
+            contentText = "${activity.getString(R.string.good_night)} \n ${activity.getString(R.string.wake_up)} ${current.getRoleToDisplay(activity, activity.playerList)}",
             rightButton = proceed,
             cancelable = false
-            )
-        wakeDialog.show(activity.supportFragmentManager, App.TAG_ALERT)
+        )
 
     }
 
@@ -99,7 +97,11 @@ class OnAction(
                 }
             }
 
-            val dialog = EventsDialog(gameActivity = activity, this.events, onClick = onClick, cancelable = false)
+            val dialog = EventsDialog(
+                gameActivity = activity,
+                events = this.events,
+                onClick = onClick,
+                cancelable = false)
             dialog.show(activity.supportFragmentManager,App.TAG_ALERT)
 
         }

@@ -3,7 +3,7 @@
 
     <style name="Theme.WerewolfOfTheMillersHollow" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/grey_darkest</item>
+        <item name="colorPrimary">@color/red_bordeaux</item>
         <item name="colorPrimaryVariant">@color/grey_black</item>
         <item name="colorOnPrimary">@color/grey_white</item>
         <!-- Secondary brand color. -->
@@ -13,6 +13,7 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/grey_darker</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/alegreya</item>
     </style>
 
 </resources>

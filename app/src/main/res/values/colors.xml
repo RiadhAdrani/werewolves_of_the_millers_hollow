@@ -17,4 +17,8 @@
     <color name="grey_darker">#495057</color>
     <color name="grey_darkest">#343A40</color>
     <color name="grey_black">#212529</color>
+
+    <color name="red_bordeaux">#540b0e</color>
+
+    <color name="brown_beige_barely_white">#FFF4CE</color>
 </resources>

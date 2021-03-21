@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_app"
+        android:icon="@drawable/ww_app_icon"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_ww"
+        android:roundIcon="@drawable/ww_app_icon"
         android:screenOrientation="sensorPortrait"
         android:supportsRtl="true"
         android:theme="@style/Theme.WerewolfOfTheMillersHollow">

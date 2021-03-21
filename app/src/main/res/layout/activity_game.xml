@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/red_bordeaux"
     android:padding="16dp">
 
     <ImageView
@@ -16,10 +17,11 @@
         android:contentDescription="@string/kick"
         android:padding="@dimen/tiny_extra"
         android:foreground="?android:attr/selectableItemBackground"
-        />
+        app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/role_name"
+        android:textColor="@color/brown_beige_barely_white"
         android:text="@string/role"
         android:textSize="@dimen/text_giant"
         android:layout_marginHorizontal="8dp"
@@ -34,6 +36,7 @@
 
     <ImageView
         android:id="@+id/more_options"
+        app:tint="@color/brown_beige_barely_white"
         android:contentDescription="@string/more_options"
         android:src="@drawable/ic_more_options"
         android:layout_width="@dimen/large_extra"
@@ -46,6 +49,7 @@
 
     <ImageView
         android:id="@+id/turn_icon"
+        app:tint="@color/brown_beige_barely_white"
         android:contentDescription="@string/turn"
         android:src="@drawable/ic_moon"
         android:layout_width="@dimen/large"
@@ -60,6 +64,7 @@
     <TextView
         android:id="@+id/turn_count"
         android:text="@string/current_players_number"
+        android:textColor="@color/brown_beige_barely_white"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
         android:layout_width="wrap_content"
@@ -85,6 +90,7 @@
     <ImageView
         android:id="@+id/skip"
         android:contentDescription="@string/done"
+        app:tint="@color/brown_beige_barely_white"
         android:src="@drawable/ic_done"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
@@ -99,6 +105,7 @@
     <TextView
         android:id="@+id/player_name"
         android:text="@string/player_name"
+        android:textColor="@color/brown_beige_barely_white"
         android:textSize="@dimen/text_small"
         android:textAlignment="center"
         android:layout_width="0dp"
@@ -112,7 +119,7 @@
         />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/grey_lightest"
+        android:background="@color/grey_darkest"
         android:id="@+id/status_effects"
         android:layout_width="0dp"
         android:layout_height="@dimen/enormous"
@@ -129,10 +136,11 @@
         android:text="@string/lorem"
         android:textAlignment="gravity"
         android:gravity="center"
-        android:background="@color/grey_lighter"
+        android:background="@color/grey_darkest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="8dp"
+        android:textColor="@color/brown_beige_barely_white"
         android:minLines="5"
         android:maxLines="5"
         app:layout_constraintTop_toBottomOf="@id/status_effects"
@@ -151,7 +159,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/ability_two"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="@dimen/small"
+        android:padding="@dimen/tiny_extra"
         android:foreground="?android:attr/selectableItemBackground"
         />
 
@@ -166,7 +174,7 @@
         app:layout_constraintLeft_toRightOf="@id/ability_one"
         app:layout_constraintRight_toRightOf="@id/ability_three"
         android:layout_marginStart="@dimen/giant"
-        android:padding="@dimen/small"
+        android:padding="@dimen/tiny_extra"
         android:foreground="?android:attr/selectableItemBackground"
         />
 
@@ -181,7 +189,7 @@
         app:layout_constraintLeft_toRightOf="@id/ability_two"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginStart="@dimen/giant"
-        android:padding="@dimen/small"
+        android:padding="@dimen/tiny_extra"
         android:foreground="?android:attr/selectableItemBackground"
         />
 

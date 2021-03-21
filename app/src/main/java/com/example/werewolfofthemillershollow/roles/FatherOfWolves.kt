@@ -38,7 +38,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
                 return targetRole.isKilled
             }
         }
-        primaryAbility = Ability(primary,App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.fatherInfect)
+        primaryAbility = Ability(primary,App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.infectInfect)
 
     }
 

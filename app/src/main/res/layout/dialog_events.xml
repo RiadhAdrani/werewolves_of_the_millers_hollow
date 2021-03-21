@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="@dimen/small"
+    android:background="@color/grey_darkest"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/dialog_icon"
         android:contentDescription="@string/turn"
         android:src="@drawable/ic_moon"
-        app:tint="@color/grey_darker"
+        app:tint="@color/brown_beige_barely_white"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
         android:layout_margin="@dimen/tiny"
@@ -22,10 +23,12 @@
     <TextView
         android:id="@+id/dialog_text"
         android:text="@string/lorem"
+        android:textSize="@dimen/text_tiny_x"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minLines="4"
         android:maxLines="4"
+        android:textColor="@color/brown_beige_barely_white"
         android:gravity="center"
         android:textAlignment="gravity"
         app:layout_constraintTop_toBottomOf="@id/dialog_icon"
@@ -38,10 +41,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_event_list"
-        android:background="@color/grey_lightest"
+        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="@dimen/yo_mama"
-        android:padding="@dimen/small"
+        android:padding="@dimen/epsilon"
         android:layout_marginVertical="@dimen/tiny"
         app:layout_constraintTop_toBottomOf="@id/dialog_text"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -62,6 +65,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_margin="@dimen/tiny"
         android:paddingHorizontal="@dimen/small"
+        android:textColor="@color/brown_beige_barely_white"
         android:paddingVertical="@dimen/tiny"
         android:foreground="?android:attr/selectableItemBackground"
         />

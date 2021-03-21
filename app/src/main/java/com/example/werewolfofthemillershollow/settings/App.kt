@@ -63,7 +63,7 @@ abstract class App : AppCompatActivity(){
         const val SERVANT_NAME : Int = R.string.servant_name
         const val SERVANT_DESCRIPTION : Int = R.string.servant_description
         const val SERVANT_TEAM : Int = TEAM_VILLAGE
-        const val SERVANT_ICON : Int = Icons.servantTake
+        const val SERVANT_ICON : Int = R.drawable.ic_ww_servant
 
         // ---------------------------------------------------------------------------------------
         // GUARDIAN
@@ -72,7 +72,7 @@ abstract class App : AppCompatActivity(){
         const val GUARDIAN_NAME : Int = R.string.guardian_name
         const val GUARDIAN_DESCRIPTION : Int = R.string.guardian_description
         const val GUARDIAN_TEAM : Int = TEAM_VILLAGE
-        const val GUARDIAN_ICON : Int = Icons.guardianProtect
+        const val GUARDIAN_ICON : Int = R.drawable.ic_ww_guardian
 
         // ---------------------------------------------------------------------------------------
         // WEREWOLF
@@ -81,7 +81,7 @@ abstract class App : AppCompatActivity(){
         const val WOLF_NAME : Int = R.string.wolf_name
         const val WOLF_DESCRIPTION : Int = R.string.wolf_description
         const val WOLF_TEAM : Int = TEAM_WOLVES
-        const val WOLF_ICON : Int = Icons.animal
+        const val WOLF_ICON : Int = R.drawable.ic_ww_wolf
 
         // ---------------------------------------------------------------------------------------
         // INFECT
@@ -90,7 +90,7 @@ abstract class App : AppCompatActivity(){
         const val INFECT_NAME : Int = R.string.infect_name
         const val INFECT_DESCRIPTION : Int = R.string.infect_description
         const val INFECT_TEAM : Int = TEAM_WOLVES
-        const val INFECT_ICON : Int = Icons.fatherInfect
+        const val INFECT_ICON : Int = R.drawable.ic_ww_infect
 
 
         // ---------------------------------------------------------------------------------------
@@ -100,7 +100,7 @@ abstract class App : AppCompatActivity(){
         const val SORCERER_NAME : Int = R.string.sorcerer_name
         const val SORCERER_DESCRIPTION : Int = R.string.sorcerer_description
         const val SORCERER_TEAM : Int = TEAM_VILLAGE
-        const val SORCERER_ICON : Int = Icons.elixir
+        const val SORCERER_ICON : Int = R.drawable.ic_ww_sorcerer
 
         // ---------------------------------------------------------------------------------------
         // SEER
@@ -109,7 +109,7 @@ abstract class App : AppCompatActivity(){
         const val SEER_NAME : Int = R.string.seer_name
         const val SEER_DESCRIPTION : Int = R.string.seer_description
         const val SEER_TEAM : Int = TEAM_VILLAGE
-        const val SEER_ICON : Int = Icons.seerSee
+        const val SEER_ICON : Int = R.drawable.ic_ww_seer
 
         // ---------------------------------------------------------------------------------------
         // KNIGHT
@@ -118,7 +118,7 @@ abstract class App : AppCompatActivity(){
         const val KNIGHT_NAME : Int = R.string.knight_name
         const val KNIGHT_DESCRIPTION : Int = R.string.knight_description
         const val KNIGHT_TEAM : Int = TEAM_VILLAGE
-        const val KNIGHT_ICON : Int = Icons.knightShield
+        const val KNIGHT_ICON : Int = R.drawable.ic_ww_knight
 
         // ---------------------------------------------------------------------------------------
         // BARBER
@@ -127,7 +127,7 @@ abstract class App : AppCompatActivity(){
         const val BARBER_NAME : Int = R.string.barber_name
         const val BARBER_DESCRIPTION : Int = R.string.barber_description
         const val BARBER_TEAM : Int = TEAM_VILLAGE
-        const val BARBER_ICON : Int = Icons.clean
+        const val BARBER_ICON : Int = R.drawable.ic_ww_hunter
 
         // ---------------------------------------------------------------------------------------
         // CAPTAIN
@@ -136,7 +136,7 @@ abstract class App : AppCompatActivity(){
         const val CAPTAIN_NAME : Int = R.string.captain_name
         const val CAPTAIN_DESCRIPTION : Int = R.string.captain_description
         const val CAPTAIN_TEAM : Int = TEAM_VILLAGE
-        const val CAPTAIN_ICON : Int = Icons.vip
+        const val CAPTAIN_ICON : Int = R.drawable.ic_ww_captain
 
         // ---------------------------------------------------------------------------------------
         // VILLAGER
@@ -145,7 +145,7 @@ abstract class App : AppCompatActivity(){
         const val VILLAGER_NAME : Int = R.string.villager_name
         const val VILLAGER_DESCRIPTION : Int = R.string.villager_description
         const val VILLAGER_TEAM : Int = TEAM_VILLAGE
-        const val VILLAGER_ICON : Int = Icons.person
+        const val VILLAGER_ICON : Int = R.drawable.ic_ww_villager
 
         // ---------------------------------------------------------------------------------------
         // ---------------------------------------------------------------------------------------

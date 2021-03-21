@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/grey_light"
+    android:background="@color/grey_darkest"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/giant"
     android:padding="@dimen/epsilon"
-    android:layout_margin="@dimen/epsilon"
+    android:layout_margin="@dimen/epsilon_extra"
     >
 
     <ImageView
@@ -14,7 +14,6 @@
         android:src="@drawable/ic_moon"
         android:contentDescription="@string/role_icon"
         android:layout_marginHorizontal="@dimen/tiny"
-        app:tint = "@color/grey_darker"
         android:layout_width="@dimen/medium_large"
         android:layout_height="@dimen/medium_large"
         app:layout_constraintTop_toTopOf="parent"
@@ -26,8 +25,8 @@
     <TextView
         android:id="@+id/item_text"
         android:text="@string/lorem"
-        android:textColor="@color/grey_darker"
-        android:textSize="@dimen/text_tiny_xx"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny_x"
         android:padding="@dimen/tiny_extra"
         android:gravity="center"
         android:textAlignment="gravity"

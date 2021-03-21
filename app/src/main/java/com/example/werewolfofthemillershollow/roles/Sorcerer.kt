@@ -51,7 +51,7 @@ class Sorcerer(context: Context) : Role() {
                 return targetRole.isKilled && !targetRole.isKilledBySorcerer
             }
         }
-        secondaryAbility = Ability(secondary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererHeal)
+        secondaryAbility = Ability(secondary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererRevive)
     }
 
     override fun canPlay(round: Int): Boolean {

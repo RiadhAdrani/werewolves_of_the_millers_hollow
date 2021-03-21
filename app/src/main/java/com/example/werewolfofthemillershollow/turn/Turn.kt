@@ -5,6 +5,7 @@ import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.*
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
@@ -66,6 +67,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
             }
             val dialog = AlertDialog(
+                icon = Icons.wolves,
                 text = com.example.werewolfofthemillershollow.R.string.good_night,
                 rightButton = onClick,
                 cancelable = false)

@@ -130,12 +130,12 @@ class GameActivity : App() {
     /**
      * Reference to the captain turn.
      */
-    lateinit var captainTurnRef : CaptainTurn
+    private lateinit var captainTurnRef : CaptainTurn
 
     /**
      * targets killed by the wolf pack this night.
      */
-    var wolfTargets : ArrayList<Role> = ArrayList()
+    private var wolfTargets : ArrayList<Role> = ArrayList()
 
     /**
      * reference to the barber player.
@@ -537,12 +537,14 @@ class GameActivity : App() {
             if (turn.getRole().name == getString(R.string.seer_name)){
                 val seer = turn as SeerTurn
                 if (!seer.getRole().isKilled)
-                    events.add(Event.seen(this, seer.getRole().getSeenRole()!!))
+                    events.add(Event.seen(this, seer.getRole().getSeenRole()))
             }
 
             if (turn.getRole().isKilled){
-                if (turn.getRole().isServed)
+                if (turn.getRole().isServed) {
                     turn.servant(this, events)
+                    turn.getRole().isServed = false
+                }
             }
 
         }
@@ -658,7 +660,6 @@ class GameActivity : App() {
 
         discussion(playerList,onVote)
     }
-
 
     private fun firstVote(){
         phase = Phase.VOTING
@@ -825,7 +826,7 @@ class GameActivity : App() {
 
         AlertDialog.displayDialog(
             activity = this,
-            icon = Icons.talkFirst,
+            icon = Icons.captainDiscuss,
             text = -1,
             contentText = "${getString(R.string.good_night)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
             rightButton = onClick,
@@ -858,7 +859,7 @@ class GameActivity : App() {
 
                 AlertDialog.displayDialog(
                     this@GameActivity,
-                    Icons.talkFirst,
+                    Icons.captainDiscuss,
                     text = -1,
                     contentText = "${getString(R.string.wake_all)} \n ${role.player} ${getString(R.string.talk_first_event)}",
                     rightButton = info,
@@ -976,7 +977,7 @@ class GameActivity : App() {
 
         AlertDialog.displayDialog(
             activity = this,
-            icon = Icons.dead,
+            icon = Icons.execute,
             text = -1,
             contentText = "${getString(R.string.good_night_all)} \n ${getString(R.string.wake_up)} ${getString(R.string.captain_name)}",
             rightButton = onClick,
@@ -1005,7 +1006,7 @@ class GameActivity : App() {
 
         val captainChoice = AlertDialog(
             text = R.string.captain_execute,
-            icon = Icons.info,
+            icon = Icons.execute,
             rightButton = yes,
             rightButtonText = R.string.yes,
             leftButton = no,

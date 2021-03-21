@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
+import com.example.werewolfofthemillershollow.roles.Villager
 import com.example.werewolfofthemillershollow.settings.App
 
 /**
@@ -90,16 +91,25 @@ class DiscussionDialog(
             }
         }
 
+        var talker : Role = Villager(activity!!)
+        for (role : Role in playerList){
+            if (role.isTalking)
+                talker = role
+
+        }
+
+        val talkerMessage = if (playerList.contains(talker)) "${talker.player} ${getString(R.string.talk_first_event)}." else ""
+
         val text : TextView = dialog.findViewById(R.id.dialog_text)
         when {
             display != null -> {
                 text.text = display
             }
             playerList.size == gameActivity.playerList.size -> {
-                text.text = getString(R.string.discussion_description)
+                text.text = "${getString(R.string.discussion_description)} $talkerMessage"
             }
             playerList.size > 1 -> {
-                text.text = "${App.listToString(playerList, activity!!)} ${getString(R.string.discussion_description_group)}"
+                text.text = "${App.listToString(playerList, activity!!)} ${getString(R.string.discussion_description_group)} $talkerMessage"
             }
             else -> {
                 text.text = "${App.listToString(playerList, activity!!)} ${getString(R.string.discussion_description_single)}"
