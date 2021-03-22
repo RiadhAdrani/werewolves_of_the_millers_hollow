@@ -29,29 +29,33 @@ class StatusEffectAdapter(private var list: ArrayList<StatusEffect>,
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        val currentItem = list[position]
-        holder.icon.setImageResource(currentItem.icon!!)
-        holder.text.text = currentItem.getName(context = context)
-
-        if (listener != null){
-            holder.itemView.setOnClickListener {
-                listener!!.onClick(holder.adapterPosition)
-            }
-            holder.icon.setOnLongClickListener {
-                return@setOnLongClickListener listener!!.onHold(holder.adapterPosition)
-            }
-        }
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val text : TextView = itemView.findViewById(R.id.item_text)
+
+        fun bind(effect: StatusEffect){
+            icon.setImageResource(effect.icon!!)
+            text.text = effect.getName(context)
+
+
+            itemView.setOnClickListener {
+                listener?.onClick(adapterPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                listener?.onHold(adapterPosition)
+                return@setOnLongClickListener true
+            }
+
+        }
     }
 
     /**

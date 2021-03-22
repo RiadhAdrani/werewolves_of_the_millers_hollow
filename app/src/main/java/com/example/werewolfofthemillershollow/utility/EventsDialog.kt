@@ -49,6 +49,8 @@ class EventsDialog(
         val icon : ImageView = dialog.findViewById(R.id.dialog_icon)
         icon.setImageResource(Icons.moon)
 
+
+
         val isOver = Role.isGameOver(gameActivity.playerList, gameActivity)
 
         val text : TextView = dialog.findViewById(R.id.dialog_text)
@@ -58,6 +60,11 @@ class EventsDialog(
         val events : RecyclerView = dialog.findViewById(R.id.dialog_event_list)
         events.layoutManager = LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
         events.adapter = EventAdapter(context = context!!, list = this.events)
+
+        val reload : ImageView = dialog.findViewById(R.id.dialog_reload_events)
+        reload.setOnClickListener {
+            (events.adapter as EventAdapter).notifyDataSetChanged()
+        }
 
         val button : TextView = dialog.findViewById(R.id.dialog_button)
         button.setOnClickListener {

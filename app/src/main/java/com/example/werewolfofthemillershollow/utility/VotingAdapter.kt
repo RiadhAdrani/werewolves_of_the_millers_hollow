@@ -16,13 +16,28 @@ class VotingAdapter(
     private var execution : Boolean = false,
     ) : RecyclerView.Adapter<VotingAdapter.MyViewHolder>() {
 
-    class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
 
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val player : TextView = itemView.findViewById(R.id.item_player)
         val add : ImageView = itemView.findViewById(R.id.item_add)
         val sub : ImageView = itemView.findViewById(R.id.item_sub)
-        val vote : TextView = itemView.findViewById(R.id.item_vote)
+        private val vote : TextView = itemView.findViewById(R.id.item_vote)
+
+        fun bind(role: Role){
+
+            icon.setImageResource(role.icon)
+            player.text = role.player
+            vote.text = "${role.vote}"
+
+            add.setOnClickListener {
+                addVote(adapterPosition)
+            }
+
+            sub.setOnClickListener {
+                decrementVote(adapterPosition)
+            }
+        }
 
     }
 
@@ -32,17 +47,7 @@ class VotingAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        val player = list[position]
-
-        holder.icon.setImageResource(player.icon)
-        holder.player.text = player.player
-        holder.vote.text = "${player.vote}"
-        holder.add.setOnClickListener {
-            addVote(holder.adapterPosition)
-        }
-        holder.sub.setOnClickListener {
-            decrementVote(holder.adapterPosition)
-        }
+        holder.bind(list[position])
 
     }
 

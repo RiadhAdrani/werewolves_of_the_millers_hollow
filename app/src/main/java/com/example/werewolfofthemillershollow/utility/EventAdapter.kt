@@ -19,6 +19,11 @@ class EventAdapter(var context: Context, var list : ArrayList<Event>): RecyclerV
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val text : TextView = itemView.findViewById(R.id.item_text)
 
+        fun bind(event : Event){
+            icon.setImageResource(event.getIcon())
+            text.text = event.getMessage()
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -28,11 +33,7 @@ class EventAdapter(var context: Context, var list : ArrayList<Event>): RecyclerV
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-        val item = list[position]
-        holder.icon.setImageResource(item.getIcon())
-        holder.text.text = item.getMessage()
-
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int {

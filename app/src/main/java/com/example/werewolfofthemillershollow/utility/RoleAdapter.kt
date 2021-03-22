@@ -59,30 +59,31 @@ class RoleAdapter(context : Context, list : ArrayList<Role>) : RecyclerView.Adap
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val item : Role = list[position]
-
-        holder.icon.setImageDrawable(Icons.getDrawableIcon(icon = item.icon, context = context))
-        holder.text.text = item.name
-
-        holder.itemView.setOnClickListener {
-            if (listener != null) listener!!.onClick(holder.adapterPosition)
-        }
-
-        holder.itemView.setOnLongClickListener{
-            if (listener != null) return@setOnLongClickListener listener!!.onHold(holder.adapterPosition)
-            return@setOnLongClickListener true
-
-        }
+        holder.bind(list[position])
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val text : TextView = itemView.findViewById(R.id.item_text)
+        
+        fun bind(role : Role){
+            icon.setImageDrawable(Icons.getDrawableIcon(icon = role.icon, context = context))
+            text.text = role.name
+
+            itemView.setOnClickListener {
+                if (listener != null) listener!!.onClick(adapterPosition)
+            }
+
+            itemView.setOnLongClickListener {
+                if (listener != null) return@setOnLongClickListener listener!!.onHold(adapterPosition)
+                return@setOnLongClickListener true
+            }
+        }
     }
 
     /**

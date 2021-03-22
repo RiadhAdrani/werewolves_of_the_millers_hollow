@@ -1,73 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/small"
     android:background="@color/grey_darkest"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:padding="@dimen/small">
 
     <ImageView
         android:id="@+id/dialog_icon"
-        android:contentDescription="@string/turn"
-        android:src="@drawable/ic_moon"
-        app:tint="@color/brown_beige_barely_white"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
         android:layout_margin="@dimen/tiny"
-        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/turn"
+        android:src="@drawable/ic_moon"
+        app:layout_constraintBottom_toTopOf="@id/dialog_text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dialog_text"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/dialog_text"
-        android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny_x"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minLines="4"
-        android:maxLines="4"
-        android:textColor="@color/brown_beige_barely_white"
-        android:gravity="center"
-        android:textAlignment="gravity"
-        app:layout_constraintTop_toBottomOf="@id/dialog_icon"
-        app:layout_constraintBottom_toTopOf="@id/dialog_event_list"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:padding="@dimen/tiny"
         android:layout_marginVertical="@dimen/tiny"
-        />
+        android:gravity="center"
+        android:maxLines="2"
+        android:minLines="2"
+        android:padding="@dimen/tiny"
+        android:text="@string/lorem"
+        android:textAlignment="gravity"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny_x"
+        app:layout_constraintBottom_toTopOf="@id/dialog_reload_events"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_icon" />
+
+    <ImageView
+        android:id="@+id/dialog_reload_events"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/epsilon_extra"
+        android:src="@drawable/ic_flip"
+        app:layout_constraintBottom_toTopOf="@id/dialog_event_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        app:tint="@color/brown_beige_barely_white"
+        android:contentDescription="@string/reset" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dialog_event_list"
-        android:background="@color/grey"
         android:layout_width="match_parent"
         android:layout_height="@dimen/yo_mama"
-        android:padding="@dimen/epsilon"
         android:layout_marginVertical="@dimen/tiny"
-        app:layout_constraintTop_toBottomOf="@id/dialog_text"
+        android:background="@color/grey"
+        android:padding="@dimen/epsilon"
+        app:layout_constraintBottom_toTopOf="@id/dialog_button"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/dialog_button"
-        />
+        app:layout_constraintTop_toBottomOf="@id/dialog_reload_events" />
 
     <TextView
         android:id="@+id/dialog_button"
-        android:text="@string/ok"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dialog_event_list"
+        android:layout_margin="@dimen/tiny"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:paddingHorizontal="@dimen/small"
+        android:paddingVertical="@dimen/tiny"
+        android:text="@string/ok"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_large"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_margin="@dimen/tiny"
-        android:paddingHorizontal="@dimen/small"
-        android:textColor="@color/brown_beige_barely_white"
-        android:paddingVertical="@dimen/tiny"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
+        app:layout_constraintTop_toBottomOf="@id/dialog_event_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

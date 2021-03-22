@@ -15,7 +15,8 @@
         android:padding="@dimen/tiny_extra"
         android:src="@drawable/ic_bloc"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/role_name"
+        app:layout_constraintBottom_toBottomOf="@id/role_name"
         app:tint="@color/brown_beige_barely_white" />
 
     <TextView
@@ -30,7 +31,8 @@
         android:textSize="@dimen/text_giant"
         app:layout_constraintLeft_toRightOf="@id/kick_player"
         app:layout_constraintRight_toLeftOf="@id/more_options"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/role_icon"/>
 
     <ImageView
         android:id="@+id/more_options"
@@ -41,7 +43,8 @@
         android:padding="@dimen/tiny_extra"
         android:src="@drawable/ic_more_options"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/role_name"
+        app:layout_constraintBottom_toBottomOf="@id/role_name"
         app:tint="@color/brown_beige_barely_white" />
 
     <ImageView
@@ -101,10 +104,14 @@
         android:layout_height="wrap_content"
         android:maxLines="3"
         android:minLines="3"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="@dimen/text_tiny"
+        android:autoSizeMinTextSize="@dimen/text_tiny_xx"
         android:text="@string/player_name"
         android:textAlignment="center"
+        android:gravity="center"
         android:textColor="@color/brown_beige_barely_white"
-        android:textSize="@dimen/text_small"
+        android:textSize="@dimen/text_tiny"
         app:layout_constraintBottom_toTopOf="@id/status_effects"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -147,7 +154,7 @@
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="@dimen/tiny_extra"
         android:src="@drawable/ic_info"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ability_one_name"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/ability_two"
         app:layout_constraintTop_toBottomOf="@id/narrator_info" />
@@ -155,7 +162,7 @@
     <TextView
         android:id="@+id/ability_one_name"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/use_ability"
         android:textAlignment="textStart"
         android:textColor="@color/brown_beige_barely_white"
@@ -182,7 +189,7 @@
     <TextView
         android:id="@+id/ability_two_name"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/use_ability"
         android:textAlignment="center"
         android:textColor="@color/brown_beige_barely_white"
@@ -209,7 +216,7 @@
     <TextView
         android:id="@+id/ability_three_name"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:text="@string/use_ability"
         android:textAlignment="center"
         android:textColor="@color/brown_beige_barely_white"

@@ -48,12 +48,36 @@ class TargetAdapter(
         fun onClick(ability: Ability, position: Int, dialog: UsePowerDialog, adapter : TargetAdapter)
     }
 
-    class MyViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder (itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val icon : ImageView = itemView.findViewById(R.id.item_icon)
         val player : TextView = itemView.findViewById(R.id.item_player)
         val role : TextView = itemView.findViewById(R.id.item_role)
         val use : ImageView = itemView.findViewById(R.id.item_use)
+
+        fun bind(currentRole: Role){
+            icon.setImageResource(currentRole.icon)
+            player.text = currentRole.player
+            role.text = currentRole.name
+
+            if (adapterPosition !in targets){
+                use.visibility = View.INVISIBLE
+            }
+            else {
+                use.visibility = View.VISIBLE
+                use.setImageResource(Icons.done)
+            }
+
+            itemView.setOnClickListener {
+                handler?.onClick(
+                    dialog.ability,
+                    adapterPosition,
+                    dialog,
+                    this@TargetAdapter
+                )
+            }
+
+        }
 
     }
 
@@ -65,28 +89,7 @@ class TargetAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-        val currentTarget = list[position]
-
-        holder.player.text = currentTarget.player
-        holder.role.text = currentTarget.name
-        holder.icon.setImageResource(currentTarget.icon)
-
-        if (position !in targets){
-            holder.use.visibility = View.INVISIBLE
-        }
-        else {
-            holder.use.visibility = View.VISIBLE
-            holder.use.setImageResource(Icons.done)
-        }
-
-        holder.itemView.setOnClickListener {
-            handler?.onClick(
-                dialog.ability,
-                holder.adapterPosition,
-                dialog,
-                this
-            )
-        }
+        holder.bind(list[position])
 
     }
 
