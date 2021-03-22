@@ -19,6 +19,7 @@ import java.io.Serializable
  * @see Role
  */
 class Ability(
+    var name : Int,
     private var specifications : Specification,
     var times : Int,
     var targets : Int,

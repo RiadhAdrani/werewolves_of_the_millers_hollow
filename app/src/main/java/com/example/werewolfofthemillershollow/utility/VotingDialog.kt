@@ -101,7 +101,7 @@ class VotingDialog(
                         onClick = gameActivity.barberTurnRef!!.getOnCallOnClickHandler(),
                         onTargetClick = gameActivity.barberTurnRef!!.getOnTargetHandler(),
                         cancelable = true,
-                        onDismissed = onDismissed ,
+                        onDismissed = onDismissed,
                         gameActivity = gameActivity
                     )
                     power.show(activity!!.supportFragmentManager, App.TAG_ALERT)

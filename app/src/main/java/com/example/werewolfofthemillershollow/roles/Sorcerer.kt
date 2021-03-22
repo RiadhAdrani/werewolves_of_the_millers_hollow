@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -35,7 +36,7 @@ class Sorcerer(context: Context) : Role() {
             }
         }
 
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererKill)
+        primaryAbility = Ability(R.string.sorcerer_ability_kill, primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererKill)
 
         val secondary = object : Ability.Specification{
             override fun use(self: Role, role: Role, list : ArrayList<Role>): Boolean {
@@ -51,7 +52,13 @@ class Sorcerer(context: Context) : Role() {
                 return targetRole.isKilled && !targetRole.isKilledBySorcerer
             }
         }
-        secondaryAbility = Ability(secondary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.sorcererRevive)
+        secondaryAbility = Ability(
+            R.string.sorcerer_ability_revive,
+            secondary,
+            App.ABILITY_ONCE,
+            App.TARGET_SINGLE,
+            Icons.sorcererRevive
+        )
     }
 
     override fun canPlay(round: Int): Boolean {

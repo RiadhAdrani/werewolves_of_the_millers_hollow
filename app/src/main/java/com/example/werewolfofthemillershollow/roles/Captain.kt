@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -48,7 +49,13 @@ class Captain(context: Context) : Role() {
             }
         }
 
-        primaryAbility = Ability(primary,App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
+        primaryAbility = Ability(
+            R.string.captain_ability_talk,
+            primary,
+            App.ABILITY_INFINITE,
+            App.TARGET_SINGLE,
+            Icons.captainDiscuss
+        )
 
     }
 

@@ -92,6 +92,21 @@ class GameActivity : App() {
     private lateinit var narratorText : TextView
 
     /**
+     * Ability One name
+     */
+    private lateinit var abilityOneLabel : TextView
+
+    /**
+     * Ability Two name
+     */
+    private lateinit var abilityTwoLabel : TextView
+
+    /**
+     * Ability Three name
+     */
+    private lateinit var abilityThreeLabel : TextView
+
+    /**
      * Allow the current player to use his first ability.
      */
     private lateinit var abilityOne : ImageView
@@ -188,6 +203,12 @@ class GameActivity : App() {
 
         narratorText = findViewById(R.id.narrator_info)
 
+        abilityOneLabel = findViewById(R.id.ability_one_name)
+
+        abilityTwoLabel = findViewById(R.id.ability_two_name)
+
+        abilityThreeLabel = findViewById(R.id.ability_three_name)
+
         abilityOne = findViewById(R.id.ability_one)
 
         abilityTwo = findViewById(R.id.ability_two)
@@ -257,11 +278,67 @@ class GameActivity : App() {
     }
 
     /**
+     * Hide primary ability ui.
+     */
+    private fun hidePrimaryAbility(){
+        abilityOne.visibility = View.GONE
+        abilityOneLabel.visibility = View.GONE
+    }
+
+    /**
+     * Hide secondary ability ui.
+     */
+    private fun hideSecondaryAbility(){
+        abilityTwo.visibility = View.GONE
+        abilityTwoLabel.visibility = View.GONE
+    }
+
+    /**
+     * Hide tertiary ability ui.
+     */
+    private fun hideTertiaryAbility(){
+        abilityThree.visibility = View.GONE
+        abilityThreeLabel.visibility = View.GONE
+    }
+
+    /**
      * Update primary ability icon.
      * @param icon new icon
      */
     private fun setPrimaryIcon(icon : Int){
         abilityOne.setImageResource(icon)
+    }
+
+    /**
+     * Update tertiary ability icon
+     * @param icon new icon
+     */
+    private fun setTertiaryIcon(icon: Int){
+        abilityThree.setImageResource(icon)
+    }
+
+    /**
+     * Update primary ability name label
+     */
+    private fun setPrimaryLabel(stringRes : Int){
+        abilityOneLabel.visibility = View.VISIBLE
+        abilityOneLabel.text = getString(stringRes)
+    }
+
+    /**
+     * Update secondary ability name label
+     */
+    private fun setSecondaryLabel(stringRes : Int){
+        abilityTwoLabel.visibility = View.VISIBLE
+        abilityTwoLabel.text = getString(stringRes)
+    }
+
+    /**
+     * Update tertiary ability name label
+     */
+    private fun setTertiaryLabel(stringRes : Int){
+        abilityThreeLabel.visibility = View.VISIBLE
+        abilityThreeLabel.text = getString(stringRes)
     }
 
     /**
@@ -339,25 +416,33 @@ class GameActivity : App() {
 
         currentPlayer.debug()
 
-        try {
-            setName(currentPlayer.getPlayer(list = playerList))
-        }catch (e : Exception){
-            Log.d("DEBUG_ROLE","$e")
-        }finally {
-            currentPlayer.getRole().debug()
-        }
+        setName(currentPlayer.getPlayer(list = playerList))
 
         setIcon(currentPlayer.getIcon())
 
-        if (currentPlayer.getPrimaryAbility() != null)
+        if (currentPlayer.getPrimaryAbility() != null) {
+            setPrimaryLabel(currentPlayer.getPrimaryAbility()!!.name)
             setPrimaryIcon(currentPlayer.getPrimaryAbility()!!.icon)
-        else
-            setPrimaryIcon(Icons.noAbility)
+        }
+        else {
+            hidePrimaryAbility()
+        }
 
-        if (currentPlayer.getSecondaryAbility() != null)
+        if (currentPlayer.getSecondaryAbility() != null) {
             setSecondaryIcon(currentPlayer.getSecondaryAbility()!!.icon)
-        else
-            setSecondaryIcon(Icons.noAbility)
+            setSecondaryLabel(currentPlayer.getSecondaryAbility()!!.name)
+        }
+        else {
+            hideSecondaryAbility()
+        }
+
+        if (currentPlayer.getTertiaryAbility() != null) {
+            setTertiaryIcon(currentPlayer.getTertiaryAbility()!!.icon)
+            setTertiaryLabel(currentPlayer.getTertiaryAbility()!!.name)
+        }
+        else {
+            hideTertiaryAbility()
+        }
 
         setRole(currentPlayer.getRoleToDisplay(context = baseContext, list = playerList))
         setInstructions(currentPlayer.getInstructions(context = baseContext, list = playerList))
@@ -464,11 +549,6 @@ class GameActivity : App() {
             }
 
         }
-
-        if (currentPlayer.getTertiaryAbility() != null)
-            abilityThree.visibility = View.VISIBLE
-        else
-            abilityThree.visibility = View.GONE
 
         abilityThree.setOnClickListener {
 

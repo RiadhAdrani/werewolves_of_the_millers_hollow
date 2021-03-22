@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -38,7 +39,7 @@ class FatherOfWolves(context: Context) :Werewolf(context) {
                 return targetRole.isKilled
             }
         }
-        primaryAbility = Ability(primary,App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.infectInfect)
+        primaryAbility = Ability(R.string.infect_ability, primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.infectInfect)
 
     }
 

@@ -6,6 +6,7 @@
     android:padding="@dimen/epsilon_extra"
     android:layout_margin="@dimen/epsilon_extra"
     android:background="@color/grey_darkest"
+    android:foreground="?android:attr/selectableItemBackground"
     >
 
     <ImageView

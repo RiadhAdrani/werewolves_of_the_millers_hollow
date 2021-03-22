@@ -229,7 +229,8 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 
                 val onClick = object : AlertDialog.OnClick{
                     override fun onClick(alertDialog: AlertDialog) {
-                        dialog!!.dismiss()
+                        dialog!!.onDismissed?.onDismissed()
+                        dialog.dismiss()
                         alertDialog.dismiss()
                     }
                 }
@@ -240,7 +241,7 @@ abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
                     cancelable = false)
                 goodNightDialog.show(activity.supportFragmentManager,App.TAG_ALERT)
 
-                return true
+                return false
 
             }
 

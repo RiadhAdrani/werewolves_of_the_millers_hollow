@@ -39,7 +39,13 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
         }
-        chooseNewCaptain = Ability(ability, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainNew)
+        chooseNewCaptain = Ability(
+            R.string.captain_ability_new,
+            ability,
+            App.ABILITY_INFINITE,
+            App.TARGET_SINGLE,
+            Icons.captainNew
+        )
 
         val talker = object :Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
@@ -56,7 +62,13 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             }
 
         }
-        chooseTalker = Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
+        chooseTalker = Ability(
+            R.string.captain_ability_talk,
+            talker,
+            App.ABILITY_INFINITE,
+            App.TARGET_SINGLE,
+            Icons.captainDiscuss
+        )
 
     }
 
@@ -125,7 +137,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         }
 
-        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
+        return Ability(R.string.captain_ability_talk, talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
     }
 
     fun getWhoDiesInMorningAbility(list : ArrayList<Role>): Ability{
@@ -145,7 +157,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
 
         }
 
-        return Ability(talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.execute)
+        return Ability(R.string.captain_ability_execute, talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.execute)
     }
 
     override fun getPrimaryAbility(): Ability {

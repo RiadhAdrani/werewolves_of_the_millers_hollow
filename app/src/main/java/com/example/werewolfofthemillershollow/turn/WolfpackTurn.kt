@@ -32,7 +32,7 @@ class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>
             }
         }
 
-        primaryAbility = Ability(primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.wolves)
+        primaryAbility = Ability(R.string.wolfpack_ability, primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.wolves)
 
     }
 

@@ -48,7 +48,7 @@ class Seer(context: Context) : Role() {
                 return true
             }
         }
-        primaryAbility = Ability(primary,App.ABILITY_INFINITE,App.TARGET_SINGLE, Icons.seerSee)
+        primaryAbility = Ability(R.string.seer_ability, primary, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.seerSee)
 
     }
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/red_bordeaux"
     android:padding="16dp">
 
@@ -11,187 +10,214 @@
         android:id="@+id/kick_player"
         android:layout_width="@dimen/large_extra"
         android:layout_height="@dimen/large_extra"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/ic_bloc"
         android:contentDescription="@string/kick"
-        android:padding="@dimen/tiny_extra"
         android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_bloc"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/role_name"
-        android:textColor="@color/brown_beige_barely_white"
-        android:text="@string/role"
-        android:textSize="@dimen/text_giant"
-        android:layout_marginHorizontal="8dp"
-        android:singleLine="true"
-        android:textAlignment="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginHorizontal="8dp"
+        android:singleLine="true"
+        android:text="@string/role"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_giant"
         app:layout_constraintLeft_toRightOf="@id/kick_player"
         app:layout_constraintRight_toLeftOf="@id/more_options"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/more_options"
-        app:tint="@color/brown_beige_barely_white"
-        android:contentDescription="@string/more_options"
-        android:src="@drawable/ic_more_options"
         android:layout_width="@dimen/large_extra"
         android:layout_height="@dimen/large_extra"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:padding="@dimen/tiny_extra"
+        android:contentDescription="@string/more_options"
         android:foreground="?android:attr/selectableItemBackground"
-        />
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_more_options"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/brown_beige_barely_white" />
 
     <ImageView
         android:id="@+id/turn_icon"
-        app:tint="@color/brown_beige_barely_white"
-        android:contentDescription="@string/turn"
-        android:src="@drawable/ic_moon"
         android:layout_width="@dimen/large"
         android:layout_height="@dimen/large"
+        android:layout_marginEnd="@dimen/large"
+        android:contentDescription="@string/turn"
+        android:src="@drawable/ic_moon"
+        app:layout_constraintBottom_toBottomOf="@id/role_icon"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/role_icon"
         app:layout_constraintTop_toTopOf="@id/role_icon"
-        app:layout_constraintBottom_toBottomOf="@id/role_icon"
-        android:layout_marginEnd="@dimen/large"
-        />
+        app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/turn_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/small"
         android:text="@string/current_players_number"
         android:textColor="@color/brown_beige_barely_white"
         android:textSize="@dimen/text_medium"
         android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/turn_icon"
-        app:layout_constraintTop_toTopOf="@id/role_icon"
         app:layout_constraintBottom_toBottomOf="@id/role_icon"
-        android:layout_marginStart="@dimen/small"
-        />
+        app:layout_constraintLeft_toRightOf="@id/turn_icon"
+        app:layout_constraintTop_toTopOf="@id/role_icon" />
 
     <ImageView
         android:id="@+id/role_icon"
-        app:layout_constraintTop_toBottomOf="@id/role_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/player_name"
-        android:src="@drawable/ic_info"
         android:layout_width="@dimen/enormous"
         android:layout_height="@dimen/enormous"
         android:contentDescription="@string/role_icon"
-        />
+        android:src="@drawable/ic_info"
+        app:layout_constraintBottom_toTopOf="@id/player_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/role_name" />
 
     <ImageView
         android:id="@+id/skip"
-        android:contentDescription="@string/done"
-        app:tint="@color/brown_beige_barely_white"
-        android:src="@drawable/ic_done"
         android:layout_width="@dimen/giant"
         android:layout_height="@dimen/giant"
-        android:padding="@dimen/tiny_extra"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/role_icon"
-        app:layout_constraintTop_toTopOf="@id/role_icon"
-        app:layout_constraintBottom_toBottomOf="@id/role_icon"
+        android:contentDescription="@string/done"
         android:foreground="?android:attr/selectableItemBackground"
-        />
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_done"
+        app:layout_constraintBottom_toBottomOf="@id/role_icon"
+        app:layout_constraintLeft_toRightOf="@id/role_icon"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/role_icon"
+        app:tint="@color/brown_beige_barely_white" />
 
     <TextView
         android:id="@+id/player_name"
-        android:text="@string/player_name"
-        android:textColor="@color/brown_beige_barely_white"
-        android:textSize="@dimen/text_small"
-        android:textAlignment="center"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="3"
         android:minLines="3"
-        app:layout_constraintTop_toBottomOf="@id/role_icon"
+        android:text="@string/player_name"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toTopOf="@id/status_effects"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/status_effects"
-        />
+        app:layout_constraintTop_toBottomOf="@id/role_icon" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/grey_darkest"
         android:id="@+id/status_effects"
         android:layout_width="0dp"
         android:layout_height="@dimen/enormous"
-        app:layout_constraintTop_toBottomOf="@id/player_name"
+        android:background="@color/grey_darkest"
+        android:paddingHorizontal="@dimen/small"
+        android:paddingVertical="@dimen/tiny_extra"
+        app:layout_constraintBottom_toTopOf="@id/narrator_info"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/narrator_info"
-        android:paddingVertical="@dimen/tiny_extra"
-        android:paddingHorizontal="@dimen/small"
-        />
+        app:layout_constraintTop_toBottomOf="@id/player_name" />
 
     <TextView
         android:id="@+id/narrator_info"
-        android:text="@string/lorem"
-        android:textAlignment="gravity"
-        android:gravity="center"
-        android:background="@color/grey_darkest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textColor="@color/brown_beige_barely_white"
-        android:minLines="5"
+        android:background="@color/grey_darkest"
+        android:gravity="center"
         android:maxLines="5"
-        app:layout_constraintTop_toBottomOf="@id/status_effects"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        android:minLines="5"
+        android:padding="8dp"
+        android:text="@string/lorem"
+        android:textAlignment="gravity"
+        android:textColor="@color/brown_beige_barely_white"
         app:layout_constraintBottom_toTopOf="@id/ability_one"
-        />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/status_effects" />
 
     <ImageView
         android:id="@+id/ability_one"
-        android:contentDescription="@string/use_ability"
-        android:src="@drawable/ic_info"
         android:layout_width="@dimen/giant_extra"
         android:layout_height="@dimen/giant_extra"
-        app:layout_constraintTop_toBottomOf="@id/narrator_info"
+        android:contentDescription="@string/use_ability"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_info"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/ability_two"
+        app:layout_constraintTop_toBottomOf="@id/narrator_info" />
+
+    <TextView
+        android:id="@+id/ability_one_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/use_ability"
+        android:textAlignment="textStart"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:padding="@dimen/tiny_extra"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
+        app:layout_constraintLeft_toLeftOf="@id/ability_one"
+        app:layout_constraintRight_toRightOf="@id/ability_one"
+        app:layout_constraintTop_toBottomOf="@id/ability_one" />
 
     <ImageView
         android:id="@+id/ability_two"
-        android:contentDescription="@string/use_ability"
-        android:src="@drawable/ic_info"
         android:layout_width="@dimen/giant_extra"
         android:layout_height="@dimen/giant_extra"
-        app:layout_constraintTop_toTopOf="@id/ability_one"
+        android:layout_marginStart="@dimen/giant"
+        android:contentDescription="@string/use_ability"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_info"
         app:layout_constraintBottom_toBottomOf="@id/ability_one"
         app:layout_constraintLeft_toRightOf="@id/ability_one"
         app:layout_constraintRight_toRightOf="@id/ability_three"
-        android:layout_marginStart="@dimen/giant"
-        android:padding="@dimen/tiny_extra"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
+        app:layout_constraintTop_toTopOf="@id/ability_one" />
+
+    <TextView
+        android:id="@+id/ability_two_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/use_ability"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/ability_two"
+        app:layout_constraintRight_toRightOf="@id/ability_two"
+        app:layout_constraintTop_toBottomOf="@id/ability_two" />
 
     <ImageView
         android:id="@+id/ability_three"
-        android:contentDescription="@string/use_ability"
-        android:src="@drawable/ic_info"
         android:layout_width="@dimen/giant_extra"
         android:layout_height="@dimen/giant_extra"
-        app:layout_constraintTop_toTopOf="@id/ability_two"
+        android:layout_marginStart="@dimen/giant"
+        android:contentDescription="@string/use_ability"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/tiny_extra"
+        android:src="@drawable/ic_info"
         app:layout_constraintBottom_toBottomOf="@id/ability_two"
         app:layout_constraintLeft_toRightOf="@id/ability_two"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="@dimen/giant"
-        android:padding="@dimen/tiny_extra"
-        android:foreground="?android:attr/selectableItemBackground"
-        />
+        app:layout_constraintTop_toTopOf="@id/ability_two" />
+
+    <TextView
+        android:id="@+id/ability_three_name"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/use_ability"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/ability_three"
+        app:layout_constraintRight_toRightOf="@id/ability_three"
+        app:layout_constraintTop_toBottomOf="@id/ability_one" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

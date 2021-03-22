@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -47,7 +48,7 @@ class Barber(context: Context) : Role() {
 
         }
 
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.hunterKill)
+        primaryAbility = Ability(R.string.barber_ability, primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.hunterKill)
 
     }
 

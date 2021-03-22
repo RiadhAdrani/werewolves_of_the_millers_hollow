@@ -1,6 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
+import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.settings.Icons
 import com.example.werewolfofthemillershollow.utility.Ability
@@ -33,7 +34,7 @@ class Servant(context: Context) : Role() {
                 return targetRole != self
             }
         }
-        primaryAbility = Ability(primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.servantServe)
+        primaryAbility = Ability(R.string.servant_ability, primary, App.ABILITY_ONCE, App.TARGET_SINGLE, Icons.servantServe)
     }
 
     override fun new(context: Context, name: String, role: Role?): Role {
