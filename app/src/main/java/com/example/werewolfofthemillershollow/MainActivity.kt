@@ -47,8 +47,7 @@ class MainActivity : App() {
      * @see NewGameActivity
      */
     private fun startNewGame() {
-        val i = Intent(applicationContext,NewGameActivity::class.java)
-        startActivity(i)
+        startActivity(Intent(applicationContext,NewGameActivity::class.java))
     }
 
     private fun loadSavedGame(){
@@ -60,7 +59,7 @@ class MainActivity : App() {
     }
 
     private fun startDocumentations(){
-        Toast.makeText(applicationContext,"Documentation",Toast.LENGTH_SHORT).show()
+        startActivity(Intent(applicationContext, DocumentationActivity::class.java))
     }
 
     private fun displayMoreInfo(){

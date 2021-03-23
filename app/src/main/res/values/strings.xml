@@ -79,7 +79,7 @@
 
     <string name="guardian_name">Guardian</string>
     <string name="guardian_ability">Protect</string>
-    <string name="guardian_description">Guardian Description</string>
+    <string name="guardian_description">The savior is a villager who has a power of protection: Every night, the leader wakes him up before the wolves and asks him to choose a person who will be protected against the bite of the werewolves, who will not know that this person is protected, and therefore in the early morning the protected person will be alive. The infectious father of wolves cannot infect a person protected by the Savior because he can only infect a person devoured by werewolves first. The Savior has the right to protect himself. He is not allowed to protect the same person two nights in a row, but the same person is allowed multiple times during the game.</string>
     <string name="guardian_instruction">Choose a player to defend this night against the attacks of the wolves. You may guard yourself, but you cannot guard the same player twice in a row.</string>
     <string name="guardian_effect">Guardian Shield</string>
     <string name="guardian_effect_description">This player is being Shielded by the Guardian of the village. This shield is only effective against the attack of the wolves. In fact, it is useless against other players attack.</string>
@@ -87,12 +87,12 @@
     <string name="wolf_name">Werewolf</string>
     <string name="wolfpack_ability">Kill</string>
     <string name="wolfpack">Wolfpack</string>
-    <string name="wolf_description">Werewolf Description</string>
+    <string name="wolf_description">This is the basic werewolf of the game. Every night the simple werewolves are awakened by the ringleader so that they agree to choose the villager they will devour. The simple werewolf cannot devour one of his fellows during the night, but may well vote against him in the vote of the day. A werewolf in love cannot vote against his lover if he is a villager. If the werewolves do not unanimously agree on which villager to devour, the feast is canceled by the leader. His goal is to devour all the villagers to win the game. He must absolutely pretend to be a villager during the day phase so as not to be unmasked and then executed by the village during the day phase.</string>
     <string name="wolf_instruction">Assemble wolf pack, who will be the victim tonight?</string>
 
     <string name="infect_name">Infect The Father</string>
     <string name="infect_ability">Infect</string>
-    <string name="infect_description">Infect The Father Description</string>
+    <string name="infect_description">He is part of the werewolf family. When the leader awakens the werewolves, he chooses which villager to devour with them. Once the victim is chosen, the ringleader wakes up the evil father of wolves and asks him if he wants to "infect" the victim or not. If the evil father of wolves wishes to infect the victim, the latter does not die devoured but the infection transforms them into a werewolf immediately! If the infected player is a character with powers, his powers remain unchanged, except that from now on he will use them for the benefit of werewolves. The Foul Father of Wolves can only use his infect power once in the game, he can use it on any night he chooses, if at all. If the wicked father of wolves dies before he has used his infectious power, the infectious power is lost.</string>
     <string name="infect_instruction_nobody">Would you like to infect the targeted player?</string>
     <string name="infect_action_success">The target was successfully infected! Make the wolves know each other.</string>
     <string name="infect_action_fail">The target was not infected! Wake up wolves and know each other.</string>
@@ -105,24 +105,24 @@
     <string name="sorcerer_name">Sorcerer</string>
     <string name="sorcerer_ability_kill">Kill</string>
     <string name="sorcerer_ability_revive">Revive</string>
-    <string name="sorcerer_description">Sorcerer Description</string>
+    <string name="sorcerer_description">The witch is part of the villagers camp. She is awakened by the ringleader every night after the werewolves. The ringleader then shows him the victim of the werewolves. The witch has two potions: the "LIFE" potion which can allow her to resurrect the victim of the werewolves, and a "DEATH" potion which allows her to eliminate a player. She can use each potion only once throughout the game. She may well not use her potions overnight. She can very well use only one potion overnight, or use both the same night if she wishes. The witch is allowed to use her “LIFE” potion on herself even if the werewolves had decided to devour her during their nighttime feast.</string>
     <string name="sorcerer_instruction_heal">Would you like to use your healing potion to revive this player?</string>
     <string name="sorcerer_instruction_kill">Would you like to use your poisonous potion to kill a player?</string>
 
     <string name="seer_name">Seer</string>
     <string name="seer_ability">See</string>
     <string name="seer_description">Seer Description</string>
-    <string name="seer_instruction">Choose a player to see his true nature. The seen role will be announced in the morning.</string>
+    <string name="seer_instruction">The Seer/clairvoyant is a character who belongs to the villagers camp with a very interesting power: Every night, when the leader wakes her up, she has the ability to clearly see the role of the player of her choice. His goal is to pass his valuable information on to the village in order to eliminate the werewolves. Beware of her though, as she poses a great threat to werewolves, if spotted she would become one of the wolves, priority targets for their night time feast. It is up to her to be clever and careful in transmitting her information.</string>
 
     <string name="knight_name">Knight</string>
     <string name="knight_ability">Kill</string>
-    <string name="knight_description">Knight Description</string>
+    <string name="knight_description">He belongs to the villagers camp. His sword is a great danger to werewolves: Indeed and once in the game, if the knight is targeted during the night feast by the werewolves or anyone else, he can choose someone to die instead.</string>
     <string name="knight_instruction_peace">No one tried to attack you this night.</string>
     <string name="knight_instruction_targeted">You have been targeted! Choose a player as a shield to die instead of you!</string>
 
     <string name="barber_name">Barber</string>
     <string name="barber_ability">Hunt</string>
-    <string name="barber_description">Barber Description</string>
+    <string name="barber_description">The hunter is a villager who aims to eliminate all werewolves in the village to win the game. He has the same functions as a simple villager as long as he remains alive. On the other hand, if he does die, in any way, the hunter must imperatively designate another player whom he will eliminate by shooting at him with the last round of his rifle.</string>
     <string name="barber_instruction">Barber, give me a sign. With it, I can interrupt the discussion in the morning so you can choose a player to kill. If the targeted player is a wolf, you live, otherwise you die with him!</string>
     <string name="barber_instruction_killed">You have been killed by someone, choose another player to die with you.</string>
 
@@ -142,7 +142,7 @@
     <string name="captain_touch">The one that I will touch will be the new captain.</string>
 
     <string name="villager_name">Simple Villager</string>
-    <string name="villager_description">Simple Villager Description</string>
+    <string name="villager_description">The simple villager is a character who seeks to defend the interests of his clan, the village, by unmasking and then eliminating all the werewolves who are hiding among the group. He only has the right to debate and vote during the daytime phase to express himself. He does not wake up during the night phases, unless he is infected with the infamous father of wolves (and of course in that case, he will switch sides and join that of the werewolves).</string>
 
     <string name="today_event">What happened last night ?</string>
     <string name="servant_event">Servant transformed into</string>

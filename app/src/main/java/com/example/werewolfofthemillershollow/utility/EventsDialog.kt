@@ -32,9 +32,7 @@ class EventsDialog(
     private lateinit var dialog : View
 
     interface OnClick{
-
         fun onClick(): Boolean
-
     }
 
     @SuppressLint("InflateParams")
