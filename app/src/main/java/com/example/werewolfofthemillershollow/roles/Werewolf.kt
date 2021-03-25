@@ -1,7 +1,7 @@
 package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
-import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.util.App
 
 /**
  * Werewolf : Sided with the wolf pack.

@@ -3,10 +3,11 @@ package com.example.werewolfofthemillershollow.turn
 import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.*
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 abstract class Turn<R : Role >(private var gameActivity: GameActivity) {
 

@@ -4,10 +4,14 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Sorcerer
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>(activity) {
 

@@ -1,9 +1,8 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.graphics.Color
-import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.OnAction
+import com.example.werewolfofthemillershollow.adapters.VotingAdapter
 
 class VotingDialog(
     private var gameActivity:GameActivity,
@@ -73,7 +74,7 @@ class VotingDialog(
 
                 barber.setOnClickListener {
 
-                    val done = object : OnAction.OnDone{
+                    val done = object : OnAction.OnDone {
                         override fun onDone(onAction: OnAction) {
 
                             if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE ||

@@ -6,9 +6,12 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Knight
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activity) {
 

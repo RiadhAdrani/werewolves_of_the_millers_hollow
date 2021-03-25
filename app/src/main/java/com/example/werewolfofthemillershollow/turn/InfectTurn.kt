@@ -4,10 +4,14 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.FatherOfWolves
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class InfectTurn(role : FatherOfWolves, var activity: GameActivity) : Turn<FatherOfWolves>(activity) {
 

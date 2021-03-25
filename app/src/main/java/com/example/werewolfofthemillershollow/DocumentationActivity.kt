@@ -1,9 +1,8 @@
 package com.example.werewolfofthemillershollow
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.example.werewolfofthemillershollow.fragments.DocsMainFragment
-import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.util.App
 
 class DocumentationActivity : App()  {
 

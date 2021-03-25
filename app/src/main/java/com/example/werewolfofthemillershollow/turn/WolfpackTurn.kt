@@ -6,10 +6,10 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Werewolf
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.Ability
-import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.Event
 
 class WolfpackTurn(role : Werewolf, var activity: GameActivity) : Turn<Werewolf>(activity) {
 

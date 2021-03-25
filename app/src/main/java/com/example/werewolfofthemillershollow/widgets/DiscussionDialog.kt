@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -13,7 +13,8 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Villager
-import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.OnAction
 
 /**
  * Display a discussion dialog.
@@ -61,7 +62,7 @@ class DiscussionDialog(
                 App.blink(barber, Color.YELLOW, 1500L)
                 barber.setOnClickListener {
 
-                    val done = object : OnAction.OnDone{
+                    val done = object : OnAction.OnDone {
                         override fun onDone(onAction: OnAction) {
                             if (gameActivity.barberTurnRef!!.getRole().primaryAbility!!.times == App.ABILITY_NONE ||
                                 !gameActivity.barberTurnRef!!.getRole().givenSign ||

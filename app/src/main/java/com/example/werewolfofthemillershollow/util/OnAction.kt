@@ -1,10 +1,13 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.util
 
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.VotingAdapter
 import com.example.werewolfofthemillershollow.roles.*
-import com.example.werewolfofthemillershollow.settings.App
 import com.example.werewolfofthemillershollow.turn.Turn
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.EventsDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 /**
  * Class that handle actions after a role has used his power in the morning discussion.
@@ -19,7 +22,8 @@ import com.example.werewolfofthemillershollow.turn.Turn
 class OnAction(
     private var activity: GameActivity,
     private var adapter: VotingAdapter? = null,
-    private var onDone: OnDone) {
+    private var onDone: OnDone
+) {
 
     interface OnDone{
         fun onDone(onAction: OnAction)

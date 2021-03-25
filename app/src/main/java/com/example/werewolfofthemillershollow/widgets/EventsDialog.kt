@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.MainActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.EventAdapter
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.Event
 
 /**
  * Display Events that happened during the last night (round).

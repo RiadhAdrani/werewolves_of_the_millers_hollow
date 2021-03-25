@@ -6,7 +6,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Servant
-import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.util.Event
 
 
 class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(activity) {

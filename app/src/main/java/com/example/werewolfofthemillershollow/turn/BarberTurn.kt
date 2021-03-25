@@ -4,10 +4,15 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.Barber
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.util.OnAction
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class BarberTurn(role : Barber, private var activity: GameActivity) : Turn<Barber>(activity) {
 

@@ -4,12 +4,13 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.Captain
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Villager
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.*
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity) {
 
@@ -20,7 +21,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
     init {
         setRole(role)
 
-        val ability = object :Ability.Specification{
+        val ability = object : Ability.Specification{
 
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 self.isCaptain = false
@@ -47,7 +48,7 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
             Icons.captainNew
         )
 
-        val talker = object :Ability.Specification{
+        val talker = object : Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.isTalking = true
                 return true
@@ -120,8 +121,8 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         }
     }
 
-    fun getWhoTalksInMorningAbility(list : ArrayList<Role>): Ability{
-        val talker = object :Ability.Specification{
+    fun getWhoTalksInMorningAbility(list : ArrayList<Role>): Ability {
+        val talker = object : Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.isTalking = true
                 return true
@@ -140,8 +141,8 @@ class CaptainTurn(role : Role, var activity: GameActivity) : Turn<Role>(activity
         return Ability(R.string.captain_ability_talk, talker, App.ABILITY_INFINITE, App.TARGET_SINGLE, Icons.captainDiscuss)
     }
 
-    fun getWhoDiesInMorningAbility(list : ArrayList<Role>): Ability{
-        val talker = object :Ability.Specification{
+    fun getWhoDiesInMorningAbility(list : ArrayList<Role>): Ability {
+        val talker = object : Ability.Specification{
             override fun use(self: Role, role: Role, list: ArrayList<Role>): Boolean {
                 role.kill(list)
                 return true

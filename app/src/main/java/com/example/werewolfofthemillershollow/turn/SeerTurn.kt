@@ -6,7 +6,7 @@ import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.roles.Seer
-import com.example.werewolfofthemillershollow.utility.Event
+import com.example.werewolfofthemillershollow.util.Event
 
 class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
 

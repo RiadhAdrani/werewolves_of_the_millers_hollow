@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.util.Event
 
 class EventAdapter(var context: Context, var list : ArrayList<Event>): RecyclerView.Adapter<EventAdapter.MyViewHolder>() {
 

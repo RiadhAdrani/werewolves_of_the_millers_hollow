@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import com.example.werewolfofthemillershollow.settings.App
+import com.example.werewolfofthemillershollow.util.App
 
 class MainActivity : App() {
 

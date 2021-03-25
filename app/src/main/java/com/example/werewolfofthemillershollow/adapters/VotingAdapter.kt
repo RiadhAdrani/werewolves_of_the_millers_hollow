@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.adapters
 
 import android.view.LayoutInflater
 import android.view.View

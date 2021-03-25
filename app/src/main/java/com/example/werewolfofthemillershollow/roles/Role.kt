@@ -4,11 +4,11 @@ import android.content.Context
 import android.util.Log
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.Ability
-import com.example.werewolfofthemillershollow.utility.Event
-import com.example.werewolfofthemillershollow.utility.StatusEffect
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.util.StatusEffect
 import java.io.Serializable
 
 /**

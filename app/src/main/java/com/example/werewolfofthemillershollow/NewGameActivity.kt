@@ -9,11 +9,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.AlertDialog
-import com.example.werewolfofthemillershollow.utility.RoleAdapter
-import com.example.werewolfofthemillershollow.utility.RolesRollerDialog
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.widgets.AlertDialog
+import com.example.werewolfofthemillershollow.adapters.RoleAdapter
+import com.example.werewolfofthemillershollow.widgets.RolesRollerDialog
 
 /**
  * Activity allowing the user to customize his game,

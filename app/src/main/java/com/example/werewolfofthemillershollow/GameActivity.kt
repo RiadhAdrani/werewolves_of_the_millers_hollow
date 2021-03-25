@@ -8,11 +8,15 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.werewolfofthemillershollow.adapters.StatusEffectAdapter
 import com.example.werewolfofthemillershollow.roles.*
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
 import com.example.werewolfofthemillershollow.turn.*
-import com.example.werewolfofthemillershollow.utility.*
+import com.example.werewolfofthemillershollow.util.Event
+import com.example.werewolfofthemillershollow.util.OnAction
+import com.example.werewolfofthemillershollow.util.*
+import com.example.werewolfofthemillershollow.widgets.*
 
 /**
  * Manage how game is played and progressed.
@@ -966,7 +970,7 @@ class GameActivity : App() {
 
         phase = Phase.DISCUSSION
 
-        val next = object :DiscussionDialog.OnNext{
+        val next = object : DiscussionDialog.OnNext{
             override fun onNext(): Boolean {
 
                 lessThanHalfExecutionVote(list)

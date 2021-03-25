@@ -1,9 +1,8 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.util
 
 import android.content.Context
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Contains an event that happened during the game.
@@ -35,7 +34,7 @@ class Event(
          * @return event object.
          * @see Event
          */
-        fun died(context: Context, deadPlayer : Role): Event{
+        fun died(context: Context, deadPlayer : Role): Event {
             val msg = " ${deadPlayer.player} (${deadPlayer.name}) " + context.getString(R.string.dead_event)
             return Event(icon = Icons.execute, message = msg, importance = 100)
         }
@@ -47,7 +46,7 @@ class Event(
          * @return event object.
          * @see Event
          */
-        fun servant(context: Context, targetRole : Role): Event{
+        fun servant(context: Context, targetRole : Role): Event {
             val msg = context.getString(R.string.servant_event) + " ${targetRole.name}."
             return Event(icon = Icons.servantServe, message = msg, importance = 75)
         }
@@ -60,7 +59,7 @@ class Event(
          * @return event object.
          * @see Event
          */
-        fun seen(context: Context, role : String): Event{
+        fun seen(context: Context, role : String): Event {
             val msg = context.getString(R.string.seen_event) + " " + role + "."
             return Event(icon = Icons.seerSee, message = msg, importance = 50)
         }
@@ -72,7 +71,7 @@ class Event(
          * @return event object.
          * @see Event
          */
-        fun talkFirst(context: Context, player : String): Event{
+        fun talkFirst(context: Context, player : String): Event {
             val msg = player + " " + context.getString(R.string.talk_first_event)
             return Event(icon = Icons.captainDiscuss, message = msg, importance = 25)
         }

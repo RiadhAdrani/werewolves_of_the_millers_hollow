@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.settings
+package com.example.werewolfofthemillershollow.util
 
 import android.content.Context
 import android.graphics.drawable.Drawable

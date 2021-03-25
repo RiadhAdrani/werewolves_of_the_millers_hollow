@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.settings
+package com.example.werewolfofthemillershollow.util
 
 import android.animation.ArgbEvaluator
 import android.animation.ObjectAnimator

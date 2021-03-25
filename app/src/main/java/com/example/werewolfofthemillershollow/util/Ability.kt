@@ -1,9 +1,7 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.util
 
 import android.util.Log
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
 import java.io.Serializable
 
 /**

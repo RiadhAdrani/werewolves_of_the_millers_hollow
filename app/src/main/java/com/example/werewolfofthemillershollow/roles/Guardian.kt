@@ -2,9 +2,9 @@ package com.example.werewolfofthemillershollow.roles
 
 import android.content.Context
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
-import com.example.werewolfofthemillershollow.utility.Ability
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.Ability
 
 /**
  * Guardian : Sided with the village,

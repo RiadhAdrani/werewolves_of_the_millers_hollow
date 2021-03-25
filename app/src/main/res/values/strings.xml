@@ -4,6 +4,7 @@
     <string name="of_the_millers_hollow">of The Millers Hollow</string>
 
     <string name="info">More Info</string>
+    <string name="icon">Icon</string>
     <string name="settings">Settings</string>
     <string name="new_game">New Game</string>
     <string name="load_game">Load Game</string>
@@ -69,6 +70,17 @@
 
     <string name="no_power">No remaining power for this player !</string>
     <string name="cant_use_power">Cannot use this ability for now !</string>
+
+    <string name="section_about_the_game">About the game</string>
+    <string name="section_about_the_game_desc">Contains general information about the game and its origins.</string>
+    <string name="section_how_to_play">How to play with friends</string>
+    <string name="section_how_to_play_desc">Contains important information about game setup and main rules and guidelines to follow.</string>
+    <string name="section_characters">Game Characters (Roles)</string>
+    <string name="section_characters_desc">Contains detailed description for each playable character in the original game.</string>
+    <string name="section_advices_narrator">Advices for the narrator</string>
+    <string name="section_advices_narrator_desc">Contains valuable advices for the narrator to make games more pleasant.</string>
+    <string name="section_advices_players">Advices for the players</string>
+    <string name="section_advices_players_desc">Contains valuable advices that can help players improve their tactics and win more games.</string>
 
     <string name="servant_name">Servant</string>
     <string name="servant_description">Servant Description</string>

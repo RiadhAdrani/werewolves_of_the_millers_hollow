@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.GameActivity
 import com.example.werewolfofthemillershollow.R
+import com.example.werewolfofthemillershollow.adapters.TargetAdapter
 import com.example.werewolfofthemillershollow.roles.Role
 import com.example.werewolfofthemillershollow.turn.Turn
+import com.example.werewolfofthemillershollow.util.Ability
 
 /**
  * Fragment dialog allowing the current player to target the a chosen player with his ability.

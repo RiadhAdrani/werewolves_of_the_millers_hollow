@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.adapters
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.Icons
+import com.example.werewolfofthemillershollow.util.Ability
+import com.example.werewolfofthemillershollow.widgets.UsePowerDialog
 
 class TargetAdapter(
     private var list : ArrayList<Role>,

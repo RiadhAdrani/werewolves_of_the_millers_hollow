@@ -1,8 +1,7 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.util
 import android.content.Context
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.*
-import com.example.werewolfofthemillershollow.settings.Icons
 
 /**
  * Describe a status effect object.
@@ -53,7 +52,7 @@ class StatusEffect(
          * @see Servant
          * @see StatusEffect
          */
-        fun servant(): StatusEffect{
+        fun servant(): StatusEffect {
             return StatusEffect(
                 icon = Icons.servant,
                 name = R.string.servant_effect,
@@ -66,7 +65,7 @@ class StatusEffect(
          * @see Guardian
          * @see StatusEffect
          */
-        fun shield(): StatusEffect{
+        fun shield(): StatusEffect {
             return StatusEffect(
                 icon = Icons.guardianProtect,
                 name = R.string.guardian_effect,
@@ -79,7 +78,7 @@ class StatusEffect(
          * @see FatherOfWolves
          * @see StatusEffect
          */
-        fun infection(): StatusEffect{
+        fun infection(): StatusEffect {
             return StatusEffect(
                 icon = Icons.infectInfect,
                 name = R.string.infection_effect,
@@ -92,7 +91,7 @@ class StatusEffect(
          * @see Captain
          * @see StatusEffect
          */
-        fun captain(): StatusEffect{
+        fun captain(): StatusEffect {
             return StatusEffect(
                 icon = Icons.captain,
                 name = R.string.captain_effect,

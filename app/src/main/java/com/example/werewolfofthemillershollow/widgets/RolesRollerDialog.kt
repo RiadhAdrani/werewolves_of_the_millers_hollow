@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.werewolfofthemillershollow.R
 import com.example.werewolfofthemillershollow.roles.Role
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.Icons
 
 /**
  * Allow the distribution of roles to players

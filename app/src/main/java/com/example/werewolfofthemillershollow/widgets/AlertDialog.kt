@@ -1,4 +1,4 @@
-package com.example.werewolfofthemillershollow.utility
+package com.example.werewolfofthemillershollow.widgets
 
 import android.annotation.SuppressLint
 import android.app.Dialog
@@ -9,8 +9,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.werewolfofthemillershollow.R
-import com.example.werewolfofthemillershollow.settings.App
-import com.example.werewolfofthemillershollow.settings.Icons
+import com.example.werewolfofthemillershollow.util.App
+import com.example.werewolfofthemillershollow.util.Icons
 
 /**
  * Display an alert dialog to the user notifying him of a problem or displaying some information.
@@ -44,7 +44,7 @@ class AlertDialog(private var icon : Int = R.drawable.ic_ww_wolf,
 
     interface OnClick{
 
-        fun onClick(alertDialog :AlertDialog)
+        fun onClick(alertDialog : AlertDialog)
 
     }
 
@@ -53,7 +53,7 @@ class AlertDialog(private var icon : Int = R.drawable.ic_ww_wolf,
         /**
          * Default value of the left button : Dismiss the alert dialog fragment.
          */
-        val okButton = object : OnClick{
+        val okButton = object : OnClick {
 
             override fun onClick(alertDialog: AlertDialog) {
                 alertDialog.dismiss()
