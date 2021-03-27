@@ -34,7 +34,7 @@ class DocCharactersAdapter(val list : ArrayList<Role>, val onClick : OnCharacter
         parent: ViewGroup,
         viewType: Int
     ): DocCharactersAdapter.CharacterHolder {
-        return CharacterHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_role_docs,parent,false))
+        return CharacterHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_docs_role,parent,false))
     }
 
     override fun onBindViewHolder(holder: DocCharactersAdapter.CharacterHolder, position: Int) {

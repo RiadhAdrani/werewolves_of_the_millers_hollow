@@ -57,6 +57,7 @@ class DocsMainFragment : BaseFragment(R.layout.fragment_docs_main) {
         )
 
         val rv: RecyclerView = view.findViewById(R.id.fragment_docs_main_recycler_view)
+        rv.setHasFixedSize(true)
         rv.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         rv.adapter = DocSectionsAdapter(

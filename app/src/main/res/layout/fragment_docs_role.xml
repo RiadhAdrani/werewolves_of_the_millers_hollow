@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey_darkest"
+    >
+
+    <ImageView
+        android:id="@+id/fragment_icon"
+        android:layout_width="@dimen/giant_extra_extra"
+        android:layout_height="@dimen/giant_extra_extra"
+        android:src="@drawable/ic_ww_villager"
+        android:background="@color/grey_lightest"
+        android:padding="@dimen/epsilon"
+        android:layout_margin="@dimen/tiny_extra"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragment_title"
+        android:contentDescription="@string/werewolves" />
+
+    <TextView
+        android:id="@+id/fragment_title"
+        android:layout_marginTop="@dimen/tiny_extra"
+        android:layout_marginHorizontal="@dimen/tiny_extra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/role"
+        android:textSize="@dimen/text_larger"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:layout_marginBottom="@dimen/text_tiny"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_icon"
+        app:layout_constraintRight_toRightOf="@id/fragment_icon"
+        app:layout_constraintTop_toBottomOf="@id/fragment_icon" />
+
+    <TextView
+        android:id="@+id/fragment_description"
+        android:layout_marginTop="@dimen/tiny_extra"
+        android:layout_marginHorizontal="@dimen/tiny_extra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/lorem"
+        android:textSize="@dimen/text_tiny"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textStyle="italic"
+        android:textAlignment="center"
+        android:layout_marginBottom="@dimen/text_tiny"
+        app:layout_constraintLeft_toLeftOf="@id/fragment_icon"
+        app:layout_constraintRight_toRightOf="@id/fragment_icon"
+        app:layout_constraintTop_toBottomOf="@id/fragment_title" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -14,13 +14,16 @@ class DocsCharactersFragment: BaseFragment(R.layout.fragment_docs_characters) {
 
     override fun onCreated(view: View, savedInstanceState: Bundle?) {
 
+        val list = Role.getRoles(requireContext())
+
         val rv : RecyclerView = view.findViewById(R.id.fragment_recycler_view)
         rv.layoutManager = LinearLayoutManager(requireContext())
+        rv.setHasFixedSize(true)
         rv.adapter = DocCharactersAdapter(
-            Role.getRoles(requireContext()),
+            list,
             object: DocCharactersAdapter.OnCharacterClick{
             override fun onClick(position: Int) {
-                TODO("Not yet implemented")
+                pushFragment(DocsRoleFragment(list[position]))
             }
         })
 

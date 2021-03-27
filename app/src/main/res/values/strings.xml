@@ -83,7 +83,7 @@
     <string name="section_advices_players_desc">Contains valuable advices that can help players improve their tactics and win more games.</string>
 
     <string name="servant_name">Servant</string>
-    <string name="servant_description">Servant Description</string>
+    <string name="servant_description">The Servant is a very particular role in the game. In the first night, she choose a player to take his power upon his death. She can use the ability of the dead player even if they were exhausted, they basically refresh for her (Except for the father of wolves if he has used his ability). And with that, this role can lead the player to side with any team and should be played with extreme intellect. Note that the servant does not inherit the status effect of the dead player.</string>
     <string name="servant_ability">Serve</string>
     <string name="servant_instructions">Choose a player, and upon his death you will take his power.</string>
     <string name="servant_effect">Servant Effect</string>
@@ -123,8 +123,8 @@
 
     <string name="seer_name">Seer</string>
     <string name="seer_ability">See</string>
-    <string name="seer_description">Seer Description</string>
-    <string name="seer_instruction">The Seer/clairvoyant is a character who belongs to the villagers camp with a very interesting power: Every night, when the leader wakes her up, she has the ability to clearly see the role of the player of her choice. His goal is to pass his valuable information on to the village in order to eliminate the werewolves. Beware of her though, as she poses a great threat to werewolves, if spotted she would become one of the wolves, priority targets for their night time feast. It is up to her to be clever and careful in transmitting her information.</string>
+    <string name="seer_instruction">Choose a player to see his true nature. The seen role will be announced in the morning.</string>
+    <string name="seer_description">The Seer/clairvoyant is a character who belongs to the villagers camp with a very interesting power: Every night, when the leader wakes her up, she has the ability to clearly see the role of the player of her choice. His goal is to pass his valuable information on to the village in order to eliminate the werewolves. Beware of her though, as she poses a great threat to werewolves, if spotted she would become one of the wolves, priority targets for their night time feast. It is up to her to be clever and careful in transmitting her information.</string>
 
     <string name="knight_name">Knight</string>
     <string name="knight_ability">Kill</string>
@@ -142,7 +142,7 @@
     <string name="captain_ability_talk">Choose</string>
     <string name="captain_ability_new">New captain</string>
     <string name="captain_ability_execute">Execute</string>
-    <string name="captain_description">Villager Description</string>
+    <string name="captain_description">The captain is a villager trying himself to eliminate the imposters. His role is to organize discussions and make vital decisions that could make the game go either ways. He has the last say about the execution (one or multiple players) in case of an indecisive voting. He is also the one choosing which player to start talking in the case of indecisive accusation. The village cannot be managed without a leader, So if the captain dies, he should choose a new captain from the remaining players. </string>
     <string name="captain_instruction">Choose a player that will open up the discussion in the morning!</string>
     <string name="captain_instruction_inherit">You have been killed, choose another player to become the new captain!</string>
     <string name="captain_instruction_equal">Choose one of the convicted players to start talking first.</string>
