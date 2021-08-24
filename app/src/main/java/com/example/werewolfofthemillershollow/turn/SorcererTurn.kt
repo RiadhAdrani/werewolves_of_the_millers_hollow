@@ -60,7 +60,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return !getRole().isIntimidated
+        return false
     }
 
     override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
