@@ -10,25 +10,22 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.werewolfofthemillershollow.adapters.StatusEffectAdapter
 import com.example.werewolfofthemillershollow.roles.*
-import com.example.werewolfofthemillershollow.util.App
-import com.example.werewolfofthemillershollow.util.Icons
 import com.example.werewolfofthemillershollow.turn.*
-import com.example.werewolfofthemillershollow.util.Event
-import com.example.werewolfofthemillershollow.util.OnAction
 import com.example.werewolfofthemillershollow.util.*
 import com.example.werewolfofthemillershollow.widgets.*
+import java.io.Serializable
 
 /**
  * Manage how game is played and progressed.
  * @see NewGameActivity
  */
-class GameActivity : App() {
+class GameActivity : App(), Serializable {
 
     enum class Phase {
         NIGHT, POST_NIGHT, DISCUSSION, VOTING, EXECUTION
     }
 
-    lateinit var phase : Phase
+    lateinit var phase: Phase
 
     /**
      * Current player turn index
@@ -362,15 +359,18 @@ class GameActivity : App() {
 
         val output = ArrayList<Turn<*>>()
 
-        val servant = ServantTurn(Servant(baseContext),this)
+        val red = RedTurn(RedWolf(baseContext), this)
+        red.addTurn(output = output, list = list, baseContext)
+
+        val servant = ServantTurn(Servant(baseContext), this)
         if (servant.addTurn(output = output, list = list, baseContext)) {
-            for (role : Role in playerList){
-                if (role.name == getString(R.string.servant_name)){
+            for (role: Role in playerList) {
+                if (role.name == getString(R.string.servant_name)) {
                     servantRef = role as Servant
                     break
                 }
             }
-            Log.d("Role","servantRef = ${this.servantRef!!.name} : ${this.servantRef!!.player}")
+            Log.d("Role", "servantRef = ${this.servantRef!!.name} : ${this.servantRef!!.player}")
         }
 
         val guardian = GuardianTurn(Guardian(baseContext),this)
@@ -495,6 +495,11 @@ class GameActivity : App() {
                 return@setOnClickListener
             }
 
+            if (currentPlayer.getRole().isIntimidated){
+                Toast.makeText(baseContext,R.string.intimidated_player,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if (!currentPlayer.getPrimaryAbility()!!.isUsable()){
                 Log.d("Ability","Primary is not usable")
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
@@ -530,6 +535,11 @@ class GameActivity : App() {
             if (currentPlayer.getSecondaryAbility() == null)
                 return@setOnClickListener
 
+            if (currentPlayer.getRole().isIntimidated){
+                Toast.makeText(baseContext,R.string.intimidated_player,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             if (!currentPlayer.getSecondaryAbility()!!.isUsable()){
                 Toast.makeText(baseContext,R.string.cant_use_power,Toast.LENGTH_LONG).show()
                 return@setOnClickListener
@@ -555,6 +565,11 @@ class GameActivity : App() {
         }
 
         abilityThree.setOnClickListener {
+
+            if (currentPlayer.getRole().isIntimidated){
+                Toast.makeText(baseContext,R.string.intimidated_player,Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             if (currentPlayer.getTertiaryAbility() == null)
                 return@setOnClickListener

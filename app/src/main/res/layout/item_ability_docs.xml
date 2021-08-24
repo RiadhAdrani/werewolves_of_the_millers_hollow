@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/medium"
+    android:background="@color/red_bordeaux"
+    android:elevation="8dp"
+    android:orientation="vertical"
+    android:padding="@dimen/tiny">
+
+    <TextView
+        android:id="@+id/ability_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/tiny_extra"
+        android:text="@string/use_ability"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_small"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ability_icon"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/giant"
+        android:layout_marginVertical="@dimen/tiny_extra"
+        android:contentDescription="@string/use_ability"
+        android:src="@drawable/ic_ww_wolf" />
+
+    <TextView
+        android:id="@+id/ability_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/tiny_extra"
+        android:layout_marginBottom="@dimen/text_tiny"
+        android:text="@string/lorem"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_tiny"
+        android:textStyle="italic" />
+
+
+</LinearLayout>

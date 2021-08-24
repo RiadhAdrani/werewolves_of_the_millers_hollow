@@ -42,7 +42,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
     }
 
     override fun canPlay(round: Int, list: ArrayList<Role>?): Boolean {
-        return getRole().canPlay(round)
+        return true
     }
 
     override fun addTurn(output: ArrayList<Turn<*>>, list: ArrayList<Role>, context: Context): Boolean {
@@ -60,7 +60,7 @@ class SorcererTurn(role : Sorcerer, var activity: GameActivity) : Turn<Sorcerer>
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return false
+        return !getRole().isIntimidated
     }
 
     override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {

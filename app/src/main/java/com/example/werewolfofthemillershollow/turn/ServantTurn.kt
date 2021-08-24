@@ -39,7 +39,7 @@ class ServantTurn(role: Servant, var activity: GameActivity) : Turn<Servant>(act
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return true
+        return !getRole().isIntimidated
     }
 
     override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {

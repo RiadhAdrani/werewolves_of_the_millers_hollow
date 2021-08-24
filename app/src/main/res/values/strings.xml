@@ -156,6 +156,13 @@
     <string name="villager_name">Simple Villager</string>
     <string name="villager_description">The simple villager is a character who seeks to defend the interests of his clan, the village, by unmasking and then eliminating all the werewolves who are hiding among the group. He only has the right to debate and vote during the daytime phase to express himself. He does not wake up during the night phases, unless he is infected with the infamous father of wolves (and of course in that case, he will switch sides and join that of the werewolves).</string>
 
+    <string name="red_name">Red Werewolf</string>
+    <string name="red_description">The red werewolf is part of the werewolf camp. He is individually awakened by the leader at the start of the night phase and he intimidates a villager: the intimidated villager will not be able to use his powers during the night phase in question. Once intimidated, he wakes up with his fellows for the nighttime feast and devours with them. The Red Werewolf cannot intimidate the same person two nights in a row.</string>
+    <string name="red_ability">Intimidate</string>
+    <string name="red_instruction">Choose a player to intimidate this night. The chosen one will not be able to use his power and you can\'t intimidate the same player twice in a row.</string>
+    <string name="red_effect">Intimidated</string>
+    <string name="red_effect_description">This player is intimidated and as a result it can\'t use its power</string>
+
     <string name="today_event">What happened last night ?</string>
     <string name="servant_event">Servant transformed into</string>
     <string name="dead_event">died.</string>
@@ -179,5 +186,9 @@
     <string name="good_night_all">Good night everybody: </string>
     <string name="game_wolves_won">GAME OVER! The werewolves has taken over the village !</string>
     <string name="game_villager_won">GAME OVER! The villagers has liberated their land from the oppression of wolves !</string>
+    <string name="plays_with">Plays with:</string>
+    <string name="team">team</string>
+    <string name="intimidated_player">This player is intimidated by the Red werewolf</string>
+
 
 </resources>

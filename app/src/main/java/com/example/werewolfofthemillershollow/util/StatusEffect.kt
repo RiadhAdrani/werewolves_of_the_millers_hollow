@@ -99,5 +99,13 @@ class StatusEffect(
             )
         }
 
+        fun intimidated() : StatusEffect{
+            return StatusEffect(
+                icon = Icons.wolves,
+                name = R.string.red_effect,
+                description = R.string.red_effect_description
+            )
+        }
+
     }
 }

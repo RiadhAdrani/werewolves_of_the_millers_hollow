@@ -72,7 +72,7 @@ class KnightTurn(role : Knight, var activity: GameActivity) : Turn<Knight>(activ
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return getRole().isKilled && getRole().primaryAbility!!.times == App.ABILITY_ONCE
+        return getRole().isKilled && getRole().primaryAbility!!.times == App.ABILITY_ONCE && getRole().isIntimidated
     }
 
     override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {

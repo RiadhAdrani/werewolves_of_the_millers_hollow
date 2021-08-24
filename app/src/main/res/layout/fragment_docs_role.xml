@@ -1,59 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey_darkest"
-    >
+    android:background="@color/grey_darkest">
 
     <ImageView
         android:id="@+id/fragment_icon"
         android:layout_width="@dimen/giant_extra_extra"
         android:layout_height="@dimen/giant_extra_extra"
-        android:src="@drawable/ic_ww_villager"
-        android:background="@color/grey_lightest"
-        android:padding="@dimen/epsilon"
         android:layout_margin="@dimen/tiny_extra"
+        android:background="@color/grey_lightest"
+        android:contentDescription="@string/werewolves"
+        android:padding="@dimen/epsilon"
+        android:src="@drawable/ic_ww_villager"
+        app:layout_constraintBottom_toTopOf="@id/fragment_title"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragment_title"
-        android:contentDescription="@string/werewolves" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/fragment_title"
-        android:layout_marginTop="@dimen/tiny_extra"
-        android:layout_marginHorizontal="@dimen/tiny_extra"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/role"
-        android:textSize="@dimen/text_larger"
-        android:textColor="@color/brown_beige_barely_white"
-        android:textStyle="bold"
-        android:textAlignment="center"
+        android:layout_marginHorizontal="@dimen/tiny_extra"
+        android:layout_marginTop="@dimen/tiny_extra"
         android:layout_marginBottom="@dimen/text_tiny"
+        android:text="@string/role"
+        android:textAlignment="center"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_giant_x"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/fragment_team_icon"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="@id/fragment_icon"
         app:layout_constraintRight_toRightOf="@id/fragment_icon"
         app:layout_constraintTop_toBottomOf="@id/fragment_icon" />
 
-    <TextView
-        android:id="@+id/fragment_description"
-        android:layout_marginTop="@dimen/tiny_extra"
-        android:layout_marginHorizontal="@dimen/tiny_extra"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/lorem"
-        android:textSize="@dimen/text_tiny"
-        android:textColor="@color/brown_beige_barely_white"
-        android:textStyle="italic"
-        android:textAlignment="center"
-        android:layout_marginBottom="@dimen/text_tiny"
-        app:layout_constraintLeft_toLeftOf="@id/fragment_icon"
-        app:layout_constraintRight_toRightOf="@id/fragment_icon"
+    <ImageView
+        android:id="@+id/fragment_team_icon"
+        android:layout_width="@dimen/large_extra"
+        android:layout_height="@dimen/large_extra"
+        android:contentDescription="@string/team"
+        android:src="@drawable/ic_ww_villager"
+        app:layout_constraintBottom_toTopOf="@id/fragment_scroll"
+        app:layout_constraintLeft_toRightOf="@id/fragment_team"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fragment_title" />
 
+    <TextView
+        android:id="@+id/fragment_plays_with"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/plays_with"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_team_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/fragment_team"
+        app:layout_constraintTop_toTopOf="@id/fragment_team_icon" />
 
+    <TextView
+        android:id="@+id/fragment_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/team"
+        android:textStyle="italic|bold"
+        android:textAllCaps="true"
+        android:textColor="@color/brown_beige_barely_white"
+        android:textSize="@dimen/text_small"
+        app:layout_constraintBottom_toBottomOf="@id/fragment_team_icon"
+        app:layout_constraintLeft_toRightOf="@id/fragment_plays_with"
+        app:layout_constraintRight_toLeftOf="@id/fragment_team_icon"
+        app:layout_constraintTop_toTopOf="@id/fragment_team_icon" />
+
+    <ScrollView
+        android:id="@+id/fragment_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/tiny"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fragment_team_icon">
+
+        <LinearLayout
+            android:id="@+id/scroll_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/tiny_extra"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/text_tiny"
+                android:text="@string/lorem"
+                android:textAlignment="center"
+                android:textColor="@color/brown_beige_barely_white"
+                android:textSize="@dimen/text_tiny"
+                android:textStyle="italic"
+                />
+
+
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

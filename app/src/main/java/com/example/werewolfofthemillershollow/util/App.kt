@@ -150,6 +150,18 @@ abstract class App : AppCompatActivity(){
         // ---------------------------------------------------------------------------------------
         // ---------------------------------------------------------------------------------------
 
+        // ---------------------------------------------------------------------------------------
+        // VILLAGER
+        // ---------------------------------------------------------------------------------------
+
+        const val RED_WOLF_NAME : Int = R.string.red_name
+        const val RED_WOLF_DESCRIPTION : Int = R.string.red_description
+        const val RED_WOLF_TEAM : Int = TEAM_WOLVES
+        const val RED_WOLF_ICON : Int = R.drawable.ic_ww_wolf
+
+        // ---------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------
+
         /**
          * Return a random number in a given interval
          * @param min min number of the interval, (0) is the default value

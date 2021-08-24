@@ -97,6 +97,18 @@ abstract class Role : Serializable {
     var isKilled : Boolean = false
 
     /**
+     * indicates if the role is blocked, which prevent the use of any ability
+     * @see RedWolf
+     */
+    var isIntimidated : Boolean = false
+
+    /**
+     * indicates if the role was blocked by the red wolf, which prevent him from being blocked again in the next night.
+     * @see RedWolf
+     */
+    var wasIntimidated : Boolean = false;
+
+    /**
      * Indicates if the role has been killed by the sorcerer or not. *Used to prevent the sorcerer from reviving a player killed by her.*
      * @see Sorcerer
      */
@@ -188,6 +200,12 @@ abstract class Role : Serializable {
 
         isKilledBySorcerer = false
 
+        wasIntimidated = false
+
+        if (isIntimidated) wasIntimidated = true
+
+        isIntimidated = false
+
     }
 
     /**
@@ -249,6 +267,10 @@ abstract class Role : Serializable {
 
         if (isCaptain){
             output.add(StatusEffect.captain())
+        }
+
+        if (isIntimidated){
+            output.add(StatusEffect.intimidated())
         }
 
         return output
@@ -390,6 +412,7 @@ abstract class Role : Serializable {
 
             val list = ArrayList<Role>()
 
+            list.add(RedWolf(context))
             list.add(Servant(context))
             list.add(Guardian(context))
             list.add(Werewolf(context))
@@ -414,6 +437,7 @@ abstract class Role : Serializable {
 
             val list = ArrayList<Role>()
 
+            if (numberOfRoles > 10) list.add(RedWolf(context))
             if (numberOfRoles > 8) list.add(Servant(context))
             list.add(Guardian(context))
             if (numberOfRoles > 7) list.add(Werewolf(context))

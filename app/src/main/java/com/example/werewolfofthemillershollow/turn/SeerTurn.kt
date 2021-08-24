@@ -37,7 +37,7 @@ class SeerTurn(role : Seer, var activity: GameActivity) : Turn<Seer>(activity) {
     }
 
     override fun shouldUsePower(gameActivity: GameActivity): Boolean {
-        return true
+        return !getRole().isIntimidated
     }
 
     override fun servant(activity: GameActivity, events: ArrayList<Event>): Int {
